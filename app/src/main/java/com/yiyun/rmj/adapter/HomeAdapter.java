@@ -45,7 +45,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     int Height = 0;
     Context context;
 
-    HomeVideoAdapter hva;
+    HomeVideo2Adapter hva;
     HomeProductAdapter hpa;
 
     public HomeAdapter(Context context, int Width, int Height) {
@@ -72,7 +72,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.bannerData.clear();
         this.bannerData.addAll(bannerData);
         if (videoData.size() > 0) {
-            hva = new HomeVideoAdapter(context, videoData);
+            hva = new HomeVideo2Adapter(context, videoData);
             notifyItemChanged(2);
         }
         if (this.bannerData.size() > 0) {

@@ -75,7 +75,9 @@
         <activity android:name=".activity.TimeFrameActivity" />
         <activity android:name=".activity.TimImgActivity" />
 
-        <activity android:name=".activity.NewHomeActivity" />
+        <activity android:name=".activity.NewHomeActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:screenOrientation="portrait"/>
         <activity android:name=".activity.CleanActivity" />
         <activity android:name=".activity.HomeActivity" />
         <activity android:name=".activity.ProductDetailActivity" />
