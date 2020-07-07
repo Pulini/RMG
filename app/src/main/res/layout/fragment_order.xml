@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/smartrf"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/marleft_right15"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_no_order"
+                android:layout_below="@+id/title_bar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/img_bg"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="@dimen/marleft_right30"
+                    android:layout_marginRight="@dimen/marleft_right30"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/no_order_bg"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignBottom="@+id/img_bg"
+                    android:text="暂无订单，快去逛逛吧~"
+                    android:textSize="@dimen/textsize16"
+                    android:textColor="@color/color66"
+                    android:layout_marginBottom="@dimen/marleft_right30"
+                    />
+
+                <Button
+                    android:id="@+id/btn_lookaround"
+                    android:layout_width="@dimen/height180"
+                    android:layout_height="@dimen/marleft_right45"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/img_bg"
+                    android:text="去逛逛"
+                    android:textColor="@color/lightblue"
+                    android:textSize="@dimen/textsize16"
+                    android:background="@drawable/shape_stroke_btn_bg_blue"
+                    />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+</LinearLayout>

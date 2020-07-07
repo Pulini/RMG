@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/marleft_right15"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_product"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_product_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_buy__"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/marleft_right15"
+            android:layout_marginBottom="@dimen/marleft_right15"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY" />
+
+        <LinearLayout
+            android:id="@+id/ll_buy__"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_product_introduction"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/marleft_right5"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_learn_more_about"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/marleft_right5"
+                android:padding="@dimen/marleft_right5"
+                android:text="@string/learn_more_about"
+                android:textColor="@color/lightblue"
+                android:textSize="@dimen/textsize18" />
+
+            <TextView
+                android:id="@+id/tv_buy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/marleft_right5"
+                android:text="@string/buy"
+                android:textColor="@color/lightblue"
+                android:textSize="@dimen/textsize18" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_product_introduction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_product_name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/marleft_right15"
+            android:layout_marginTop="@dimen/marleft_right5"
+            android:layout_marginRight="@dimen/marleft_right15"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/textcolor_black"
+            android:textSize="@dimen/textsize14"
+            android:typeface="serif" />
+
+        <TextView
+            android:id="@+id/txt_shop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/marleft_right15"
+            android:layout_marginTop="@dimen/marleft_right15"
+            android:text="@string/shop"
+            android:textColor="@color/textcolor_black"
+            android:textSize="@dimen/textsize16"
+            android:textStyle="bold"
+            android:typeface="monospace"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_product_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_shop"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/marleft_right5"
+            android:padding="@dimen/marleft_right5"
+            android:text="@string/app_name"
+            android:textColor="@color/textcolor_black"
+            android:textSize="@dimen/textsize22" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_video"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00ff55"
+        android:layout_marginTop="15dp">
+        <VideoView
+            android:id="@+id/vv_player"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true" />
+        <ImageView
+            android:id="@+id/iv_videoPreloadBKG"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:background="@mipmap/video_bkg"
+            />
+        <ImageView
+            android:id="@+id/iv_videoBKG"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            />
+
+        <ImageView
+            android:id="@+id/iv_play"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ic_play"
+            android:visibility="gone"/>
+        <RelativeLayout
+            android:id="@+id/rl_loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ProgressBar
+                android:id="@+id/pb_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

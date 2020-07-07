@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/color_light_gray"
+    >
+    <ImageView
+        android:layout_marginTop="@dimen/height10"
+        android:layout_marginBottom="@dimen/height10"
+        android:layout_marginLeft="@dimen/marleft_right5"
+        android:layout_marginRight="@dimen/marleft_right5"
+        android:layout_width="@dimen/height100"
+        android:layout_height="@dimen/height150"
+        android:scaleType="center"
+        android:id="@+id/iv_photo"
+         />
+    <ImageView
+        android:layout_marginTop="@dimen/marleft_right5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/icon_dingshi_shanchu"
+        android:layout_alignRight="@+id/iv_photo"
+        android:id="@+id/iv_delete"
+        />
+
+</RelativeLayout>

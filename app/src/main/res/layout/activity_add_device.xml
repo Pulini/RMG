@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/blue_title"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_bar"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="正在搜索设备"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/marleft_right15"
+            />
+
+        <ProgressBar
+            android:layout_width="@dimen/marleft_right15"
+            android:layout_height="@dimen/marleft_right15"
+            android:src="@mipmap/title_add_icon"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/marleft_right15"
+            android:indeterminate="true"
+            android:indeterminateBehavior="repeat"
+            android:indeterminateDrawable="@drawable/guijuhua"
+            android:indeterminateDuration="3000"
+            android:max="100"
+            android:progress="22"
+            />
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginLeft="@dimen/marleft_right15"
+        android:layout_marginRight="@dimen/marleft_right15"
+        android:id="@+id/rv_list"
+        android:layout_below="@+id/rl_progress"
+        android:layout_above="@+id/btn_start_scan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btn_start_scan"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/marleft_right30"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/searchfail_btn"
+        android:text="开始搜索设备"
+        android:textSize="@dimen/textsize18"
+        android:textColor="@color/white"
+        />
+
+</RelativeLayout>

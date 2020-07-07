@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/home_title"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_llll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marleft_right15"
+        android:layout_marginLeft="@dimen/marleft_right15"
+        android:layout_marginRight="@dimen/marleft_right15"
+        android:layout_below="@+id/title_bar"
+        android:background="@mipmap/my_wallet_bg"
+        >
+
+        <TextView
+            android:id="@+id/txt_wdye"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/marleft_right25"
+            android:layout_marginTop="@dimen/marleft_right25"
+            android:text="我的余额"
+            android:textSize="@dimen/textsize16"
+            android:textColor="@color/white"
+            />
+
+
+        <TextView
+            android:id="@+id/tv_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.00"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize56"
+            android:layout_below="@+id/txt_wdye"
+            android:layout_marginLeft="@dimen/marleft_right25"
+
+            />
+
+        <TextView
+            android:id="@+id/tv_withdraw"
+            android:drawableRight="@mipmap/person_center_goto"
+            android:drawablePadding="@dimen/marleft_right5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="提现"
+            android:textColor="@color/white"
+            android:layout_alignBottom="@+id/tv_money"
+            android:textSize="@dimen/textsize16"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/marleft_right15"
+            android:layout_marginBottom="@dimen/marleft_right10"
+
+            />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_below="@+id/rl_llll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/magic_indicator"
+            android:layout_marginLeft="@dimen/marleft_right15"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpage"
+            android:layout_below="@+id/ll_tab"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>

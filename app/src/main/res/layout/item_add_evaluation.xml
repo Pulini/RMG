@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_layout_conner_white_bg"
+        android:layout_margin="@dimen/marleft_right15">
+
+        <LinearLayout
+            android:layout_below="@+id/title_bar"
+            android:id="@+id/ll_score"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height100"
+            android:layout_marginLeft="@dimen/marleft_right15"
+            android:layout_marginRight="@dimen/marleft_right15"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_product_image"
+                android:layout_width="@dimen/height80"
+                android:layout_height="@dimen/height80"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/icon_jieshu" />
+
+            <RelativeLayout
+                android:layout_gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/marleft_right15">
+
+                <TextView
+                    android:id="@+id/txt_sppf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="商品评分"
+                    android:textColor="@color/textcolor_black"
+                    android:textSize="@dimen/textsize16"
+                    android:layout_marginBottom="@dimen/marleft_right15"
+                    />
+
+                <com.yiyun.rmj.view.RatingBar
+                    android:id="@+id/rb_star"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_sppf"
+                    app:starCount="5"
+                    app:starEmpty="@mipmap/ic_evaluation_stroke"
+                    app:starFill="@mipmap/ic_evaluation_solid"
+                    app:starImageSize="@dimen/marleft_right25"
+                    app:starPadding="@dimen/marleft_right5"
+                    app:starStep="1"
+                    app:stepSize="Full"
+                    app:clickable="true"
+                    />
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_below="@+id/ll_score"
+            android:layout_marginTop="@dimen/marleft_right15"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_light_gray" />
+
+        <EditText
+            android:layout_marginRight="@dimen/marleft_right15"
+            android:layout_marginLeft="@dimen/marleft_right15"
+            android:id="@+id/et_evaluation"
+            android:layout_marginTop="@dimen/marleft_right15"
+            android:layout_below="@+id/divider"
+            android:layout_width="match_parent"
+            android:textSize="@dimen/textsize14"
+            android:textColor="@color/textcolor_black"
+            android:hint="@string/edit_evaluation_hint"
+            android:maxHeight="@dimen/height150"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/ll_take_photo"
+            android:layout_marginTop="@dimen/marleft_right45"
+            android:layout_below="@+id/et_evaluation"
+            android:layout_marginRight="@dimen/marleft_right15"
+            android:layout_marginLeft="@dimen/marleft_right15"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/tv_btn_take_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/photo_icon"
+                />
+
+            <TextView
+                android:textSize="@dimen/textsize14"
+                android:textColor="@color/color99"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="添加图片"
+                />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginRight="@dimen/marleft_right15"
+            android:layout_marginLeft="@dimen/marleft_right15"
+            android:layout_marginBottom="@dimen/marleft_right15"
+            android:layout_marginTop="@dimen/height10"
+            android:id="@+id/rv_image_contanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_take_photo"/>
+    </RelativeLayout>
+</RelativeLayout>

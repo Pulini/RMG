@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height100"
+        android:layout_marginBottom="1dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:background="@color/bg"
+            android:scaleType="center"
+            android:src="@mipmap/icon_dingshi_shanchu"
+
+            />
+
+        <TextView
+            android:id="@+id/tv_specific_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="@dimen/marleft_right11"
+            android:layout_toRightOf="@id/iv_delete"
+            android:text="04:40-05:50"
+            android:textSize="36sp"
+
+            />
+
+        <Switch
+            android:id="@+id/switcher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:thumb="@drawable/thumb"
+            android:track="@drawable/track" />
+
+        <TextView
+            android:id="@+id/tv_shiduan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/tv_specific_time"
+            android:layout_below="@id/tv_specific_time"
+            android:layout_marginTop="0dp"
+            android:text="时段1，"
+            android:textColor="@color/color222"
+            android:textSize="@dimen/textsize14" />
+
+        <TextView
+            android:id="@+id/tv_chongfu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/tv_shiduan"
+            android:layout_marginLeft="@dimen/marleft_right5"
+            android:layout_marginTop="0dp"
+            android:layout_toRightOf="@id/tv_shiduan"
+            android:text="周一  周二"
+            android:textColor="@color/color222"
+            android:textSize="@dimen/textsize14" />
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/home_title"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_phone_number"
+        android:layout_below="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height50"
+        android:layout_marginLeft="@dimen/marleft_right15"
+        android:layout_marginTop="@dimen/marleft_right20"
+        android:layout_marginRight="@dimen/marleft_right15"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="手机号"
+            android:textSize="@dimen/textsize16"
+            android:textColor="@color/textcolor_black"
+            android:layout_centerVertical="true"
+            />
+        
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="12355555555"
+            android:textSize="@dimen/textsize16"
+            android:textColor="@color/color99"
+            />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_settingpassword"
+        android:layout_below="@+id/rl_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height50"
+        android:layout_marginLeft="@dimen/marleft_right15"
+        android:layout_marginTop="@dimen/marleft_right20"
+        android:layout_marginRight="@dimen/marleft_right15"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设置修改密码"
+            android:textSize="@dimen/textsize16"
+            android:textColor="@color/textcolor_black"
+            android:layout_centerVertical="true"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/person_center_goto"
+            />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@+id/rl_settingpassword"
+        android:background="@color/color_f8"
+        ></LinearLayout>
+
+</RelativeLayout>

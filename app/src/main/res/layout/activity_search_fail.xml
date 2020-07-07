@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.yiyun.rmj.activity.SearchFailActivity">
+
+    <include layout="@layout/title" />
+
+    <Button
+        android:id="@+id/btn_search_again"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height44"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="38dp"
+        android:layout_marginRight="37dp"
+        android:background="@drawable/searchfail_btn"
+        android:text="重新搜索"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textsize15" />
+
+    <ImageView
+        android:id="@+id/fail_reason"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btn_search_again"
+        android:layout_marginBottom="20dp"
+        android:scaleType="center"
+        android:src="@mipmap/failure_reasons"></ImageView>
+
+
+    <com.yiyun.rmj.view.CircleImageView
+        android:id="@+id/civ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/fail_reason"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:src="@mipmap/img_lanya" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/civ"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:text="未检测到可用设备"
+        android:textColor="@color/color222"
+        android:textSize="24sp" />
+</RelativeLayout>

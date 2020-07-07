@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/lsv"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <RelativeLayout
+            android:id="@+id/rl_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginTop="@dimen/marleft_right15"
+                android:layout_marginBottom="@dimen/marleft_right15"
+                android:id="@+id/txt_sbbh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/textsize16"
+                android:layout_marginLeft="@dimen/marleft_right15"
+                android:textColor="@color/textcolor_black"
+                android:text="设备名称:"
+                />
+
+            <TextView
+                android:layout_toRightOf="@+id/txt_sbbh"
+                android:id="@+id/tv_device_bh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/textsize16"
+                android:textColor="@color/textcolor_black"
+                android:layout_marginLeft="@dimen/marleft_right5"
+                android:text="10010023"
+                />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

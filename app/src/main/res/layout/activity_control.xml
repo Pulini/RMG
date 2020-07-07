@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.yiyun.rmj.activity.ControlActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height48"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_control"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:drawableBottom="@drawable/xiahuaxian"
+            android:gravity="center"
+            android:text="控制"
+            android:textColor="@color/color222"
+            android:textSize="@dimen/textsize18" />
+
+        <TextView
+            android:id="@+id/tv_timing"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="24dp"
+            android:layout_toRightOf="@id/tv_control"
+
+            android:gravity="center"
+            android:text="定时"
+            android:textColor="#999999"
+            android:textSize="@dimen/textsize14" />
+
+        <TextView
+            android:id="@+id/tv_clean"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="24dp"
+            android:layout_toRightOf="@id/tv_timing"
+
+            android:gravity="center"
+            android:text="清洗"
+            android:textColor="#999999"
+            android:textSize="@dimen/textsize14" />
+
+        <ImageView
+            android:id="@+id/iv_disable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/marleft_right15"
+
+            android:src="@mipmap/duankailianjie" />
+
+        <TextView
+            android:id="@+id/tv_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:text="编辑"
+            android:visibility="gone"
+            android:textColor="#f00201"
+            android:textSize="@dimen/textsize14" />
+
+    </RelativeLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.viewpager.widget.ViewPager>
+
+    <!--<include layout="@layout/activity_main2" />-->
+</LinearLayout>

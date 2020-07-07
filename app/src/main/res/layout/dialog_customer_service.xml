@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:id="@+id/ll_tttt"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_conner_white_bg"
+        android:orientation="vertical"
+        >
+
+
+        <TextView
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentTop="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/height40"
+            android:text="客服"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/marleft_right75"
+            android:textSize="@dimen/textsize26"
+            android:textColor="@color/textcolor_black"
+            />
+
+        <Button
+            android:id="@+id/btn_pre_sale"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/marleft_right25"
+            android:layout_marginRight="@dimen/marleft_right25"
+            android:textSize="@dimen/textsize16"
+            android:textColor="@color/white"
+            android:text="售前客服"
+            android:background="@drawable/shape_conner_blue_bg"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/height40"
+            android:id="@+id/btn_after_sale"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/marleft_right25"
+            android:layout_marginRight="@dimen/marleft_right25"
+            android:textSize="@dimen/textsize16"
+            android:textColor="@color/white"
+            android:layout_marginBottom="@dimen/height40"
+            android:background="@drawable/shape_conner_blue_bg"
+            android:text="售后客服"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_tttt"
+        android:src="@mipmap/dialog_close"
+        android:padding="@dimen/marleft_right5"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        />
+
+
+    <ProgressBar
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@+id/ll_tttt"
+        android:layout_marginTop="-80dp"
+        android:indeterminate="true"
+        android:indeterminateBehavior="repeat"
+        android:indeterminateDrawable="@drawable/progress_custom_service"
+        android:indeterminateDuration="3000"
+        android:max="100"
+        android:progress="22" />
+
+
+</RelativeLayout>

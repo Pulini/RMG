@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="3dp"
+        android:layout_marginBottom="3dp"
+        app:cardCornerRadius="5dp"
+        >
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff">
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.6" />
+
+
+
+        <ImageView
+            android:id="@+id/iv_leftbluetag"
+            android:layout_width="@dimen/marleft_right5"
+            android:layout_height="match_parent"
+            android:src="@drawable/shape_bluetooth_mainitem_left_blue_bg"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_leftgraytag"
+            android:layout_width="@dimen/marleft_right5"
+            android:layout_height="match_parent"
+            android:src="@drawable/shape_bluetooth_mainitem_left_gray_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/iv_leftgraytag_intelligent"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/marleft_right10"
+            android:layout_marginBottom="@dimen/height10"
+            android:scaleType="fitStart"
+            android:src="@mipmap/intelligent_model_unselect"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_leftbluetag_intelligent"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/marleft_right10"
+            android:layout_marginBottom="@dimen/height10"
+            android:scaleType="fitStart"
+            android:src="@mipmap/intelligent_model_select"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone" />
+
+
+        <TextView
+            android:id="@+id/tv_remarks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/marleft_right25"
+            android:focusable="false"
+            android:maxLines="1"
+            android:text="无备注"
+            android:textColor="@color/textcolor_black"
+            android:textSize="@dimen/textsize16"
+            app:layout_constraintBottom_toTopOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_modify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/shape_small_conner_stroke_blue_bg"
+            android:paddingLeft="@dimen/marleft_right8"
+            android:paddingTop="@dimen/marleft_right2"
+            android:paddingRight="@dimen/marleft_right8"
+            android:paddingBottom="@dimen/marleft_right2"
+            android:text="修改"
+            android:textColor="@color/lightblue"
+            android:textSize="@dimen/textsize12"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_remarks"
+            app:layout_constraintStart_toEndOf="@+id/tv_remarks" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline2" >
+
+            <TextView
+                android:id="@+id/txt_qd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="强度："
+                android:textColor="@color/color99"
+                android:textSize="@dimen/textsize14"
+                />
+
+            <TextView
+                android:id="@+id/tv_strength"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MAX"
+                android:textColor="@color/color99"
+                android:textSize="@dimen/textsize14"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txt_qd"
+                app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+            <TextView
+                android:id="@+id/txt_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="时间："
+                android:textColor="@color/color99"
+                android:textSize="@dimen/textsize14"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_strength"
+                app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="60秒"
+                android:textColor="@color/color99"
+                android:textSize="@dimen/textsize14"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/txt_time"
+                app:layout_constraintTop_toTopOf="@+id/guideline2" />
+        </LinearLayout>
+
+
+
+        <Switch
+            android:id="@+id/sw_choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="25dp"
+            android:thumb="@drawable/switch_custom_thumb_selector"
+            android:track="@drawable/switch_custom_track_selector"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

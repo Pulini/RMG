@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    >
+    <include layout="@layout/home_title"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_bar"
+        android:background="@color/color_fa"
+        >
+        <RelativeLayout
+            android:id="@+id/rl_person_head"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height60"
+            android:background="@color/white"
+            >
+
+            <TextView
+                android:layout_marginLeft="@dimen/marleft_right15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="我的头像"
+                android:textSize="@dimen/textsize16"
+                android:textColor="@color/textcolor_black"
+                />
+
+
+            <com.yiyun.rmj.view.CircleImageView
+                android:layout_marginRight="@dimen/marleft_right15"
+                android:id="@+id/civ_mine_head"
+                android:layout_width="@dimen/height40"
+                android:layout_height="@dimen/height40"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/person_default_icon" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:background="@color/white"
+            android:layout_below="@+id/rl_person_head"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height60"
+            >
+
+            <TextView
+                android:id="@+id/txt_yhnc"
+                android:layout_marginLeft="@dimen/marleft_right15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="用户昵称"
+                android:textSize="@dimen/textsize16"
+                android:textColor="@color/textcolor_black"
+                />
+
+            <EditText
+                android:id="@+id/et_person_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/txt_yhnc"
+                android:layout_marginRight="@dimen/marleft_right15"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:text="一半"
+                android:gravity="right"
+                android:textColor="@color/color99"
+                android:textSize="@dimen/textsize16"
+                />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+
+
+
+
+</RelativeLayout>

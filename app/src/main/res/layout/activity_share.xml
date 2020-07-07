@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/share_bg"
+
+    >
+
+    <include layout="@layout/home_title"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_bar"
+        android:scrollbars="none"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <RelativeLayout
+                android:id="@+id/rl_smxz"
+                android:layout_width="match_parent"
+                android:layout_marginRight="@dimen/marleft_right30"
+                android:layout_marginLeft="@dimen/marleft_right30"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/share_roundconner_bg_"
+
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/marleft_right30"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="扫码下载"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textsize16"
+                    android:layout_marginTop="@dimen/marleft_right25"
+                    />
+
+                <View
+                    android:id="@+id/dash_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:layout_marginLeft="@dimen/marleft_right10"
+                    android:layout_marginRight="@dimen/marleft_right10"
+                    android:background="@drawable/shape_dash_line"
+                    android:layout_marginTop="68dp"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_qrcode"
+                    android:layout_marginTop="@dimen/marleft_right30"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/dash_line"
+                    />
+
+                <Button
+                    android:layout_marginTop="@dimen/marleft_right30"
+                    android:layout_below="@+id/iv_qrcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/marleft_right20"
+                    android:textSize="@dimen/textsize16"
+                    android:textColor="@color/dark_white"
+                    android:layout_marginRight="@dimen/marleft_right20"
+                    android:text="点击下载绿趣APP"
+                    android:background="@drawable/shape_conner_red_bg"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_marginTop="@dimen/marleft_right30"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/rl_smxz"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    >
+
+                    <RelativeLayout
+                        android:id="@+id/rl_jlgz_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/txt_jlgz"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:text="奖励规则"
+                            android:textColor="@color/dark_white"
+                            android:textSize="@dimen/textsize14"
+                            />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="@dimen/marleft_right15"
+                            android:layout_marginRight="@dimen/marleft_right10"
+                            android:layout_toLeftOf="@+id/txt_jlgz"
+                            android:layout_height="0.5dp"
+                            android:background="@color/white"
+                            android:layout_centerVertical="true"
+                            />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="@dimen/marleft_right15"
+                            android:layout_marginRight="@dimen/marleft_right10"
+                            android:layout_toRightOf="@+id/txt_jlgz"
+                            android:layout_height="0.5dp"
+                            android:background="@color/white"
+                            android:layout_centerVertical="true"
+                            />
+
+                    </RelativeLayout>
+
+
+                    <TextView
+                        android:layout_centerHorizontal="true"
+                        android:layout_below="@+id/rl_jlgz_title"
+                        android:layout_marginTop="@dimen/marleft_right15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/share_introduce"
+                        android:lineSpacingExtra="@dimen/marleft_right5"
+                        android:textColor="@color/dark_white"
+                        android:textSize="@dimen/textsize12"
+
+                        />
+
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

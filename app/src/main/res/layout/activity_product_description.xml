@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/home_title"/>
+
+    <ScrollView
+        android:layout_below="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        >
+        <LinearLayout
+            android:layout_margin="@dimen/marleft_right15"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/tv_des_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="防蓝光辐射,保湿润眼干涩眼镜,电脑护目镜!"
+                android:textStyle="bold"
+                android:textSize="@dimen/textsize22"
+                android:textColor="@color/textcolor_black"
+                />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2019-03-21"
+                android:textColor="@color/color99"
+                android:textSize="@dimen/textsize14"
+                android:layout_marginTop="@dimen/marleft_right20"
+                />
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/banner"
+                android:layout_marginTop="@dimen/marleft_right20"
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="其包括镜框、镜片和软胶垫，镜片安装于镜框的两个安装孔框架内，软胶垫安装在所述镜框上，在镜框内安装控制及加热模块。"
+                android:layout_marginTop="@dimen/marleft_right20"
+                android:textSize="@dimen/textsize14"
+                android:textColor="@color/color66"
+                />
+
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/glasses_icon"
+                android:layout_marginTop="@dimen/marleft_right25"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="框架及软胶垫形成的相对密闭的空间内，可以提供最为恰当的温度下防止了泪液蒸发增加了眼周的湿度，起到物理保湿的作用，能有效地将热量传导至眼表腺体，起到热敷的作用，从而有效地改善了眼部的干燥环境，从根本上解决了干眼症。"
+                android:textSize="@dimen/textsize14"
+                android:textColor="@color/color66"
+                android:layout_marginTop="@dimen/marleft_right25"
+                android:layout_marginBottom="@dimen/marleft_right25"
+                />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

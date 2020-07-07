@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/sign_bg"
+    >
+
+
+    <include layout="@layout/home_title"/>
+
+    <ScrollView
+        android:layout_below="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/date_icon"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/iv_date_icon"
+                    />
+
+
+                <LinearLayout
+                    android:id="@+id/ll_integral"
+                    android:layout_marginTop="@dimen/marleft_right5"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_below="@+id/iv_date_icon"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="累计获得"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/textsize16"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_integral"
+                        android:text="99"
+                        android:textColor="@color/color_deep_red"
+                        android:textSize="@dimen/textsize16"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="积分"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/textsize16"
+                        />
+                </LinearLayout>
+
+            <com.yiyun.rmj.view.MySignView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/msv_sign_calender"
+                android:layout_below="@+id/ll_integral"
+                android:layout_margin="@dimen/marleft_right15"
+                android:layout_centerHorizontal="true"
+                />
+            <Button
+                android:id="@+id/btn_sign"
+                android:layout_width="@dimen/height150"
+                android:layout_height="@dimen/height40"
+                android:background="@drawable/shape_conner_white_bg"
+                android:textSize="@dimen/textsize16"
+                android:text="签到"
+                android:textColor="@color/color_dark_red"
+                android:layout_below="@+id/msv_sign_calender"
+                android:layout_centerHorizontal="true"/>
+
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerHorizontal="true"
+                 android:layout_below="@+id/btn_sign"
+                 android:text="已连续签到2天,继续加油 !"
+                 android:textSize="@dimen/textsize14"
+                 android:textColor="@color/white"
+                 android:layout_marginBottom="@dimen/marleft_right30"
+                 android:layout_marginTop="@dimen/marleft_right15"
+                 />
+
+        </RelativeLayout>
+    </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

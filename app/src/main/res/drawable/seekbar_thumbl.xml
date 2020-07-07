@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<item android:state_focused="true" android:state_pressed="false" android:drawable="@mipmap/icon_sjjg_tuodong" />-->
+    <!--<item android:state_focused="true" android:state_pressed="true" android:drawable="@mipmap/icon_sjjg_tuodong" />-->
+    <!--<item android:state_focused="false" android:state_pressed="true" android:drawable="@mipmap/icon_sjjg_tuodong" />-->
+    <!--<item android:drawable="@mipmap/icon_sjjg_tuodong" />-->
+
+    <item android:drawable="@mipmap/icon_sjjg_tuodong" android:state_pressed="true" />  <!--this drawable is for thumb when pressing-->
+    <item android:drawable="@mipmap/icon_sjjg_tuodong" />  <!--for thumb when normal-->
+</selector>
+
+

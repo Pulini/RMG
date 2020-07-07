@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="106dp"
+    android:orientation="horizontal"
+    android:layout_marginBottom="@dimen/marleft_right30"
+
+    >
+    
+    <CheckBox
+        android:layout_marginLeft="@dimen/marleft_right15"
+        android:layout_centerVertical="true"
+        android:id="@+id/cb_choice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/check_box_bg"/>
+
+    <ImageView
+
+        android:layout_toRightOf="@+id/cb_choice"
+        android:layout_marginLeft="@dimen/marleft_right15"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/glasses_icon"
+        android:layout_width="106dp"
+        android:layout_height="106dp"
+        android:id="@+id/iv_cart_product_img"
+        android:scaleType="fitCenter"
+        />
+
+        <TextView
+            android:layout_marginTop="@dimen/marleft_right15"
+            android:id="@+id/tv_product_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize14"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/marleft_right18"
+            android:layout_toRightOf="@+id/iv_cart_product_img"
+            android:textColor="@color/textcolor_black"
+            android:text="保湿润眼干涩眼镜"
+            />
+
+    <TextView
+        android:id="@+id/tv_moneytag"
+        android:layout_marginLeft="@dimen/marleft_right18"
+        android:layout_toRightOf="@+id/iv_cart_product_img"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="￥"
+        android:textSize="@dimen/textsize12"
+        android:textColor="@color/lightblue"
+        android:layout_marginBottom="@dimen/marleft_right15"
+        />
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_marginBottom="@dimen/marleft_right15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textsize16"
+        android:textColor="@color/lightblue"
+        android:layout_toRightOf="@+id/tv_moneytag"
+        android:layout_alignParentBottom="true"
+        android:text="698"
+        />
+
+    <com.yiyun.rmj.view.AmountView
+        android:id="@+id/av_count"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_marginRight="@dimen/marleft_right15"
+        android:layout_marginBottom="@dimen/marleft_right15"
+        app:btnTextSize="@dimen/textsize16"
+        app:btnWidth="@dimen/height30"
+        app:tvWidth="@dimen/height30"
+        app:tvTextSize="@dimen/textsize4"
+        />
+
+
+</RelativeLayout>

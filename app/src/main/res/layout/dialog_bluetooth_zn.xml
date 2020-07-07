@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_conner_white_bg"
+        android:layout_marginLeft="@dimen/marleft_right20"
+        android:layout_marginRight="@dimen/marleft_right20"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/dialog_zn_cancel"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/marleft_right15"
+            android:layout_marginRight="@dimen/marleft_right15"
+            android:id="@+id/tv_cancel"
+            />
+
+        <TextView
+            android:id="@+id/txt_znms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="选择智能模式"
+            android:textColor="@color/textcolor_black"
+            android:textSize="@dimen/textsize16"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/marleft_right35"
+
+            />
+
+        <RelativeLayout
+            android:id="@+id/rll_strength"
+            android:layout_below="@+id/txt_znms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/height40"
+            >
+
+            <TextView
+                android:id="@+id/tv_strength_mid"
+                android:background="@drawable/dialog_zn_btn_select_bg"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:text="电竞模式"
+                android:gravity="center"
+                android:textColor="@color/color66"
+                android:layout_centerHorizontal="true"
+                android:textSize="@dimen/textsize14"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_toLeftOf="@+id/tv_strength_mid"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+
+                >
+                <TextView
+                    android:id="@+id/tv_strength_small"
+                    android:background="@drawable/dialog_zn_btn_unselect_bg"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:text="阅读模式"
+                    android:gravity="center"
+                    android:textColor="@color/color66"
+                    android:textSize="@dimen/textsize14"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_toRightOf="@+id/tv_strength_mid"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+
+                >
+                <TextView
+                    android:id="@+id/tv_strength_big"
+                    android:background="@drawable/dialog_zn_btn_unselect_bg"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:text="美容模式"
+                    android:gravity="center"
+                    android:textColor="@color/color66"
+                    android:textSize="@dimen/textsize14"
+                    />
+
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height40"
+            android:id="@+id/tv_sure"
+            android:layout_below="@+id/rll_strength"
+            android:gravity="center"
+            android:textSize="@dimen/textsize16"
+            android:textColor="@color/white"
+            android:text="确定"
+            android:background="@drawable/shape_conner_blue_bg"
+            android:layout_margin="@dimen/marleft_right35"
+            />
+
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

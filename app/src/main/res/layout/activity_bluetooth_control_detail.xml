@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/title_bar"
+        android:layout_height="@dimen/height68"
+        android:background="@color/transparent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/marleft_right20"
+            android:background="@color/transparent"
+            android:orientation="vertical"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height48"
+            >
+
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:minWidth="@dimen/height40"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:scaleType="center"
+                android:src="@mipmap/icon_back"
+                />
+
+            <LinearLayout
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
+
+                <LinearLayout
+                    android:id="@+id/ll_tab_control"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    >
+                    <TextView
+                        android:id="@+id/tv_control"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="控制"
+                        android:textColor="@color/textcolor_black"
+                        android:textSize="@dimen/textsize18"
+
+
+                        />
+
+                    <View
+                        android:id="@+id/v_diver_control"
+                        android:layout_marginTop="@dimen/marleft_right10"
+                        android:layout_width="@dimen/height30"
+                        android:layout_height="2dp"
+                        android:background="@color/lightblue"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginLeft="@dimen/marleft_right25"
+                    android:id="@+id/ll_tab_clean"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    >
+                    <TextView
+                        android:id="@+id/tv_clean"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="清洗"
+                        android:textColor="@color/color99"
+                        android:textSize="@dimen/textsize15"
+
+
+                        />
+
+                    <View
+                        android:visibility="invisible"
+                        android:id="@+id/v_diver_clean"
+                        android:layout_marginTop="@dimen/marleft_right10"
+                        android:layout_width="@dimen/height30"
+                        android:layout_height="2dp"
+                        android:background="@color/lightblue"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:layout_below="@+id/title_bar"
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</RelativeLayout>

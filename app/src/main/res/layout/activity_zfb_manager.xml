@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/home_title"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_zfblist"
+        android:layout_below="@+id/title_bar"
+        android:layout_above="@+id/btn_add_zfb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_fa"
+        />
+
+    <Button
+        android:id="@+id/btn_add_zfb"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height50"
+        android:background="@color/lightblue"
+        android:text="新增支付宝账号"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textsize18"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>

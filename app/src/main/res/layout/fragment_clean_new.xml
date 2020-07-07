@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_fa"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="@dimen/marleft_right15"
+            android:layout_marginLeft="@dimen/marleft_right15"
+            android:layout_marginRight="@dimen/marleft_right15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cardtop"
+            app:cardElevation="0dp"
+            app:cardCornerRadius="@dimen/marleft_right5"
+            android:background="@color/white"
+            >
+            <RelativeLayout
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_marginLeft="@dimen/marleft_right15"
+                    android:id="@+id/txt_xzsj"
+                    android:textSize="@dimen/textsize16"
+                    android:textColor="@color/textcolor_black"
+                    android:layout_marginTop="@dimen/marleft_right15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="选择时间"
+                    />
+
+                <com.yiyun.rmj.view.WheelView
+                    android:id="@+id/wheel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_xzsj"
+                    app:textTimeSize="@dimen/textsize16"
+                    android:layout_marginTop="@dimen/marleft_right15" />
+
+
+                <TextView
+                    android:layout_marginLeft="@dimen/marleft_right15"
+                    android:id="@+id/txt_xzqxpt"
+                    android:layout_below="@+id/wheel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="手动实时清洗"
+                    android:textSize="@dimen/textsize16"
+                    android:textColor="@color/textcolor_black"
+
+                    />
+
+                <TextView
+                    android:id="@+id/txt_description"
+                    android:layout_marginLeft="@dimen/marleft_right15"
+                    android:layout_below="@+id/txt_xzqxpt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="点击后立即清洗对应眼睛"
+                    android:textColor="@color/color99"
+                    android:textSize="@dimen/textsize12"
+                    android:layout_marginTop="@dimen/marleft_right15"
+
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rl_btn_clean"
+                    android:layout_below="@+id/txt_description"
+                    android:layout_marginTop="@dimen/marleft_right15"
+                    android:layout_marginBottom="@dimen/height20"
+                    >
+
+                    <Button
+                        android:id="@+id/btn_clean_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/clean_btn_selector"
+                        android:text="清洗左眼"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/textsize14"
+                        />
+
+                    <Button
+                        android:id="@+id/btn_clean_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/clean_btn_selector"
+                        android:text="清洗右眼"
+                        android:layout_alignParentRight="true"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/textsize14"
+                        />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardbottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cardtop"
+            app:cardCornerRadius="@dimen/marleft_right5"
+            app:cardElevation="0dp"
+            android:layout_marginLeft="@dimen/marleft_right15"
+            android:layout_marginRight="@dimen/marleft_right15"
+            android:layout_marginTop="@dimen/height10"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                >
+
+                <RelativeLayout
+                    android:id="@+id/rl_auto_wash"
+                    android:layout_marginRight="@dimen/marleft_right15"
+                    android:layout_marginLeft="@dimen/marleft_right15"
+                    android:layout_marginTop="@dimen/marleft_right15"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="自动清洁"
+                        android:textColor="@color/textcolor_black"
+                        android:textSize="@dimen/textsize14"
+
+                        />
+
+                    <Switch
+                        android:id="@+id/swith_auto_wash"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:thumb="@drawable/switch_custom_thumb_selector"
+                        android:track="@drawable/switch_custom_track_selector"
+                        />
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rl_auto_wash"
+                    android:layout_marginStart="@dimen/marleft_right15"
+                    android:layout_marginTop="@dimen/marleft_right15"
+                    android:layout_marginEnd="@dimen/marleft_right15"
+                    android:layout_marginBottom="@dimen/marleft_right15"
+                    android:text="每次开机后，眼镜会自动清洗左右喷头"
+                    android:textColor="@color/color99"
+                    android:textSize="@dimen/textsize12" />
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+
+</RelativeLayout>

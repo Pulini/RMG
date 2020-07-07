@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_fa"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <RelativeLayout
+        android:id="@+id/rl_setting"
+        android:layout_marginTop="@dimen/height10"
+        android:layout_marginLeft="@dimen/marleft_right15"
+        android:layout_marginRight="@dimen/marleft_right15"
+        android:background="@drawable/shape_small_conner_white_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txt_zdysz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="强度"
+            android:layout_marginLeft="@dimen/height10"
+            android:textColor="@color/textcolor_black"
+            android:textSize="@dimen/textsize16"
+            android:layout_marginTop="@dimen/height10"
+
+            />
+
+        <com.yiyun.rmj.view.MyNewArcProgressBar
+            android:id="@+id/progressBar"
+            android:layout_below="@+id/txt_zdysz"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:centerStrenthSize="@dimen/textsize44"
+            app:centerDesSize="@dimen/textsize14"
+            app:bottomTextSize="@dimen/textsize12"
+            app:calibrationTextSize="@dimen/textsize12"
+            android:layout_marginLeft="@dimen/marleft_right41"
+            android:layout_marginRight="@dimen/marleft_right41"
+            />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/marleft_right10"
+        android:layout_marginRight="@dimen/marleft_right15"
+        android:layout_marginLeft="@dimen/marleft_right15"
+        android:background="@drawable/shape_small_conner_white_bg"
+        android:layout_below="@+id/rl_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/height10"
+            android:layout_marginLeft="@dimen/height10"
+            android:text="间隔时间"
+            android:textSize="@dimen/textsize16"
+            android:textColor="@color/textcolor_black"
+            android:id="@+id/txt_jgsj"
+            />
+
+        <com.yiyun.rmj.view.WheelView
+            android:id="@+id/wheel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_jgsj"
+            android:layout_marginTop="@dimen/marleft_right10"
+            app:textTimeSize="@dimen/textsize16"
+            />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/searchfail_btn"
+        android:layout_marginLeft="@dimen/marleft_right30"
+        android:layout_marginRight="@dimen/marleft_right30"
+        android:text="保存"
+        android:textSize="@dimen/textsize16"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/marleft_right15"
+        />
+
+</RelativeLayout>

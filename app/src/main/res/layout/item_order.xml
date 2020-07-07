@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/marleft_right15"
+        >
+
+    <RelativeLayout
+        android:id="@+id/rl_state"
+        android:layout_margin="@dimen/marleft_right15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:id="@+id/tv_order_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color66"
+            android:textSize="@dimen/textsize14"
+            android:text="订单编号：12345678921652"
+            />
+
+        <TextView
+            android:id="@+id/tv_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="待付款"
+            android:textColor="@color/lightblue"
+            android:layout_alignParentRight="true"
+            />
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:focusableInTouchMode="false"
+        android:clickable="false"
+        android:layout_below="@+id/rl_state"
+        android:id="@+id/rv_product_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:id="@+id/ll_count"
+        android:layout_marginTop="@dimen/marleft_right5"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/marleft_right15"
+        android:layout_below="@+id/rv_product_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="合计：￥"
+            android:textSize="@dimen/textsize12"
+            android:textColor="@color/textcolor_black"
+            />
+        <TextView
+            android:id="@+id/tv_count_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="698"
+            android:textSize="@dimen/textsize12"
+            android:textColor="@color/textcolor_black"
+
+            />
+
+        <TextView
+            android:id="@+id/tv_yf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="（含运费 ￥10.00）"
+            android:textSize="@dimen/textsize12"
+            android:textColor="@color/color66"
+            />
+    </LinearLayout>
+
+
+        <Button
+            android:layout_below="@+id/ll_count"
+            android:layout_marginTop="@dimen/marleft_right15"
+            android:layout_toLeftOf="@+id/ll_contant"
+            android:id="@+id/btn_order_left"
+            android:layout_width="@dimen/height80"
+            android:layout_height="@dimen/height30"
+            android:text="取消订单"
+            android:layout_marginRight="@dimen/marleft_right15"
+            android:layout_marginBottom="@dimen/marleft_right15"
+            android:textColor="@color/color66"
+            android:textSize="@dimen/textsize14"
+            android:background="@drawable/shape_stroke_btn_bg_gray"
+            />
+
+        <LinearLayout
+            android:id="@+id/ll_contant"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_count"
+            android:orientation="horizontal"
+            >
+        <Button
+            android:layout_marginTop="@dimen/marleft_right15"
+            android:layout_marginRight="@dimen/marleft_right15"
+            android:id="@+id/btn_order_right"
+            android:layout_marginBottom="@dimen/marleft_right15"
+            android:layout_width="@dimen/height80"
+            android:layout_height="@dimen/height30"
+            android:text="再次购买"
+            android:textColor="@color/lightblue"
+            android:textSize="@dimen/textsize14"
+            android:background="@drawable/shape_stroke_btn_bg_blue"
+            />
+
+
+    </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

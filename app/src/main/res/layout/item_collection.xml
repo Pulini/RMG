@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marleft_right15"
+        android:layout_marginBottom="@dimen/marleft_right15"
+        >
+
+            <LinearLayout
+                android:id="@+id/ll_image"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/marleft_right15"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_product_image"
+                    android:layout_width="80dp"
+                    android:layout_height="100dp"
+                    android:src="@mipmap/icon_jieshu"
+                    />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_marginLeft="@dimen/marleft_right15"
+                android:layout_marginRight="@dimen/marleft_right15"
+                android:layout_toRightOf="@+id/ll_image"
+                android:layout_width="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_product_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="保湿润眼干涩眼镜"
+                    android:textSize="@dimen/textsize14"
+                    android:textColor="@color/textcolor_black"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_store"
+                    android:textSize="@dimen/textsize12"
+                    android:textColor="@color/color99"
+                    android:layout_below="@+id/tv_product_name"
+                    android:text="库存310"
+                    android:layout_marginTop="@dimen/marleft_right10"
+
+                    />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_store"
+                    android:text="@string/money_type"
+                    android:layout_marginTop="@dimen/marleft_right25"
+                    android:textSize="@dimen/textsize12"
+                    android:textColor="@color/textcolor_black"
+                    android:id="@+id/tv_moneytag"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tv_moneytag"
+                    android:text="698"
+                    android:textSize="@dimen/textsize16"
+                    android:textColor="@color/textcolor_black"
+                    android:layout_toRightOf="@+id/tv_moneytag"
+                    />
+
+                <Button
+                    android:id="@+id/btn_buy"
+                    android:layout_width="@dimen/height68"
+                    android:layout_height="@dimen/height30"
+                    android:text="立即购买"
+                    android:textSize="@dimen/textsize12"
+                    android:background="@drawable/shape_conner_blue_bg"
+                    android:textColor="@color/white"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignBottom="@+id/tv_moneytag"
+
+                    />
+
+            </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

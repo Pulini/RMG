@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/smart_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/rl_share_bottom">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            >
+            <include layout="@layout/home_title"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_list"
+                android:layout_below="@+id/title_bar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+        </RelativeLayout>
+
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_share_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height50"
+        android:layout_alignParentBottom="true"
+        android:background="@mipmap/share_btn_layout_bg"
+        >
+
+
+        <RelativeLayout
+            android:id="@+id/rl_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/share_btn_bg"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="分享规则"
+                    android:textColor="@color/color_dark_blue"
+                    android:textSize="@dimen/textsize16"
+                    />
+
+                <TextView
+                    android:layout_marginTop="@dimen/marleft_right2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="点我 >"
+                    android:textColor="@color/color_dark_blue"
+                    android:textSize="@dimen/textsize10"
+
+                    />
+
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</RelativeLayout>

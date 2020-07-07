@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical"
+    tools:context="com.yiyun.rmj.activity.TimeFrameActivity">
+
+    <include
+        android:id="@+id/laout_title"
+        layout="@layout/title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height64" />
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/laout_title"
+        android:layout_marginLeft="76dp"
+        android:layout_marginTop="19dp"
+        android:drawableLeft="@mipmap/icon_kaishi1"
+        android:drawablePadding="@dimen/marleft_right8"
+        android:text="开始"
+        android:textColor="#04c7fe"
+        android:textSize="@dimen/textsize16" />
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/laout_title"
+        android:layout_marginRight="80dp"
+        android:layout_marginTop="19dp"
+        android:drawableLeft="@mipmap/icon_jieshu1"
+        android:drawablePadding="@dimen/marleft_right8"
+        android:text="结束"
+        android:textColor="#04c7fe"
+        android:textSize="@dimen/textsize16" />
+
+    <TextView
+        android:id="@+id/tv_open_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv1"
+        android:layout_marginLeft="55dp"
+        android:text="04:50"
+        android:textColor="@color/color222"
+        android:textSize="36dp" />
+
+    <TextView
+        android:id="@+id/tv_end_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv2"
+        android:layout_marginRight="55dp"
+        android:text="08:00"
+        android:textColor="@color/color222"
+        android:textSize="36dp" />
+
+    <com.kyesun.ly.CircleTimePicker.widget.CirclePicker
+        android:id="@+id/circle_pciker"
+        android:layout_width="wrap_content"
+        android:layout_height="240dp"
+        android:layout_below="@id/tv_open_time"
+        android:layout_marginTop="20dp"
+
+        app:Clock_Bg="@mipmap/img_shiduan"
+        app:Degree_Cycle="360"
+        app:End_Btn_Bg="@mipmap/icon_jieshu"
+        app:End_Btn_Color="#03a1fe"
+        app:Ring_Default_Color="@color/white"
+        app:Start_Btn_Bg="@mipmap/icon_kaishi"
+        app:Start_Btn_Color="#03a1fe" />
+
+    <RelativeLayout
+        android:id="@+id/rll_reception"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height44"
+        android:layout_below="@id/circle_pciker"
+        android:layout_marginTop="@dimen/height40"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/marleft_right15"
+            android:text="重复"
+            android:textColor="@color/color222"
+            android:textSize="@dimen/textsize16" />
+
+        <ImageView
+            android:id="@+id/allright"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/marleft_right15"
+            android:src="@mipmap/icon_you" />
+
+        <TextView
+            android:id="@+id/tv_reception"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:text="永不"
+            android:textColor="#999999"
+            android:textSize="@dimen/textsize16"
+
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rll_label"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height44"
+        android:layout_below="@id/rll_reception">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/marleft_right15"
+            android:text="标签"
+            android:textColor="@color/color222"
+            android:textSize="@dimen/textsize16" />
+
+        <ImageView
+            android:id="@+id/allright2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/marleft_right15"
+            android:src="@mipmap/icon_you" />
+
+        <TextView
+            android:id="@+id/tv_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/marleft_right30"
+            android:text="看书"
+            android:textColor="#999999"
+            android:textSize="@dimen/textsize16"
+
+            />
+
+    </RelativeLayout>
+</RelativeLayout>

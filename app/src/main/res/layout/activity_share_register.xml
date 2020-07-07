@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/share_bg"
+    android:focusableInTouchMode="true"
+    >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        >
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/marleft_right25"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/share_register_title_bg"
+            android:layout_centerHorizontal="true"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/share_register_flower"
+            android:layout_marginTop="@dimen/marleft_right160"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/share_title_introduce"
+            android:layout_marginTop="65dp"
+            />
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/marleft_right200"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/marleft_right15"
+            android:layout_marginRight="@dimen/marleft_right15"
+            android:background="@drawable/shape_conner_white_bg"
+            android:orientation="vertical"
+
+            >
+
+            <TextView
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/marleft_right30"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="注册"
+                android:textSize="@dimen/textsize18"
+                android:textColor="@color/textcolor_black"
+                />
+
+            <EditText
+                android:maxLength="11"
+                android:layout_marginLeft="@dimen/marleft_right35"
+                android:layout_marginRight="@dimen/marleft_right35"
+                android:layout_marginTop="@dimen/marleft_right30"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/share_phone"
+                android:textSize="@dimen/textsize14"
+                android:textColor="@color/textcolor_black"
+                android:drawablePadding="@dimen/marleft_right10"
+                android:theme="@style/MyEditText"
+                android:hint="输入您的注册号码"/>
+
+            <EditText
+                android:maxLength="20"
+                android:layout_marginLeft="@dimen/marleft_right35"
+                android:layout_marginRight="@dimen/marleft_right35"
+                android:layout_marginTop="@dimen/marleft_right15"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:drawableLeft="@mipmap/share_password"
+                android:textSize="@dimen/textsize14"
+                android:textColor="@color/textcolor_black"
+                android:drawablePadding="@dimen/marleft_right10"
+                android:theme="@style/MyEditText"
+                android:hint="请设置6-20位登录密码"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/marleft_right35"
+                android:layout_marginRight="@dimen/marleft_right35"
+                android:layout_marginTop="@dimen/marleft_right15"
+                >
+                <EditText
+                    android:maxLength="6"
+                    android:layout_toLeftOf="@+id/btn_getcode"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/share_phone"
+                    android:textSize="@dimen/textsize14"
+                    android:textColor="@color/textcolor_black"
+                    android:drawablePadding="@dimen/marleft_right10"
+                    android:inputType="number"
+                    android:theme="@style/MyEditText"
+                    android:hint="请输入短信验证码"/>
+
+                <Button
+                    android:layout_centerVertical="true"
+                    android:layout_width="@dimen/height64"
+                    android:layout_height="@dimen/marleft_right20"
+                    android:id="@+id/btn_getcode"
+                    android:text="获取验证码"
+                    android:textSize="@dimen/textsize10"
+                    android:textColor="@color/white"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/shape_conner_blue_bg"
+
+                    />
+
+            </RelativeLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_conner_blue_bg"
+                android:layout_marginLeft="@dimen/height40"
+                android:layout_marginRight="@dimen/height40"
+                android:text="立即注册"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize16"
+                android:layout_marginTop="@dimen/marleft_right20"
+                android:id="@+id/btn_share_registnow"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已经注册？立即登陆"
+                android:layout_marginTop="@dimen/marleft_right10"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/lightblue"
+                android:textSize="@dimen/textsize12"
+                android:layout_marginBottom="@dimen/marleft_right30"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+    </ScrollView>
+    <include  layout="@layout/home_title"/>
+</RelativeLayout>

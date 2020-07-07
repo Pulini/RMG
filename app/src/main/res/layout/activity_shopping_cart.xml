@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/home_title"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rlv_cart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_bar"
+        android:layout_above="@+id/rl_bottom_btn"
+        />
+
+
+    <!--底部按钮栏-->
+    <RelativeLayout
+        android:id="@+id/rl_bottom_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height55"
+        android:layout_alignParentBottom="true"
+        >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/marleft_right1"
+            android:layout_alignParentTop="true"
+            android:background="#EEEEEE"
+            />
+
+        <CheckBox
+            android:id="@+id/btn_select"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/marleft_right20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/check_box_bg"/>
+
+        <TextView
+            android:id="@+id/tv_selectall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_all"
+            android:textSize="@dimen/textsize14"
+            android:textColor="@color/color99"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/marleft_right5"
+            android:layout_marginRight="@dimen/marleft_right5"
+            android:layout_toRightOf="@+id/btn_select"
+
+            />
+
+
+        <RelativeLayout
+            android:layout_toRightOf="@+id/tv_selectall"
+            android:layout_toLeftOf="@+id/tv_settlement"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/ll_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_Freight"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/color99"
+                android:textSize="@dimen/textsize12"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/marleft_right5"
+                android:text="@string/count"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/textcolor_black"
+                android:textSize="@dimen/textsize14"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/marleft_right5"
+                android:textColor="@color/lightblue"
+                android:textSize="@dimen/textsize12"
+                android:text="￥"
+                />
+
+            <TextView
+                android:id="@+id/tv_total_money"
+                android:minWidth="@dimen/height100"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/lightblue"
+                android:textSize="@dimen/textsize16"
+                android:text="394"
+                />
+
+
+        </LinearLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_settlement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize16"
+            android:layout_marginRight="@dimen/marleft_right15"
+            android:background="@drawable/shape_conner_btn_bg"
+            android:text="结算(2)"
+            />
+
+        <TextView
+            android:id="@+id/tv_delete_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:textColor="@color/lightblue"
+            android:textSize="@dimen/textsize16"
+            android:layout_marginRight="@dimen/marleft_right15"
+            android:background="@drawable/shape_deletebtn_conner_bg"
+            android:text="@string/delete"
+            android:visibility="gone"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@color/color_fa"
+        android:layout_below="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rl_list_is_none"
+        >
+
+        <ImageView
+            android:id="@+id/iv_is_none_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/no_order_bg"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="购物车空空如也~"
+            android:textSize="@dimen/textsize16"
+            android:textColor="@color/color66"
+            android:layout_alignBottom="@+id/iv_is_none_bg"
+            android:layout_marginBottom="@dimen/height30"
+            />
+
+        <Button
+            android:id="@+id/btn_go_around"
+            android:layout_width="@dimen/height180"
+            android:layout_height="@dimen/marleft_right45"
+            android:text="去逛逛"
+            android:textSize="@dimen/textsize16"
+            android:textColor="@color/lightblue"
+            android:background="@drawable/shape_stroke_btn_bg_blue"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/iv_is_none_bg"
+
+            />
+    </RelativeLayout>
+</RelativeLayout>

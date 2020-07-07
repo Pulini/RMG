@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    tools:context="com.yiyun.rmj.activity.LabelActivity">
+
+    <include layout="@layout/title" />
+
+    <EditText
+        android:id="@+id/et_label"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height44"
+        android:layout_centerVertical="true"
+        android:background="@color/white"
+        android:hint="看书和看抖音"
+        android:paddingLeft="@dimen/marleft_right15"
+        android:textColor="@color/color222"
+        android:textColorHint="@color/color222"
+        android:textSize="@dimen/textsize16" />
+</RelativeLayout>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:id="@+id/title_bar"
+        android:layout_height="@dimen/height68"
+        android:background="@color/transparent"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/marleft_right20"
+        android:background="@color/transparent"
+        android:orientation="vertical"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height48"
+        >
+
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:minWidth="@dimen/height40"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:scaleType="center"
+            android:src="@mipmap/icon_back"
+            android:visibility="gone"
+            />
+
+
+        <ImageView
+            android:id="@+id/iv_back_white"
+            android:layout_width="wrap_content"
+            android:minWidth="@dimen/height40"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:scaleType="center"
+            android:src="@mipmap/title_back_white"
+            android:visibility="gone"
+            />
+
+        <ImageView
+            android:id="@+id/iv_shopping_cart"
+            android:layout_width="wrap_content"
+            android:minWidth="@dimen/height40"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/marleft_right4"
+            android:scaleType="center"
+            android:visibility="gone"
+            android:src="@mipmap/shopicon" />
+
+        <ImageView
+            android:id="@+id/iv_setting"
+            android:layout_width="wrap_content"
+            android:minWidth="@dimen/height40"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/marleft_right4"
+            android:scaleType="center"
+            android:visibility="gone"
+            android:src="@mipmap/title_setting" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="首页"
+            android:typeface="monospace"
+            android:textColor="@color/black"
+            android:visibility="gone"
+            android:textSize="@dimen/textsize18" />
+
+        <TextView
+            android:id="@+id/title_manager"
+            android:layout_width="wrap_content"
+            android:minWidth="@dimen/height40"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:textColor="@color/color66"
+            android:paddingRight="@dimen/marleft_right15"
+            android:text="@string/management"
+            android:textSize="@dimen/textsize14"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+
+            />
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:minWidth="@dimen/height40"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:id="@+id/title_complete"
+        android:textColor="@color/color66"
+        android:text="@string/complete"
+        android:paddingRight="@dimen/marleft_right15"
+        android:textSize="@dimen/textsize14"
+        android:layout_alignParentRight="true"
+            android:visibility="gone"
+
+        />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:minWidth="@dimen/height40"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:id="@+id/tv_title_next"
+            android:textColor="@color/color66"
+            android:text="@string/next_step"
+            android:textSize="@dimen/textsize14"
+            android:visibility="gone"
+            android:paddingRight="@dimen/marleft_right15"
+            android:layout_alignParentRight="true"
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:minWidth="@dimen/height40"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:id="@+id/tv_title_add"
+            android:textColor="@color/color66"
+            android:text="@string/add"
+            android:textSize="@dimen/textsize14"
+            android:visibility="gone"
+            android:paddingRight="@dimen/marleft_right15"
+            android:layout_alignParentRight="true"
+
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/title_add_blue_icon"
+            android:paddingRight="@dimen/marleft_right15"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/marleft_right15"
+            android:id="@+id/iv_title_blue_add"
+            android:visibility="gone"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/product_descrition_share_icon"
+            android:layout_marginRight="@dimen/marleft_right15"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/marleft_right15"
+            android:id="@+id/iv_title_share"
+            android:visibility="gone"
+            />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

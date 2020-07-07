@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.yiyun.rmj">
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+
+    <!--在sdcard中创建/删除文件的权限 -->
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+
+    <application
+        android:name=".base.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:requestLegacyExternalStorage="false"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:replace="android:requestLegacyExternalStorage">
+        <activity android:name=".activity.MainActivity" />
+        <activity
+            android:name=".activity.SplashActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity android:name=".activity.RepetitionActivity" />
+        <activity android:name=".activity.LabelActivity">
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+
+        </activity>
+
+        <activity android:name=".activity.SearchFailActivity" />
+        <activity android:name=".activity.SearchIngActivity" />
+        <activity android:name=".activity.ControlActivity">
+
+
+        </activity>
+        <activity android:name=".activity.Main2Activity">
+
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+
+        </activity>
+        <activity android:name=".activity.TimeFrameActivity" />
+        <activity android:name=".activity.TimImgActivity" />
+
+        <activity android:name=".activity.NewHomeActivity" />
+        <activity android:name=".activity.CleanActivity" />
+        <activity android:name=".activity.HomeActivity" />
+        <activity android:name=".activity.ProductDetailActivity" />
+        <activity android:name=".activity.ShoppingCartActivity" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name=".activity.RegisterOrForgetPassActivity" />
+        <activity android:name=".activity.SettlementActivity" />
+        <activity android:name=".activity.SelectOrShowAddressActivity" />
+        <activity android:name=".activity.EditAddAdressActivity" />
+        <activity android:name=".activity.PersonCenterActivity" />
+        <activity android:name=".activity.PersonInfomationActivity" />
+        <activity android:name=".activity.SettingActivity" />
+        <activity android:name=".activity.MyCollectionActivity" />
+        <activity android:name=".activity.AboutUsActivity" />
+        <activity android:name=".activity.SafeAccountActivity" />
+        <activity android:name=".activity.ModifyPasswordActivity" />
+        <activity android:name=".activity.MyWalletActivity" />
+        <activity android:name=".activity.WithdrawActivity" />
+        <activity android:name=".activity.ZfbAccountManagerActivity" />
+        <activity android:name=".activity.EditAddZfbAccountActivity" />
+        <activity android:name=".activity.MyEvaluationActivity" />
+        <activity android:name=".activity.MyOrderActivity" />
+        <activity android:name=".activity.CustomServiceActivity" />
+        <activity android:name=".activity.ShareRegisterActivity" />
+        <activity android:name=".activity.ShareActivity" />
+        <activity android:name=".activity.SignActivity" />
+        <activity android:name=".activity.SignDescriptionActivity" />
+        <activity android:name=".activity.DistributionActivity" />
+        <activity android:name=".activity.EvaluationActivity" />
+        <activity android:name=".activity.OrderProgressActivity" />
+        <activity
+            android:name=".activity.OrderDetailActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name=".activity.IntegrationActivity" />
+        <activity android:name=".activity.IntegrationDesActivity" />
+        <activity android:name=".activity.bluetooth.BluetoothSelectDeviceActivity" />
+        <activity android:name=".activity.bluetooth.BluetoothConnecttingDeviceActivity" />
+        <activity android:name=".activity.bluetooth.BluetoothConnectFailedActivity" />
+        <activity android:name=".activity.bluetooth.BluetoothMainActivity" />
+        <activity android:name=".activity.bluetooth.BluetoothControlDetailActivity" />
+        <activity android:name=".activity.bluetooth.BluetoothAddDeviceActivity" />
+        <activity android:name=".activity.ClipHeaderActivity" />
+        <activity android:name=".activity.ShareRuleActivity" />
+        <activity android:name=".activity.ShareRuleDetailActivity" />
+        <activity android:name=".activity.ShareRuleRangeDetailActivity" />
+        <activity android:name=".activity.PayResultActivity" />
+
+        <!--umeng微信begin-->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--umeng微信end-->
+
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
+
+
+        <!--umengQQbegin-->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent101573070" />
+            </intent-filter>
+        </activity>
+        <!--umengQQend-->
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <activity
+            android:name="com.tencent.bugly.beta.ui.BetaActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
+            android:theme="@android:style/Theme.Translucent" />
+
+
+        <activity android:name=".activity.ProductDescriptionActivity" />
+
+
+        <activity android:name=".activity.MyWebActivity" />
+
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/myprovider_paths" />
+        </provider>
+
+    </application>
+
+
+</manifest>

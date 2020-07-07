@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/smart_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include layout="@layout/home_title"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_below="@+id/title_bar"
+                android:id="@+id/rv_collection_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <RelativeLayout
+                android:background="@color/color_fa"
+                android:id="@+id/rl_no_one_collection"
+                android:layout_below="@+id/title_bar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/iv_default_bg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/no_collection_bg"
+                    android:layout_centerInParent="true"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="还没有收藏，赶快去收藏一波吧~"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/textsize16"
+                    android:textColor="@color/color66"
+                    android:layout_alignBottom="@+id/iv_default_bg"
+                    android:layout_marginBottom="@dimen/marleft_right30"
+                    />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+</RelativeLayout>

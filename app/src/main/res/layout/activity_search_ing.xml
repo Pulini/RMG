@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.yiyun.rmj.activity.SearchIngActivity">
+
+    <include layout="@layout/title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height48"
+        android:id="@+id/title"/>
+
+    <TextView
+        android:layout_below="@id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:text="欢迎使用la"
+        android:textColor="@color/color222"
+        android:textSize="@dimen/textsize18" />
+    <ProgressBar
+        android:id="@+id/pb_Circle"
+        android:layout_width="196dp"
+        android:layout_height="196dp"
+        android:layout_centerInParent="true"
+        android:indeterminate="true"
+        android:indeterminateBehavior="repeat"
+        android:indeterminateDrawable="@drawable/progress_indeterminate_gear"
+        android:indeterminateDuration="3000"
+        android:max="100"
+        android:progress="22" />
+
+    <TextView
+        android:id="@+id/tv_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="正在搜素"
+        android:textColor="#999999"
+        android:textSize="15sp" />
+
+</RelativeLayout>

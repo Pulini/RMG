@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <paths>
+        <!-- /storage/emulated/0/Download/${applicationId}/.beta/apk-->
+        <external-path
+            name="beta_external_path"
+            path="Download/" />
+
+        <external-path
+            name="beta_external_path"
+            path="Pictures/" />
+
+        <!--/storage/emulated/0/Android/data/${applicationId}/files/apk/-->
+        <external-path
+            name="beta_external_files_path"
+            path="Android/data/" />
+
+        <external-path
+            name="external_files"
+            path="." />
+
+        <external-path
+            name="external_storage_download"
+            path="Download" />
+
+        <root-path
+            name="camera_photos"
+            path="" />
+
+    </paths>
+</resources>

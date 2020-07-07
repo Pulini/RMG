@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+>
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height64" />
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/title"
+        android:background="@color/white"
+        android:gravity="center"
+        android:text="可连接设备"
+        android:textColor="@color/color222"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/btn_search_again"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height44"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/height64"
+        android:layout_marginLeft="37dp"
+        android:layout_marginRight="38dp"
+        android:background="@drawable/searchfail_btn"
+        android:gravity="center"
+        android:text="重新搜索"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textsize15" />
+
+    <ListView
+        android:id="@+id/list_conactdevices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btn_search_again"
+        android:layout_below="@+id/tv2"
+        android:layout_marginBottom="37dp"
+        android:background="#f9f9f9"
+        android:divider="@null"
+        android:dividerHeight="@dimen/marleft_right1"></ListView>
+
+
+</RelativeLayout>

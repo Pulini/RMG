@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.yiyun.rmj.fragment.CleanFragment">
+
+    <TextView
+        android:id="@+id/tv_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="75dp"
+        android:text="输入要清洗的时长"
+        android:textColor="@color/color222"
+        android:textSize="26sp" />
+
+    <com.yiyun.rmj.view.WheelView
+        android:id="@+id/wheel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_text"
+        android:layout_marginTop="@dimen/height44" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="33dp"
+        android:text="59"
+        android:textColor="@color/colorPrimary"
+        android:textSize="120sp"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/btn_clean"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/wheel"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="54dp"
+        android:background="@mipmap/button_ksqx"
+        android:gravity="center"
+        android:text="开始清洗"
+        android:paddingBottom="@dimen/height10"
+        android:textColor="@color/white" />
+
+
+</RelativeLayout>

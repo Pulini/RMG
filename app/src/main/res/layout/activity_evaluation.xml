@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+    <include layout="@layout/home_title"/>
+
+    <RelativeLayout
+        android:layout_below="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_f8"
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rv_list"
+            android:layout_below="@+id/title_bar"
+            android:layout_above="@+id/btn_submit"
+            />
+
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_marginLeft="@dimen/marleft_right30"
+            android:layout_marginRight="@dimen/marleft_right30"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="提交评价"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize18"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/shape_conner_blue_bg"
+            android:layout_marginBottom="@dimen/marleft_right30"
+            />
+        </RelativeLayout>
+
+</RelativeLayout>

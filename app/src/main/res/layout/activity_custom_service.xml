@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_fa"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="vertical"
+        android:background="@color/lightblue"
+        ></LinearLayout>
+
+    <include layout="@layout/home_title"/>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/marleft_right15"
+        android:layout_below="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/marleft_right15"
+        android:layout_marginRight="@dimen/marleft_right15"
+        android:orientation="horizontal"
+        android:background="@drawable/shape_conner_white_bg"
+
+        >
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_service_weixin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="微信咨询"
+                android:layout_marginTop="@dimen/marleft_right35"
+                android:layout_marginBottom="@dimen/marleft_right35"
+                android:drawableTop="@mipmap/customservice_weixin"
+                android:drawablePadding="@dimen/marleft_right15"
+
+
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_service_qq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marleft_right35"
+                android:layout_marginBottom="@dimen/marleft_right35"
+                android:text="QQ咨询"
+                android:drawableTop="@mipmap/customservice_qq"
+                android:drawablePadding="@dimen/marleft_right15"
+
+
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

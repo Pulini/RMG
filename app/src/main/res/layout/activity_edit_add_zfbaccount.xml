@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    >
+
+    <include layout="@layout/home_title"/>
+
+    <LinearLayout
+        android:id="@+id/ll_type_name"
+        android:layout_below="@+id/title_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/marleft_right15"
+            android:text="姓名"
+            android:textSize="@dimen/textsize16"
+            android:textColor="@color/textcolor_black"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/marleft_right15"
+            android:text="支付宝账号"
+            android:textSize="@dimen/textsize16"
+            android:textColor="@color/textcolor_black"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_toRightOf="@+id/ll_type_name"
+        android:layout_below="@+id/title_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <EditText
+            android:id="@+id/et_input_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/marleft_right15"
+            android:hint="请输入您的姓名"
+            android:textSize="@dimen/textsize16"
+            android:textColor="@color/textcolor_black"
+            />
+        <EditText
+            android:id="@+id/et_input_zfbaccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/marleft_right15"
+            android:hint="请输入您的支付宝账号"
+            android:textSize="@dimen/textsize16"
+            android:textColor="@color/textcolor_black"
+            />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_type_name"
+        android:background="@color/color_fa"
+        >
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_marginTop="@dimen/height100"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/marleft_right30"
+            android:layout_marginRight="@dimen/marleft_right30"
+            android:background="@drawable/searchfail_btn"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textsize18"
+            android:text="@string/save"
+            />
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

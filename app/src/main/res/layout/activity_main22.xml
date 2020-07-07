@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    tools:context="com.yiyun.rmj.activity.Main2Activity">
+
+    <!--<SeekBar-->
+    <!--android:id="@+id/seekBar"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/marleft_right30"-->
+    <!--android:background="@drawable/searchfail_btn"-->
+    <!--android:thumb="@drawable/seekbar_thumbl" />-->
+
+    <!--<com.czp.library.ArcProgress-->
+    <!--android:id="@+id/myProgress01"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_marginLeft="20dp"-->
+    <!--android:layout_marginRight="20dp"-->
+    <!--app:degree="180"-->
+    <!--app:progressColor="#30cfe2"-->
+    <!--app:radius="150dp"-->
+    <!--app:tickDensity="3" />-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:translationZ="2dp"
+                android:id="@+id/rll_elertic"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height40"
+                android:layout_marginLeft="@dimen/marleft_right15"
+                android:layout_marginRight="@dimen/marleft_right15"
+                android:layout_marginTop="@dimen/marleft_right15"
+                android:background="@drawable/radius">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/marleft_right15"
+
+                    android:text="眼镜电量" />
+
+                <ImageView
+                    android:id="@+id/iv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/marleft_right9"
+                    android:layout_toRightOf="@id/tv_name"
+                    android:src="@mipmap/icon_shandian" />
+
+                <com.yiyun.rmj.view.ElectricView
+                    android:id="@+id/tv_eric"
+                    android:layout_width="92dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/marleft_right15"
+                    android:layout_marginTop="@dimen/marleft_right10"
+                    android:layout_toRightOf="@id/iv_name" />
+
+                <TextView
+                    android:id="@+id/tv_power"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/tv_eric"
+                    android:text="80%"
+                    android:textColor="#03c394"
+                    android:textSize="@dimen/textsize16" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:translationZ="2dp"
+                android:id="@+id/rll2"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_below="@id/rll_elertic"
+                android:layout_marginLeft="@dimen/marleft_right15"
+                android:layout_marginRight="@dimen/marleft_right15"
+                android:layout_marginTop="@dimen/marleft_right15"
+                android:background="@drawable/radius">
+
+                <TextView
+                    android:id="@+id/tv2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="雾化大小"
+                    android:textColor="@color/color222"
+                    android:textSize="13sp" />
+
+                <com.yiyun.rmj.view.ArcProgress
+                    android:id="@+id/prgrocess"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_below="@id/tv2"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/marleft_right13"
+                    app:degree="180"
+                    app:progressColor="#30cfe2"
+                    app:radius="150dp"
+                    app:tickDensity="3" />
+
+
+                <TextView
+                    android:id="@+id/tv3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="调节雾化大小"
+                    android:textColor="@color/color222"
+                    android:textSize="14sp" />
+
+                <SeekBar
+                    android:id="@+id/seek"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_toRightOf="@id/tv3"
+                    android:background="@drawable/seekbar"
+                    android:thumb="@drawable/seekbar_thumbl" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:translationZ="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_below="@id/rll2"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/radius">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="间隔时间"
+                    android:textColor="@color/color222"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tv_min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="38dp"
+                    android:layout_marginLeft="22dp"
+                    android:text="10s"
+                    android:textColor="#999999"
+                    android:textSize="16sp" />
+
+
+                <TextView
+                    android:id="@+id/tv_max"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="38dp"
+                    android:layout_marginRight="20dp"
+                    android:text="30s"
+                    android:textColor="#999999"
+                    android:textSize="16sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="37dp"
+                    android:layout_toLeftOf="@id/tv_max"
+                    android:layout_toRightOf="@id/tv_min"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+
+                        android:id="@+id/tv_cursor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@mipmap/icon_sjjg_xianshi"
+                        android:gravity="center_horizontal"
+                        android:paddingTop="5dp"
+                        android:textSize="@dimen/textsize10"
+                        android:text="10秒/次"/>
+                    <com.yiyun.rmj.view.MyHorizontalProgressBar
+                        android:layout_marginLeft="@dimen/marleft_right20"
+                        android:layout_marginRight="@dimen/marleft_right20"
+                        android:id="@+id/my_hpb"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_horizontal"
+                        />
+
+                </LinearLayout>
+
+<!--
+                <com.warkiz.widget.IndicatorStayLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="37dp"
+                    android:layout_marginLeft="@dimen/marleft_right10"
+                    android:layout_marginRight="@dimen/marleft_right10"
+                    android:layout_toLeftOf="@id/tv_max"
+                    android:layout_toRightOf="@id/tv_min"
+                  >
+
+                    <com.warkiz.widget.IndicatorSeekBar
+                        android:id="@+id/seektime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/seekbar"
+                        android:elevation="20dp"
+                        app:isb_indicator_color="@color/bg"
+                        app:isb_indicator_top_content_layout="@layout/custom_top_content_view_round_miles"
+                        app:isb_max="30"
+                        app:isb_min="10"
+                        app:isb_show_indicator="rectangle"
+                        app:isb_show_tick_marks_type="divider"
+                        app:isb_show_tick_texts="true"
+                        app:isb_thumb_color="@color/white"
+                        app:isb_thumb_drawable="@drawable/seekbar_thumbl"
+                        app:isb_track_progress_color="#00f"
+
+
+                        />
+                </com.warkiz.widget.IndicatorStayLayout>
+
+                -->
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_updata"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="38dp"
+                android:layout_marginRight="38dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/searchfail_btn"
+                android:text="确定修改"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textsize15" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

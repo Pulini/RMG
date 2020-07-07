@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+        <RelativeLayout
+            android:layout_marginTop="@dimen/marleft_right10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/marleft_right15"
+            android:layout_marginRight="@dimen/marleft_right15"
+            >
+            <com.yiyun.rmj.view.CircleImageView
+                android:id="@+id/iv_buyer_icon"
+                android:layout_width="@dimen/height30"
+                android:layout_height="@dimen/marleft_right30"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/order_unpay_icon"
+                />
+
+            <RelativeLayout
+                android:layout_centerVertical="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/marleft_right10"
+                android:orientation="horizontal"
+                android:layout_toRightOf="@+id/iv_buyer_icon"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_buyer_name"
+                    android:text="西瓜"
+                    android:textSize="@dimen/textsize16"
+                    android:textColor="@color/textcolor_black"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2019-3-25"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/color66"
+                    android:textSize="@dimen/textsize12"
+                    />
+
+                <com.yiyun.rmj.view.RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_buyer_name"
+                    android:clickable="false"
+                    android:id="@+id/rb_star"
+                    app:starCount="5"
+                    app:starEmpty="@mipmap/ic_evaluation_stroke"
+                    app:starFill="@mipmap/ic_evaluation_solid"
+                    app:starImageSize="@dimen/marleft_right15"
+                    app:starPadding="@dimen/marleft_right5"
+                    app:starStep="4"
+                    app:stepSize="Full"
+                    app:clickable="false"
+                    />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_evaluation_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/marleft_right15"
+            android:layout_marginRight="@dimen/marleft_right15"
+            android:layout_marginTop="@dimen/marleft_right10"
+            android:text="带上眼镜的一刹那，感觉性价比是合理的，使用中眼睛很舒服，镜框也很合适！"
+            android:textSize="@dimen/textsize16"
+            android:textColor="@color/textcolor_black"
+            />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginLeft="@dimen/marleft_right15"
+                android:layout_marginRight="@dimen/marleft_right15"
+                android:id="@+id/rv_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:layout_marginBottom="@dimen/marleft_right10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marleft_right10"
+                android:layout_marginRight="@dimen/marleft_right15"
+                android:layout_marginLeft="@dimen/marleft_right15"
+                >
+
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_ll_num"
+                    android:text="浏览1980"
+                    android:textSize="@dimen/textsize12"
+                    android:textColor="@color/color66"
+                    />
+
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:id="@+id/tv_like_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="68"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_like"
+                    android:visibility="gone"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/evaluation_like_seleced"
+                    android:layout_toLeftOf="@+id/tv_like_num"
+                    android:layout_marginRight="@dimen/marleft_right5"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_un_like"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/evaluation_like_unseleced"
+                    android:layout_toLeftOf="@+id/tv_like_num"
+                    android:layout_marginRight="@dimen/marleft_right5"
+                    />
+
+
+            </RelativeLayout>
+
+</LinearLayout>
