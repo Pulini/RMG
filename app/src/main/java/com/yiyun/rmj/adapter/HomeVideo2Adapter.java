@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.yiyun.rmj.R;
@@ -59,7 +60,19 @@ public class HomeVideo2Adapter extends RecyclerView.Adapter<HomeVideo2Adapter.Ho
     public void setHolder(HomeVideoViewHolder holder, int position) {
 
         holder.gsyvp_player.getBackButton().setVisibility(View.VISIBLE);
-//        holder.gsyvp_player.setThumbImageView(imageView);
+        ImageView imageView = new ImageView(context);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        imageView.setImageResource(R.mipmap.video_bkg);
+        Glide.with(context)
+                .setDefaultRequestOptions(
+                        new RequestOptions()
+                                .frame(1000000)
+                                .centerCrop()
+                                .error(R.mipmap.video_bkg)
+                                .placeholder(R.mipmap.video_bkg))
+                .load(dataList.get(position).VideoUrl)
+                .into(imageView);
+        holder.gsyvp_player.setThumbImageView(imageView);
 
         holder.gsyvp_player.setUpLazy(dataList.get(position).VideoUrl, true, null, null, " ");
         //增加title

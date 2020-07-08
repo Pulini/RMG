@@ -164,7 +164,12 @@ public class NewHomeActivity extends BaseActivity {
         iv_control.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, BluetoothSelectDeviceActivity.class));
+                String token = SpfUtils.getSpfUtils(getApplicationContext()).getToken();
+                if(token.isEmpty()){
+                    startlogin();
+                }else{
+                    startActivity(new Intent(context, BluetoothSelectDeviceActivity.class));
+                }
             }
         });
         tv_person_center.setOnClickListener(new View.OnClickListener() {
@@ -546,4 +551,9 @@ public class NewHomeActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        System.exit(0);
+        super.onBackPressed();
+    }
 }
