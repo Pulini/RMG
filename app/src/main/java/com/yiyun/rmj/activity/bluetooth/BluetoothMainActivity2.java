@@ -1,5 +1,6 @@
 package com.yiyun.rmj.activity.bluetooth;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -11,6 +12,7 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import com.yiyun.rmj.R;
 import com.yiyun.rmj.base.BaseActivity;
 import com.yiyun.rmj.bluetooth.NewBleBluetoothUtil;
+import com.yiyun.rmj.utils.LogUtils;
 import com.yiyun.rmj.view.ElectricView;
 
 /**
@@ -36,6 +38,9 @@ public class BluetoothMainActivity2 extends BaseActivity {
     private Button bt_cleanRight;
     private int deviceId = 0;
 
+
+
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_bluetooth_main2;
@@ -46,6 +51,24 @@ public class BluetoothMainActivity2 extends BaseActivity {
         findView();
         setClick();
         bluetoothUtil = NewBleBluetoothUtil.getInstance();
+        readStatus();
+    }
+    private void readStatus(){
+        bluetoothUtil.readStatus(values -> {
+            //0x53+【开机状态】+【剩余电量】+【清洗时长】+【短喷间隔时间】+【短喷喷雾强度】+【开机清洗使能】 +【工作模式】+【长喷间隔时间】+【长喷喷雾强度】。
+            if (values.length != 0) {
+                LogUtils.LogE("开机状态=" + values[1]);
+                LogUtils.LogE("剩余电量=" + values[2]);
+                LogUtils.LogE("清洗时长=" + values[3]);
+                LogUtils.LogE("短喷间隔时间=" + values[4]);
+                LogUtils.LogE("短喷喷雾强度=" + values[5]);
+                LogUtils.LogE("开机清洗使能=" + values[6]);
+                LogUtils.LogE("工作模式=" + values[7]);
+                LogUtils.LogE("长喷间隔时间=" + values[8]);
+                LogUtils.LogE("长喷喷雾强度=" + values[9]);
+
+            }
+        });
     }
 
     public void findView() {

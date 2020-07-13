@@ -10,7 +10,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.6" />
+        app:layout_constraintGuide_percent="0.55" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
@@ -35,14 +42,34 @@
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/tv_shortSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:text="开启短喷"
+                app:layout_constraintBottom_toBottomOf="@+id/sw_shortSwitch"
+                app:layout_constraintEnd_toStartOf="@+id/sw_shortSwitch"
+                app:layout_constraintTop_toTopOf="@+id/sw_shortSwitch" />
+
+            <Switch
+                android:id="@+id/sw_shortSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:thumb="@drawable/switch_custom_thumb_selector"
+                android:track="@drawable/switch_bootbtn_track_selector"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.yiyun.rmj.view.MyNewArcProgressBar
                 android:id="@+id/pb_short"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="20dp"
                 app:bottomTextSize="12sp"
                 app:calibrationTextSize="12sp"
                 app:centerDesSize="14sp"
@@ -59,7 +86,7 @@
         android:layout_height="0dp"
         android:layout_margin="10dp"
         app:cardCornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline6">
@@ -91,5 +118,21 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView5"
                 app:textTimeSize="16sp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/bt_shortSave"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/shape_conner_gray_bg"
+        android:text="保存短喷"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline7" />
 </androidx.constraintlayout.widget.ConstraintLayout>

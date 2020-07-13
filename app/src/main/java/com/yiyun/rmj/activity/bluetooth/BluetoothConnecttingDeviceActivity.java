@@ -56,7 +56,7 @@ public class BluetoothConnecttingDeviceActivity extends BaseActivity implements 
                         //fortest
 //                        NewBleBluetoothUtil.getInstance().removeBond(bleDevice);
                         //连接成功
-                        Intent intent = new Intent(BluetoothConnecttingDeviceActivity.this, BluetoothMainActivity.class);
+                        Intent intent = new Intent(BluetoothConnecttingDeviceActivity.this, BluetoothMainActivity2.class);
 //                        Intent intent = new Intent(BluetoothConnecttingDeviceActivity.this, BluetoothActivity.class);
                         intent.putExtra("deviceId",deviceId);
                         startActivity(intent);
@@ -67,7 +67,7 @@ public class BluetoothConnecttingDeviceActivity extends BaseActivity implements 
                     break;
                 case 3:
                     //连接成功
-                    Intent intent2 = new Intent(BluetoothConnecttingDeviceActivity.this, BluetoothMainActivity.class);
+                    Intent intent2 = new Intent(BluetoothConnecttingDeviceActivity.this, BluetoothMainActivity2.class);
 //                    Intent intent2 = new Intent(BluetoothConnecttingDeviceActivity.this, BluetoothActivity.class);
                     intent2.putExtra("deviceId",deviceId);
                     startActivity(intent2);
