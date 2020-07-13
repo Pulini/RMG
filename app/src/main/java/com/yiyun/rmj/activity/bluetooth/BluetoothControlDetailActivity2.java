@@ -12,6 +12,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.hjq.toast.ToastUtils;
 import com.yiyun.rmj.R;
 import com.yiyun.rmj.base.BaseActivity;
 import com.yiyun.rmj.bean.BluetoothSettingBean;
@@ -84,32 +85,36 @@ public class BluetoothControlDetailActivity2 extends BaseActivity {
         for (int i = 1; i < 11; i++) {
             longList.add(i + "分");
         }
-        wv_short.lists(shortList).select(0).showCount(5)
-                .listener(index -> {
+        wv_short.lists(shortList).select(0).showCount(5);
 
-                });
-
-        wv_long.lists(longList).select(0).showCount(5)
-                .listener(index -> {
-
-                });
+        wv_long.lists(longList).select(0).showCount(5);
 
         sw_shortSwitch.setOnCheckedChangeListener((compoundButton, b) -> {
             tv_shortSwitch.setText(b ? "短喷关闭" : "短喷开启");
-            bt_shortSave.setBackgroundResource(b?R.drawable.shape_conner_blue_bg:R.drawable.shape_conner_gray_bg);
+            bt_shortSave.setBackgroundResource(b ? R.drawable.shape_conner_blue_bg : R.drawable.shape_conner_gray_bg);
+            pb_short.setClickable(b);
         });
 
         sw_longSwitch.setOnCheckedChangeListener((compoundButton, b) -> {
             tv_longSwitch.setText(b ? "长喷关闭" : "长喷开启");
-            bt_longSave.setBackgroundResource(b?R.drawable.shape_conner_blue_bg:R.drawable.shape_conner_gray_bg);
+            bt_longSave.setBackgroundResource(b ? R.drawable.shape_conner_blue_bg : R.drawable.shape_conner_gray_bg);
+            pb_long.setClickable(b);
         });
 
         bt_shortSave.setOnClickListener(view -> {
+            if(sw_shortSwitch.isChecked()){
 
+            }else{
+                ToastUtils.show("请先开启短喷");
+            }
         });
 
         bt_longSave.setOnClickListener(view -> {
+            if(sw_shortSwitch.isChecked()){
 
+            }else{
+                ToastUtils.show("请先开启长喷");
+            }
         });
 
 
@@ -155,7 +160,7 @@ public class BluetoothControlDetailActivity2 extends BaseActivity {
 
     @Override
     protected void initData() {
-        if (getIntent().getIntExtra("type", BluetoothMainActivity.TYPE_ADD) == BluetoothMainActivity.TYPE_MODIFY) {
+        if (getIntent().getIntExtra("type", BluetoothMainActivity2.TYPE_ADD) == BluetoothMainActivity.TYPE_MODIFY) {
             settingBean = (BluetoothSettingBean) getIntent().getSerializableExtra("setting");
         }
         wv_short.select(shortList.indexOf(settingBean.getTime() + "秒"));

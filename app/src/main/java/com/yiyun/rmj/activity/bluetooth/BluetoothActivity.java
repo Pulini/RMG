@@ -406,7 +406,7 @@ public class BluetoothActivity extends BaseActivity implements View.OnClickListe
                         break;
                     case 3:
                         if (currentWorkMode != NewBleBluetoothUtil.mode_middle) {
-                            bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_strength, 0);
+                            bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_long, 0);
                         }
                         bluetoothUtil.sendOrder();
                         break;

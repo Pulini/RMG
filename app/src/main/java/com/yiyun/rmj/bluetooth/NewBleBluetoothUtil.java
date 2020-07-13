@@ -52,10 +52,12 @@ public class NewBleBluetoothUtil {
     public static final byte setstrenth = 0x57; //设置喷雾强度  10进制：87
     public static final byte setcleartime = 0x58; //设置清洗时长  10进制：88
     public static final byte readstate = 0x53;//读状态  10进制：83
-    public static final byte mode_normal = 0x40;//普通模式  10进制：64
+    public static final byte mode_short = 0x40;//短喷  10进制：64
     public static final byte mode_mild = 0x41;//智能轻度模式  10进制：65
     public static final byte mode_middle = 0x42;//智能中度模式 10进制：66
     public static final byte mode_strength = 0x43;//智能强度模式 10进制：67
+    public static final byte mode_long = 0x44;//长喷 10进制：68
+    public static final byte mode_short_long = 0x45;//长喷加短喷 10进制：69
     public static final byte state_boot = 0x01; //开机状态
     public static final byte state_shutdown = 0x00; //关机状态
     public static final byte readStatuss = 0x71; //读取状态
@@ -449,7 +451,7 @@ public class NewBleBluetoothUtil {
                 //设置清洗时长
                 sendClearTime(order.intdata);
                 break;
-            case mode_normal:
+            case mode_short:
                 //设置普通模式
                 setMode_normal();
                 break;
@@ -459,7 +461,7 @@ public class NewBleBluetoothUtil {
             case mode_middle:
                 setMode_middle();
                 break;
-            case mode_strength:
+            case mode_long:
                 setMode_strength();
                 break;
             case readStatuss:
@@ -568,7 +570,7 @@ public class NewBleBluetoothUtil {
      */
     public void setMode_normal() {
         byte[] data = new byte[1];
-        data[0] = mode_normal;
+        data[0] = mode_short;
         dataSend(data, opencloseCharacter);
     }
 
@@ -595,7 +597,7 @@ public class NewBleBluetoothUtil {
      */
     public void setMode_strength() {
         byte[] data = new byte[1];
-        data[0] = mode_strength;
+        data[0] = mode_long;
         dataSend(data, opencloseCharacter);
     }
 

@@ -1,19 +1,33 @@
 package com.yiyun.rmj.activity.bluetooth;
 
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
+import com.google.gson.Gson;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 import com.yiyun.rmj.R;
 import com.yiyun.rmj.base.BaseActivity;
+import com.yiyun.rmj.bean.BluetoothBean;
+import com.yiyun.rmj.bean.BluetoothSettingBean;
 import com.yiyun.rmj.bluetooth.NewBleBluetoothUtil;
 import com.yiyun.rmj.utils.LogUtils;
+import com.yiyun.rmj.utils.SpfUtils;
 import com.yiyun.rmj.view.ElectricView;
+
+import org.litepal.crud.DataSupport;
+
+import java.util.ArrayList;
 
 /**
  * File Name : BluetoothMainActivity2
@@ -24,6 +38,8 @@ import com.yiyun.rmj.view.ElectricView;
  */
 public class BluetoothMainActivity2 extends BaseActivity {
 
+    public static final int TYPE_ADD = 0;
+    public static final int TYPE_MODIFY = 1;
 
     NewBleBluetoothUtil bluetoothUtil;
     private ImageView iv_add;
@@ -36,9 +52,11 @@ public class BluetoothMainActivity2 extends BaseActivity {
     private SwipeMenuRecyclerView rv_deviceList;
     private Button bt_cleanLeft;
     private Button bt_cleanRight;
+
+
     private int deviceId = 0;
-
-
+    private ArrayList<BluetoothSettingBean> listData = new ArrayList<>();
+    private BluetoothBean device;
 
 
     @Override
@@ -51,24 +69,22 @@ public class BluetoothMainActivity2 extends BaseActivity {
         findView();
         setClick();
         bluetoothUtil = NewBleBluetoothUtil.getInstance();
-        readStatus();
-    }
-    private void readStatus(){
-        bluetoothUtil.readStatus(values -> {
-            //0x53+【开机状态】+【剩余电量】+【清洗时长】+【短喷间隔时间】+【短喷喷雾强度】+【开机清洗使能】 +【工作模式】+【长喷间隔时间】+【长喷喷雾强度】。
-            if (values.length != 0) {
-                LogUtils.LogE("开机状态=" + values[1]);
-                LogUtils.LogE("剩余电量=" + values[2]);
-                LogUtils.LogE("清洗时长=" + values[3]);
-                LogUtils.LogE("短喷间隔时间=" + values[4]);
-                LogUtils.LogE("短喷喷雾强度=" + values[5]);
-                LogUtils.LogE("开机清洗使能=" + values[6]);
-                LogUtils.LogE("工作模式=" + values[7]);
-                LogUtils.LogE("长喷间隔时间=" + values[8]);
-                LogUtils.LogE("长喷喷雾强度=" + values[9]);
 
-            }
-        });
+    }
+
+    @Override
+    protected void initData() {
+        deviceId = getIntent().getIntExtra("deviceId", 0);
+        Log.e("Pan", "deviceId=" + deviceId);
+        device = SpfUtils.getBluetoothSetList(deviceId);
+        if (device == null) {
+            LogUtils.LogE("2次读取");
+            device = DataSupport.find(BluetoothBean.class, deviceId);
+        }
+        Log.e("Pan", "device=" + new Gson().toJson(device));
+        tv_deviceName.setText(device.getDeviceName());
+        readStatus();
+
     }
 
     public void findView() {
@@ -94,9 +110,12 @@ public class BluetoothMainActivity2 extends BaseActivity {
             finish();
         });
 
-        iv_add.setOnClickListener(view -> {
-
-        });
+        iv_add.setOnClickListener(view ->
+            startActivityForResult(
+                    new Intent(this, BluetoothControlDetailActivity2.class).putExtra("type", TYPE_ADD),
+                    TYPE_ADD
+            )
+        );
 
         sw_bootSwitch.setOnCheckedChangeListener((compoundButton, b) -> {
             tv_bootState.setText(b ? "关机" : "开机");
@@ -117,11 +136,21 @@ public class BluetoothMainActivity2 extends BaseActivity {
 
     }
 
+    private void readStatus() {
+        bluetoothUtil.readStatus(values -> {
+            //0x53+【开机状态】+【剩余电量】+【清洗时长】+【短喷间隔时间】+【短喷喷雾强度】+【开机清洗使能】 +【工作模式】+【长喷间隔时间】+【长喷喷雾强度】。
+            runOnUiThread(() -> {
+                if (values.length != 0) {
+                    BluetoothModel bm = new BluetoothModel(values);
+                    ev_electricityQuantity.setCount(bm.getElectricityQuantity() / 10);
+                    tv_power.setText(bm.getElectricityQuantity() + "%");
+                    Log.e("Pan", bm.getState() == NewBleBluetoothUtil.state_boot ? "开机" : "关机");
+                    tv_bootState.setText(bm.getState() == NewBleBluetoothUtil.state_boot ? "关机" : "开机");
+                    sw_bootSwitch.setChecked(bm.getState() == NewBleBluetoothUtil.state_boot);
+                }
+            });
+        });
 
-    @Override
-    protected void initData() {
-        deviceId = getIntent().getIntExtra("deviceId", 0);
     }
-
 
 }

@@ -357,10 +357,10 @@ public class BluetoothMainActivity extends BaseActivity implements View.OnClickL
             case NewBleBluetoothUtil.mode_middle:
                 currentMode = 0x42;
                 break;
-            case NewBleBluetoothUtil.mode_strength:
+            case NewBleBluetoothUtil.mode_long:
                 currentMode = 0x43;
                 break;
-            case NewBleBluetoothUtil.mode_normal:
+            case NewBleBluetoothUtil.mode_short:
                 currentMode = 0x40;
                 break;
             case NewBleBluetoothUtil.settimeinterval:
@@ -542,7 +542,7 @@ public class BluetoothMainActivity extends BaseActivity implements View.OnClickL
                         break;
                     case 3:
                         if (currentMode != NewBleBluetoothUtil.mode_middle) {
-                            bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_strength, 0);
+                            bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_long, 0);
                         }
 //                        readStatusToQuee();
                         bluetoothUtil.sendOrder();
@@ -1094,7 +1094,7 @@ public class BluetoothMainActivity extends BaseActivity implements View.OnClickL
                             listData.get(currentSelectPosition).setSelected(false);
 //                            listData.get(currentSelectPosition).save();
                             if (currentSelectPosition == 0) {
-                                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_normal, 0);
+                                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_short, 0);
                             }
                         }
                         for (int i = 0; i < listData.size(); i++) {
@@ -1142,7 +1142,7 @@ public class BluetoothMainActivity extends BaseActivity implements View.OnClickL
                                 iv_leftgraytag_intelligent.setVisibility(View.VISIBLE);
                                 iv_leftbluetag_intelligent.setVisibility(View.GONE);
                                 //设置普通模式
-                                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_normal, 0);
+                                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_short, 0);
 //                                readStatusToQuee();
                                 bluetoothUtil.sendOrder();
                             } else {

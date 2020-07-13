@@ -56,8 +56,8 @@
                 android:id="@+id/sw_shortSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
                 android:thumb="@drawable/switch_custom_thumb_selector"
                 android:track="@drawable/switch_bootbtn_track_selector"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -67,8 +67,8 @@
                 android:id="@+id/pb_short"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
                 android:layout_marginBottom="20dp"
                 app:bottomTextSize="12sp"
                 app:calibrationTextSize="12sp"
@@ -76,6 +76,7 @@
                 app:centerStrenthSize="44sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
