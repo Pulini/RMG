@@ -30,6 +30,7 @@ import com.yiyun.rmj.bean.apibean.ProductBean;
 import com.yiyun.rmj.bean.apibean.RotationBean;
 import com.yiyun.rmj.bean.apiparm.GetVersionParm;
 import com.yiyun.rmj.dialog.CustomerServiceDialog;
+import com.yiyun.rmj.utils.Ali;
 import com.yiyun.rmj.utils.DESHelper;
 import com.yiyun.rmj.utils.LogUtils;
 import com.yiyun.rmj.utils.PackageUpdateUtil;
@@ -164,6 +165,7 @@ public class NewHomeActivity extends BaseActivity {
         iv_control.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                Ali.LoginIM(getApplicationContext());
                 String token = SpfUtils.getSpfUtils(getApplicationContext()).getToken();
                 if(token.isEmpty()){
                     startlogin();
@@ -218,6 +220,7 @@ public class NewHomeActivity extends BaseActivity {
                 }
             }
         });
+
     }
 
     public void goDetail(int id) {

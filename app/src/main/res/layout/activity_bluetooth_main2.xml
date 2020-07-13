@@ -74,16 +74,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Switch
-            android:id="@+id/sw_boot_or_shutdown"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:thumb="@drawable/switch_custom_thumb_selector"
-            android:track="@drawable/switch_bootbtn_track_selector"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+
 
         <ImageView
             android:id="@+id/imageView"
@@ -97,7 +88,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.yiyun.rmj.view.ElectricView
-            android:id="@+id/tv_eric"
+            android:id="@+id/ev_electricityQuantity"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/marleft_right15"
             android:layout_gravity="center_vertical"
@@ -116,21 +107,30 @@
             android:textSize="@dimen/textsize16"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tv_eric"
+            app:layout_constraintStart_toEndOf="@+id/ev_electricityQuantity"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_boot_state"
+            android:id="@+id/tv_bootState"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="开机"
             android:textColor="@color/textcolor_black"
             android:textSize="@dimen/textsize14"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/sw_boot_or_shutdown"
+            app:layout_constraintEnd_toStartOf="@+id/sw_bootSwitch"
             app:layout_constraintStart_toEndOf="@+id/view"
             app:layout_constraintTop_toTopOf="parent" />
-
+        <Switch
+            android:id="@+id/sw_bootSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:thumb="@drawable/switch_custom_thumb_selector"
+            android:track="@drawable/switch_bootbtn_track_selector"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -146,7 +146,7 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <TextView
-        android:id="@+id/tv_device_number"
+        android:id="@+id/tv_deviceName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -157,7 +157,7 @@
         tools:text="10010021" />
 
     <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
-        android:id="@+id/rv_list"
+        android:id="@+id/rv_deviceList"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="10dp"
@@ -173,7 +173,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@drawable/clean_btn_selector"
-        android:text="清洗左眼"
+        android:text="左清洗"
         android:textColor="@color/white"
         android:textSize="@dimen/textsize14"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -183,70 +183,13 @@
         android:id="@+id/bt_cleanRight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_margin="10dp"
         android:background="@drawable/clean_btn_selector"
-        android:text="清洗右眼"
+        android:text="右清洗"
         android:textColor="@color/white"
         android:textSize="@dimen/textsize14"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-
-    <RelativeLayout
-        android:id="@+id/rll_update_bg"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/color_33transfer"
-        android:visibility="gone">
-
-        <LinearLayout
-            android:id="@+id/ll_add_dialog"
-            android:layout_width="100dp"
-            android:layout_height="80dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/height60"
-            android:layout_marginRight="@dimen/marleft_right15"
-            android:background="@mipmap/bluetooth_main_add_dialog_bg"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_to_setting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/marleft_right15"
-                android:layout_marginTop="@dimen/marleft_right15"
-                android:text="自定义设置"
-                android:textColor="@color/textcolor_black"
-                android:textSize="@dimen/textsize14" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/marleft_right15"
-                android:layout_marginTop="@dimen/marleft_right15"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_update"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="固件升级"
-                    android:textColor="@color/textcolor_black"
-                    android:textSize="@dimen/textsize14" />
-
-                <ImageView
-                    android:id="@+id/iv_update_flag"
-                    android:layout_width="6dp"
-                    android:layout_height="6dp"
-                    android:layout_marginLeft="3dp"
-                    android:src="@drawable/shape_bluetooth_update_flag_red" />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

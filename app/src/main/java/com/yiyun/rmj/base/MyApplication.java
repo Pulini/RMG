@@ -6,6 +6,9 @@ import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 
+//import com.alibaba.mobileim.YWAPI;
+//import com.alibaba.mobileim.YWIMKit;
+//import com.alibaba.wxlib.util.SysUtil;
 import com.hjq.toast.ToastUtils;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.ClassicsHeader;
@@ -24,10 +27,15 @@ import com.yiyun.rmj.R;
 
 import org.litepal.LitePal;
 
+//import static com.alibaba.tcms.client.ClientRegInfo.APP_KEY;
+
 public class MyApplication extends Application {
 
     private static MyApplication myApplication;
     public static int wxpayResltCode = 999;
+    public static String IM_KEY = "30456578";
+
+
     static {
         SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
             @NonNull
@@ -72,6 +80,21 @@ public class MyApplication extends Application {
         Beta.autoInit = true;
         Beta.autoCheckUpgrade = true;
         Bugly.init(getApplicationContext(), "7c0d355d82", false);
+
+
+//        //必须首先执行这部分代码, 如果在":TCMSSevice"进程中，无需进行云旺（OpenIM）和app业务的初始化，以节省内存;
+//        SysUtil.setApplication(this);
+//        if(SysUtil.isTCMSServiceProcess(this)){
+//            return;
+//        }
+//        //第一个参数是Application Context
+//        //这里的APP_KEY即应用创建时申请的APP_KEY，同时初始化必须是在主进程中
+//        if(SysUtil.isMainProcess()){
+//            YWAPI.init(this, "23015524");
+//        }
+
+
+
     }
 
     @Override

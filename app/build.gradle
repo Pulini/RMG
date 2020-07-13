@@ -98,6 +98,7 @@ dependencies {
     // 支付宝 SDK AAR 包所需的配置
     implementation files('libs/alipaySdk-15.6.2-20190416165036.aar')
 
+
     // 友盟基础组件
 //    implementation 'com.umeng.umsdk:common:1.5.4'
 //    implementation 'com.umeng.umsdk:utdid:1.1.5.3'
@@ -114,9 +115,12 @@ dependencies {
     // 指定tinker依赖版本（注：应用升级1.3.5版本起，不再内置tinker）
 //    implementation 'com.tencent.tinker:tinker-android-lib:1.9.9'
 
+    //权限自动申请
     implementation 'com.github.HuanTanSheng:EasyPhotos:3.0.6'
 
+    //视频播放器
     implementation 'com.shuyu:GSYVideoPlayer:7.1.4'
+
 
 }
 

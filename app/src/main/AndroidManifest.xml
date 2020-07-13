@@ -38,10 +38,10 @@
             android:name=".activity.SplashActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
             <!--<intent-filter>-->
             <!--<action android:name="android.intent.action.MAIN" />-->
             <!--<category android:name="android.intent.category.LAUNCHER" />-->
@@ -119,7 +119,19 @@
         <activity android:name=".activity.bluetooth.BluetoothConnecttingDeviceActivity" />
         <activity android:name=".activity.bluetooth.BluetoothConnectFailedActivity" />
         <activity android:name=".activity.bluetooth.BluetoothMainActivity" />
+        <activity android:name=".activity.bluetooth.BluetoothMainActivity2" >
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
         <activity android:name=".activity.bluetooth.BluetoothControlDetailActivity" />
+        <activity android:name=".activity.bluetooth.BluetoothControlDetailActivity2" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".activity.bluetooth.BluetoothAddDeviceActivity" />
         <activity android:name=".activity.ClipHeaderActivity" />
         <activity android:name=".activity.ShareRuleActivity" />

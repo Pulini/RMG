@@ -408,6 +408,7 @@ public class BluetoothMainActivity extends BaseActivity implements View.OnClickL
                 break;
 
             case R.id.rll_update_bg:
+            case R.id.tv_update:
                 startHideAnimation();
                 break;
 
@@ -417,10 +418,6 @@ public class BluetoothMainActivity extends BaseActivity implements View.OnClickL
                 bluecontrolDetailIntent.putExtra("type", BluetoothMainActivity.TYPE_ADD);
                 startActivityForResult(bluecontrolDetailIntent, TYPE_ADD);
                 overridePendingTransition(R.anim.activity_rightclick_in, R.anim.activity_rightclick_out);
-                break;
-
-            case R.id.tv_update:
-                startHideAnimation();
                 break;
         }
     }
