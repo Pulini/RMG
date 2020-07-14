@@ -156,7 +156,7 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
         tools:text="10010021" />
 
-    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+    <com.yanzhenjie.recyclerview.SwipeRecyclerView
         android:id="@+id/rv_deviceList"
         android:layout_width="0dp"
         android:layout_height="0dp"

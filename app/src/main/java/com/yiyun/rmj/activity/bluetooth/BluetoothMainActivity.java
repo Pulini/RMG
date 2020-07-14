@@ -2,6 +2,7 @@ package com.yiyun.rmj.activity.bluetooth;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,13 +23,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.hjq.toast.ToastUtils;
+import com.yanzhenjie.recyclerview.SwipeMenuItem;
+import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 import com.yiyun.rmj.view.indicatorseekbar.SizeUtils;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+
 import com.yiyun.rmj.R;
 import com.yiyun.rmj.adapter.CommonRecyclerViewAdapter;
 import com.yiyun.rmj.adapter.CommonRecyclerViewHolder;
@@ -55,7 +53,7 @@ import cn.jake.share.frdialog.dialog.FRDialog;
 public class BluetoothMainActivity extends BaseActivity implements View.OnClickListener {
 
     ElectricView tv_eric;
-    SwipeMenuRecyclerView rv_list;
+    SwipeRecyclerView rv_list;
     ArrayList<BluetoothSettingBean> listData;
     NewBleBluetoothUtil bluetoothUtil;
     private int deviceId;
@@ -689,32 +687,24 @@ public class BluetoothMainActivity extends BaseActivity implements View.OnClickL
         rv_list.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MyCommRecAdapter(this, listData);
 
-        rv_list.setSwipeMenuCreator(new SwipeMenuCreator() {
-            @Override
-            public void onCreateMenu(SwipeMenu swipeMenu, SwipeMenu swipeMenu1, int i) {
-                Log.e("bcz", "onCreateMenu:" + i);
-                if (i != 0) {
-                    SwipeMenuItem deleteItem = new SwipeMenuItem(BluetoothMainActivity.this)
-                            .setBackgroundColorResource(R.color.color_0036)
-                            .setText("删除")
-                            .setTextColor(getResources().getColor(R.color.white))
-                            .setTextSize(14)
-                            .setHeight(ViewGroup.LayoutParams.MATCH_PARENT)//设置高，这里使用match_parent，就是与item的高相同
-                            .setWidth(DisplayUtils.dp2px(BluetoothMainActivity.this, 50));//设置宽
-                    swipeMenu1.addMenuItem(deleteItem);//设置右边的侧滑
-                }
+        rv_list.setSwipeMenuCreator((leftMenu, rightMenu, position) -> {
+            if (0 != position) {
+                rightMenu.addMenuItem(
+                        new SwipeMenuItem(this)
+                                .setBackgroundColor(Color.parseColor("#FE0036"))
+                                .setText("删除")
+                                .setTextColor(Color.WHITE)
+                                .setTextSize(14)
+                                .setWidth(DisplayUtils.dp2px(this, 50))
+                                .setHeight(ViewGroup.LayoutParams.MATCH_PARENT)
+                );
             }
         });
 
-        //设置侧滑菜单的点击事件
-        rv_list.setSwipeMenuItemClickListener(new SwipeMenuItemClickListener() {
-            @Override
-            public void onItemClick(SwipeMenuBridge menuBridge) {
-                menuBridge.closeMenu();
-                final int adapterPosition = menuBridge.getAdapterPosition(); // RecyclerView的Item的position。
-
+        rv_list.setOnItemMenuClickListener((menuBridge, adapterPosition) -> {
+            menuBridge.closeMenu();
+            if (menuBridge.getDirection() == SwipeRecyclerView.RIGHT_DIRECTION) {
                 if (menuBridge.getPosition() == 0) {
-
                     PermissionUtil.requestStoragePermission(BluetoothMainActivity.this, new PermissionUtil.IRequestPermissionCallBack() {
                         @Override
                         public void permissionSuccess() {
@@ -729,7 +719,6 @@ public class BluetoothMainActivity extends BaseActivity implements View.OnClickL
                             adapter.notifyDataSetChanged();
                         }
                     });
-
                 }
             }
         });
@@ -776,6 +765,7 @@ public class BluetoothMainActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void initData() {
+       /*
         PermissionUtil.requestStoragePermission(BluetoothMainActivity.this, new PermissionUtil.IRequestPermissionCallBack() {
             @Override
             public void permissionSuccess() {
@@ -827,6 +817,7 @@ public class BluetoothMainActivity extends BaseActivity implements View.OnClickL
                 initDialog();
             }
         });
+        */
     }
 
     public void readStatus(final int dealMessage) {
@@ -1190,7 +1181,7 @@ public class BluetoothMainActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void onDestroy() {
-        if (device != null) {
+       /* if (device != null) {
             LogUtils.LogE("listData：" + listData.size());
             for (BluetoothSettingBean listDatum : listData) {
                 listDatum.setSelected(false);
@@ -1200,7 +1191,7 @@ public class BluetoothMainActivity extends BaseActivity implements View.OnClickL
             LogUtils.LogE("保存数据：" + device.getList().size());
             SpfUtils.saveBluetoothSetList(device);
             LogUtils.LogE("device：" + device.getId());
-        }
+        }*/
         //移除30秒读状态的定时器
         handler.removeCallbacks(runnable);
         super.onDestroy();

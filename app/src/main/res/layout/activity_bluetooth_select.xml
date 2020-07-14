@@ -5,11 +5,11 @@
 
     <include layout="@layout/blue_title"/>
 
-    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+    <com.yanzhenjie.recyclerview.SwipeRecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/title_bar"
         android:id="@+id/rv_list"
-        ></com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView>
+        />
 
 </RelativeLayout>

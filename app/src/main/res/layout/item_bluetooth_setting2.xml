@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="3dp"
+        app:cardCornerRadius="5dp">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff">
+
+
+            <ImageView
+                android:id="@+id/iv_model"
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:background="@color/lightblue"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_auto"
+                android:layout_width="15dp"
+                android:layout_height="60dp"
+                android:background="@mipmap/intelligent_model_unselect"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_remark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:focusable="false"
+                android:maxLines="1"
+                android:text="无备注"
+                android:textColor="@color/textcolor_black"
+                android:textSize="@dimen/textsize16"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_modify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/shape_small_conner_stroke_blue_bg"
+                android:paddingLeft="@dimen/marleft_right8"
+                android:paddingTop="@dimen/marleft_right2"
+                android:paddingRight="@dimen/marleft_right8"
+                android:paddingBottom="@dimen/marleft_right2"
+                android:text="修改"
+                android:textColor="@color/lightblue"
+                android:textSize="@dimen/textsize12"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_remark"
+                app:layout_constraintStart_toEndOf="@+id/tv_remark"
+                app:layout_constraintTop_toTopOf="@+id/tv_remark" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_short"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color99"
+                    android:textSize="12sp"
+                    tools:text="短喷: 强度:中 时间:5秒" />
+
+                <TextView
+                    android:id="@+id/tv_long"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color99"
+                    android:textSize="12sp"
+                    tools:text="长喷: 强度:中 时间:5分钟" />
+
+                <TextView
+                    android:id="@+id/tv_auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color99"
+                    android:textSize="12sp"
+                    tools:text="美容模式" />
+
+            </LinearLayout>
+
+            <Switch
+                android:id="@+id/sw_choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="25dp"
+                android:thumb="@drawable/switch_custom_thumb_selector"
+                android:track="@drawable/switch_custom_track_selector"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

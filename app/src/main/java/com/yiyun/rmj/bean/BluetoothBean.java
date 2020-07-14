@@ -1,5 +1,7 @@
 package com.yiyun.rmj.bean;
 
+import com.yiyun.rmj.activity.bluetooth.SettingListModel;
+
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
@@ -12,7 +14,7 @@ public class BluetoothBean extends DataSupport {
     private String deviceName; //设备名
     private String address;  //Mac地址
     private int bundState;  //绑定状态
-    private List<BluetoothSettingBean> list = new ArrayList();
+    private List<SettingListModel> list = new ArrayList();
 
     public int getId() {
         return id;
@@ -22,11 +24,11 @@ public class BluetoothBean extends DataSupport {
         this.id = id;
     }
 
-    public List<BluetoothSettingBean> getList() {
+    public List<SettingListModel> getList() {
         return list;
     }
 
-    public void setList(List<BluetoothSettingBean> list) {
+    public void setList(List<SettingListModel> list) {
         this.list = list;
     }
 //    public List<BluetoothSettingBean> getList() {

@@ -2,10 +2,15 @@ package com.yiyun.rmj.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.yiyun.rmj.activity.bluetooth.SettingListModel;
 import com.yiyun.rmj.base.MyApplication;
-import com.yiyun.rmj.bean.BluetoothBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 80999 on 2018/11/26.
@@ -156,12 +161,17 @@ public class SpfUtils {
         editor.commit();
     }
 
-    public static BluetoothBean getBluetoothSetList(int id) {
-        return new Gson().fromJson(MyApplication.getSP().getString("BluetoothSetList:"+id, ""), BluetoothBean.class);
+    public static List<SettingListModel> getBluetoothSetList(int id) {
+        String json = MyApplication.getSP().getString("BluetoothSetList:" + id, "");
+        Log.e("Pan","json="+json);
+        List<SettingListModel> list = new Gson().fromJson(json, new TypeToken<List<SettingListModel>>() {
+                }.getType());
+        return list==null?new ArrayList<>():list;
     }
-    public static void saveBluetoothSetList(BluetoothBean data) {
+
+    public static void saveBluetoothSetList(List<SettingListModel> data,int id) {
         SharedPreferences.Editor edit = MyApplication.getSP().edit();
-        edit.putString("BluetoothSetList:"+data.getId(),  new Gson().toJson(data));
+        edit.putString("BluetoothSetList:" + id, new Gson().toJson(data));
         edit.commit();
     }
 

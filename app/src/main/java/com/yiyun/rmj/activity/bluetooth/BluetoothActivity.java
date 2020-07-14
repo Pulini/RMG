@@ -3,6 +3,7 @@ package com.yiyun.rmj.activity.bluetooth;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -18,12 +19,9 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+
+import com.yanzhenjie.recyclerview.SwipeMenuItem;
+import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 import com.yiyun.rmj.R;
 import com.yiyun.rmj.adapter.CommonRecyclerViewAdapter;
 import com.yiyun.rmj.base.BaseActivity;
@@ -34,6 +32,7 @@ import com.yiyun.rmj.dialog.RoundEditDialog;
 import com.yiyun.rmj.utils.DisplayUtils;
 import com.yiyun.rmj.utils.LogUtils;
 import com.yiyun.rmj.utils.PermissionUtil;
+import com.yiyun.rmj.utils.SpfUtils;
 import com.yiyun.rmj.view.ElectricView;
 
 import org.litepal.crud.DataSupport;
@@ -58,7 +57,7 @@ public class BluetoothActivity extends BaseActivity implements View.OnClickListe
     private TextView tv_boot_state;
     private Switch sw_boot_or_shutdown;
     private TextView txt_sbbh;
-    private SwipeMenuRecyclerView rv_list;
+    private SwipeRecyclerView rv_list;
     private TextView tv_device_number;
     private RelativeLayout rll_update_bg;
     private LinearLayout ll_add_dialog;
@@ -165,6 +164,7 @@ public class BluetoothActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void initData() {
+       /*
         PermissionUtil.requestStoragePermission(mActivity, new PermissionUtil.IRequestPermissionCallBack() {
             @Override
             public void permissionSuccess() {
@@ -207,6 +207,8 @@ public class BluetoothActivity extends BaseActivity implements View.OnClickListe
 //                initDialog();
             }
         });
+
+        */
     }
 
     public void readStatus() {
@@ -284,29 +286,23 @@ public class BluetoothActivity extends BaseActivity implements View.OnClickListe
                 }
             }
         });
-
-        rv_list.setSwipeMenuCreator(new SwipeMenuCreator() {
-            @Override
-            public void onCreateMenu(SwipeMenu swipeMenu, SwipeMenu swipeMenu1, int i) {
-                if (i != 0) {
-                    SwipeMenuItem deleteItem = new SwipeMenuItem(mActivity)
-                            .setBackgroundColorResource(R.color.color_0036)
-                            .setText("删除")
-                            .setTextColor(getResources().getColor(R.color.white))
-                            .setTextSize(14)
-                            .setHeight(ViewGroup.LayoutParams.MATCH_PARENT)//设置高，这里使用match_parent，就是与item的高相同
-                            .setWidth(DisplayUtils.dp2px(mActivity, 50));//设置宽
-                    swipeMenu1.addMenuItem(deleteItem);//设置右边的侧滑
-                }
+        rv_list.setSwipeMenuCreator((leftMenu, rightMenu, position) -> {
+            if (0 != position) {
+                rightMenu.addMenuItem(
+                        new SwipeMenuItem(this)
+                                .setBackgroundColor(Color.parseColor("#FE0036"))
+                                .setText("删除")
+                                .setTextColor(Color.WHITE)
+                                .setTextSize(14)
+                                .setWidth(DisplayUtils.dp2px(this, 50))
+                                .setHeight(ViewGroup.LayoutParams.MATCH_PARENT)
+                );
             }
         });
 
-        //设置侧滑菜单的点击事件
-        rv_list.setSwipeMenuItemClickListener(new SwipeMenuItemClickListener() {
-            @Override
-            public void onItemClick(SwipeMenuBridge menuBridge) {
-                menuBridge.closeMenu();
-                final int adapterPosition = menuBridge.getAdapterPosition(); // RecyclerView的Item的position。
+        rv_list.setOnItemMenuClickListener((menuBridge, adapterPosition) -> {
+            menuBridge.closeMenu();
+            if (menuBridge.getDirection() == SwipeRecyclerView.RIGHT_DIRECTION) {
                 if (menuBridge.getPosition() == 0) {
                     PermissionUtil.requestStoragePermission(mActivity, new PermissionUtil.IRequestPermissionCallBack() {
                         @Override
@@ -319,6 +315,7 @@ public class BluetoothActivity extends BaseActivity implements View.OnClickListe
                 }
             }
         });
+
 
         adapter.setOnRecyclerViewItemClickListener(new CommonRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
             @Override

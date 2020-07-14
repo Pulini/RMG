@@ -4,23 +4,23 @@ import com.yiyun.rmj.utils.LogUtils;
 
 public class BluetoothModel {
     // 开机状态
-    int State = 0x00;
+    private int State = 0x00;
     // 剩余电量
-    int ElectricityQuantity = 0x00;
+    private int ElectricityQuantity = 0x00;
     // 清洗时长
-    int CleanTime = 0x00;
+    private int CleanTime = 0x00;
     // 短喷间隔时间
-    int ShortTime = 0x00;
+    private int ShortTime = 0x00;
     // 短喷喷雾强度
-    int ShortStrength = 0x00;
+    private int ShortStrength = 0x00;
     // 开机清洗使能
-    int AutoClean = 0x00;
+    private int AutoClean = 0x00;
     // 工作模式
-    int Model = 0x00;
+    private int Model = 0x00;
     // 长喷间隔时间
-    int LongTime = 0x00;
+    private int LongTime = 0x00;
     // 长喷喷雾强度
-    int LongStrength = 0x00;
+    private int LongStrength = 0x00;
 
     public BluetoothModel(byte[] data) {
         State = data[1];
@@ -33,13 +33,13 @@ public class BluetoothModel {
         LongTime = data[8];
         LongStrength = data[9];
 
-        LogUtils.LogE("开机状态=" +State);
-        LogUtils.LogE("剩余电量=" +ElectricityQuantity);
-        LogUtils.LogE("清洗时长=" +CleanTime);
+        LogUtils.LogE("开机状态=" + State);
+        LogUtils.LogE("剩余电量=" + ElectricityQuantity);
+        LogUtils.LogE("清洗时长=" + CleanTime);
         LogUtils.LogE("短喷间隔时间=" + ShortTime);
         LogUtils.LogE("短喷喷雾强度=" + ShortStrength);
         LogUtils.LogE("开机清洗使能=" + AutoClean);
-        LogUtils.LogE("工作模式=" +Model);
+        LogUtils.LogE("工作模式=" + Model);
         LogUtils.LogE("长喷间隔时间=" + LongTime);
         LogUtils.LogE("长喷喷雾强度=" + LongStrength);
 

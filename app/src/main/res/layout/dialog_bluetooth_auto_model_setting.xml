@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/marleft_right20"
+    android:layout_marginRight="@dimen/marleft_right20"
+    android:background="@drawable/shape_conner_white_bg"
+    android:padding="20dp">
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <ImageView
+        android:id="@+id/iv_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:src="@mipmap/dialog_zn_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="选择智能模式"
+        android:textColor="@color/textcolor_black"
+        android:textSize="@dimen/textsize16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_model1"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:background="@drawable/dialog_zn_btn_unselect_bg"
+        android:gravity="center"
+        android:text="阅读模式"
+        android:textColor="@color/color66"
+        android:textSize="@dimen/textsize14"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_model2"
+        app:layout_constraintEnd_toStartOf="@+id/tv_model2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_model2" />
+
+    <TextView
+        android:id="@+id/tv_model2"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/dialog_zn_btn_select_bg"
+        android:gravity="center"
+        android:text="电竞模式"
+        android:textColor="@color/color66"
+        android:textSize="@dimen/textsize14"
+        app:layout_constraintBottom_toTopOf="@+id/tv_sure"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+
+    <TextView
+        android:id="@+id/tv_model3"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:background="@drawable/dialog_zn_btn_unselect_bg"
+        android:gravity="center"
+        android:text="美容模式"
+        android:textColor="@color/color66"
+        android:textSize="@dimen/textsize14"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_model2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_model2"
+        app:layout_constraintTop_toTopOf="@+id/tv_model2" />
+
+
+    <TextView
+        android:id="@+id/tv_sure"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height40"
+        android:background="@drawable/shape_conner_blue_bg"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textsize16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="35dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

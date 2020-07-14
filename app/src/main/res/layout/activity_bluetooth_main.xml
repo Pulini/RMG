@@ -101,7 +101,7 @@
             android:textColor="@color/color66"
             android:textSize="@dimen/textsize12" />
 
-        <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+        <com.yanzhenjie.recyclerview.SwipeRecyclerView
             android:id="@+id/rv_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

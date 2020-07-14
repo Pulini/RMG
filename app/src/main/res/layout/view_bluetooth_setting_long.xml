@@ -10,14 +10,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.55" />
+        app:layout_constraintGuide_percent="0.6" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.9" />
+
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
@@ -34,6 +29,7 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -42,26 +38,27 @@
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/tv_longSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:text="开启长喷"
-                app:layout_constraintBottom_toBottomOf="@+id/sw_longSwitch"
+                app:layout_constraintBottom_toBottomOf="@+id/textView3"
                 app:layout_constraintEnd_toStartOf="@+id/sw_longSwitch"
-                app:layout_constraintTop_toTopOf="@+id/sw_longSwitch" />
+                app:layout_constraintTop_toTopOf="@+id/textView3" />
 
             <Switch
                 android:id="@+id/sw_longSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:thumb="@drawable/switch_custom_thumb_selector"
                 android:track="@drawable/switch_bootbtn_track_selector"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_longSwitch"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/tv_longSwitch" />
 
             <com.yiyun.rmj.view.MyNewArcProgressBar
                 android:id="@+id/pb_long"
@@ -86,7 +83,7 @@
         android:layout_height="0dp"
         android:layout_margin="10dp"
         app:cardCornerRadius="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline7"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline6">
@@ -121,18 +118,4 @@
 
     </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/bt_longSave"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/shape_conner_gray_bg"
-        android:text="保存长喷"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline7" />
 </androidx.constraintlayout.widget.ConstraintLayout>

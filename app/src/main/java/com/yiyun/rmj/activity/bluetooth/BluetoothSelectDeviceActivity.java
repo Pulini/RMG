@@ -2,6 +2,7 @@ package com.yiyun.rmj.activity.bluetooth;
 
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.gson.Gson;
 import com.hjq.toast.ToastUtils;
-import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
-import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+
+import com.yanzhenjie.recyclerview.OnItemClickListener;
+import com.yanzhenjie.recyclerview.SwipeMenuItem;
+import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 import com.yiyun.rmj.R;
 import com.yiyun.rmj.adapter.CommonRecyclerViewAdapter;
 import com.yiyun.rmj.adapter.CommonRecyclerViewHolder;
@@ -39,7 +37,7 @@ import java.util.ArrayList;
 //选择设备界面
 public class BluetoothSelectDeviceActivity extends BaseActivity implements View.OnClickListener {
 
-    SwipeMenuRecyclerView rv_list;
+    SwipeRecyclerView rv_list;
     ArrayList<BluetoothBean> listData;
     CommonRecyclerViewAdapter mAdapter;
 
@@ -77,42 +75,38 @@ public class BluetoothSelectDeviceActivity extends BaseActivity implements View.
         TextView tv_title = (TextView) findViewById(R.id.tv_title);
         tv_title.setText(getString(R.string.select_device));
 
-        rv_list = (SwipeMenuRecyclerView) findViewById(R.id.rv_list);
+        rv_list = (SwipeRecyclerView) findViewById(R.id.rv_list);
         rv_list.setLayoutManager(new LinearLayoutManager(this));
         //设置item下划线
         rv_list.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         //设置侧滑按钮
-        rv_list.setSwipeMenuCreator(new SwipeMenuCreator() {
-            @Override
-            public void onCreateMenu(SwipeMenu swipeMenu, SwipeMenu swipeMenu1, int i) {
-                SwipeMenuItem deleteItem1 = new SwipeMenuItem(BluetoothSelectDeviceActivity.this)
-                        .setBackgroundColorResource(R.color.colorb)
-                        .setText("修改")
-                        .setTextColor(getResources().getColor(R.color.white))
-                        .setTextSize(14)
-                        .setHeight(ViewGroup.LayoutParams.MATCH_PARENT)//设置高，这里使用match_parent，就是与item的高相同
-                        .setWidth(DisplayUtils.dp2px(BluetoothSelectDeviceActivity.this,50));//设置宽
-                swipeMenu1.addMenuItem(deleteItem1);//设置右边的侧滑
-
-                SwipeMenuItem deleteItem2 = new SwipeMenuItem(BluetoothSelectDeviceActivity.this)
-                        .setBackgroundColorResource(R.color.color_0036)
-                        .setText("删除")
-                        .setTextColor(getResources().getColor(R.color.white))
-                        .setTextSize(14)
-                        .setHeight(ViewGroup.LayoutParams.MATCH_PARENT)//设置高，这里使用match_parent，就是与item的高相同
-                        .setWidth(DisplayUtils.dp2px(BluetoothSelectDeviceActivity.this,50));//设置宽
-                swipeMenu1.addMenuItem(deleteItem2);//设置右边的侧滑
+        rv_list.setSwipeMenuCreator((leftMenu, rightMenu, position) -> {
+            if (0 != position) {
+                rightMenu.addMenuItem(
+                        new SwipeMenuItem(this)
+                                .setBackgroundColor(Color.parseColor("#BBBBBB"))
+                                .setText("修改")
+                                .setTextColor(Color.WHITE)
+                                .setTextSize(14)
+                                .setWidth(DisplayUtils.dp2px(this, 50))
+                                .setHeight(ViewGroup.LayoutParams.MATCH_PARENT)
+                );
+                rightMenu.addMenuItem(
+                        new SwipeMenuItem(this)
+                                .setBackgroundColor(Color.parseColor("#FE0036"))
+                                .setText("删除")
+                                .setTextColor(Color.WHITE)
+                                .setTextSize(14)
+                                .setWidth(DisplayUtils.dp2px(this, 50))
+                                .setHeight(ViewGroup.LayoutParams.MATCH_PARENT)
+                );
             }
         });
 
-        //设置侧滑菜单的点击事件
-        rv_list.setSwipeMenuItemClickListener(new SwipeMenuItemClickListener() {
-            @Override
-            public void onItemClick(SwipeMenuBridge menuBridge) {
-                menuBridge.closeMenu();
-                final int adapterPosition = menuBridge.getAdapterPosition(); // RecyclerView的Item的position。
-
-                if(menuBridge.getPosition() == 0){
+        rv_list.setOnItemMenuClickListener((menuBridge, adapterPosition) -> {
+            menuBridge.closeMenu();
+            if (menuBridge.getDirection() == SwipeRecyclerView.RIGHT_DIRECTION) {
+                if (menuBridge.getPosition() == 0) {
                     RoundEditDialog dialog = new RoundEditDialog(BluetoothSelectDeviceActivity.this, "", new RoundEditDialog.IDialogBtnLiscener() {
                         @Override
                         public void onCancel() {
@@ -135,8 +129,8 @@ public class BluetoothSelectDeviceActivity extends BaseActivity implements View.
                     // 然后弹出输入法
                     dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-                }else if(menuBridge.getPosition() == 1){
-
+                }
+                if(menuBridge.getPosition() == 1){
                     PermissionUtil.requestStoragePermission(BluetoothSelectDeviceActivity.this, new PermissionUtil.IRequestPermissionCallBack(){
                         @Override
                         public void permissionSuccess() {
@@ -150,20 +144,17 @@ public class BluetoothSelectDeviceActivity extends BaseActivity implements View.
         });
 
         //设置listview---item点击事件
-        rv_list.setSwipeItemClickListener(new SwipeItemClickListener() {
-            @Override
-            public void onItemClick(View itemView, int position) {
-                if(NewBleBluetoothUtil.getInstance().isBlueEnable()){
+        rv_list.setOnItemClickListener((itemView, position) -> {
+            if(NewBleBluetoothUtil.getInstance().isBlueEnable()){
 
-                    Intent connectingIntent = new Intent(BluetoothSelectDeviceActivity.this, BluetoothConnecttingDeviceActivity.class);
-                    connectingIntent.putExtra("deviceId",listData.get(position).getId());
-                    startActivity(connectingIntent);
-                    overridePendingTransition(R.anim.activity_rightclick_in, R.anim.activity_rightclick_out);
-                    finish();
+                Intent connectingIntent = new Intent(BluetoothSelectDeviceActivity.this, BluetoothConnecttingDeviceActivity.class);
+                connectingIntent.putExtra("deviceId",listData.get(position).getId());
+                startActivity(connectingIntent);
+                overridePendingTransition(R.anim.activity_rightclick_in, R.anim.activity_rightclick_out);
+                finish();
 
-                }else{
-                    ToastUtils.show("请先打开蓝牙");
-                }
+            }else{
+                ToastUtils.show("请先打开蓝牙");
             }
         });
 
