@@ -75,7 +75,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
     private BluetoothBean device;
     private FRDialog dialog;
     private int settingModel = 0;
-    private int cleanType=0;
+    private int cleanType = 0;
 
     private Handler handler = new Handler() {
         @Override
@@ -99,9 +99,15 @@ public class BluetoothMainActivity2 extends BaseActivity {
         findView();
         setClick();
         bluetoothUtil = NewBleBluetoothUtil.getInstance();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        }, 1000);
         bluetoothUtil.readVersion(values -> {
             for (byte value : values) {
-                Log.e("Pan","value="+value);
+                Log.e("Pan", "value=" + value);
             }
         });
         bluetoothUtil.setBlutToothListener(new NewBleBluetoothUtil.OnBlutToothListener() {
@@ -117,13 +123,13 @@ public class BluetoothMainActivity2 extends BaseActivity {
 
             @Override
             public void onSendFinish() {
-                if(cleanType==1){
-                    handler.postDelayed(() -> bt_cleanLeft.setBackgroundResource(R.drawable.btn_cleanleft),5000);
-                    cleanType=0;
+                if (cleanType == 1) {
+                    handler.postDelayed(() -> bt_cleanLeft.setBackgroundResource(R.drawable.btn_cleanleft), 5000);
+                    cleanType = 0;
                 }
-                if(cleanType==2){
-                    handler.postDelayed(() -> bt_cleanRight.setBackgroundResource(R.drawable.btn_cleanleft),5000);
-                    cleanType=0;
+                if (cleanType == 2) {
+                    handler.postDelayed(() -> bt_cleanRight.setBackgroundResource(R.drawable.btn_cleanleft), 5000);
+                    cleanType = 0;
                 }
                 readStatus();
             }
@@ -277,7 +283,8 @@ public class BluetoothMainActivity2 extends BaseActivity {
 //        readStatus();
         AddDevice();
     }
-    private void AddDevice(){
+
+    private void AddDevice() {
         AddDeviceParm addDeviceParm = new AddDeviceParm();
         addDeviceParm.setToken(SpfUtils.getSpfUtils(getApplicationContext()).getToken());
         addDeviceParm.setDeviceId(deviceId);
@@ -288,17 +295,17 @@ public class BluetoothMainActivity2 extends BaseActivity {
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
-                        Log.e("Pan","onCompleted");
+                        Log.e("Pan", "onCompleted");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("Pan","onError="+e.getMessage());
+                        Log.e("Pan", "onError=" + e.getMessage());
                     }
 
                     @Override
                     public void onNext(String add) {
-                        Log.e("Pan","onNext="+add);
+                        Log.e("Pan", "onNext=" + add);
                     }
                 });
     }
@@ -359,7 +366,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
             bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.clearleft, 0);
             bluetoothUtil.sendOrder();
             bt_cleanLeft.setBackgroundResource(R.drawable.btn_cleanright);
-            cleanType=1;
+            cleanType = 1;
         });
 
         bt_cleanRight.setOnClickListener(view -> {
@@ -369,7 +376,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
             bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.clearright, 0);
             bluetoothUtil.sendOrder();
             bt_cleanRight.setBackgroundResource(R.drawable.btn_cleanright);
-            cleanType=2;
+            cleanType = 2;
         });
 
 
@@ -391,9 +398,9 @@ public class BluetoothMainActivity2 extends BaseActivity {
                                 //初始为未选中状态
                                 data.setSelected(false);
                                 //模式相同进行内容匹配
-                                Log.e("Pan",data.getModel() == bm.getModel()?"模式符合":"模式不符合");
+                                Log.e("Pan", data.getModel() == bm.getModel() ? "模式符合" : "模式不符合");
                                 if (data.getModel() == bm.getModel()) {
-                                    Log.e("Pan","模式="+bm.getModel());
+                                    Log.e("Pan", "模式=" + bm.getModel());
                                     switch (data.getModel()) {
                                         case NewBleBluetoothUtil.mode_mild:
                                         case NewBleBluetoothUtil.mode_middle:
@@ -408,7 +415,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
                                                     data.getShortStrength() == bm.getShortStrength() &&
                                                     data.getLongTime() == bm.getLongTime() &&
                                                     data.getLongStrength() == bm.getLongStrength()) {
-                                                Log.e("Pan","模式一直");
+                                                Log.e("Pan", "模式一直");
                                                 isAlready = true;
                                                 data.setSelected(true);
                                             }
@@ -610,7 +617,6 @@ public class BluetoothMainActivity2 extends BaseActivity {
         bluetoothUtil.disconnectDevice();
         super.onDestroy();
     }
-
 
 
     @Override
