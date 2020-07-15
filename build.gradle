@@ -8,7 +8,7 @@ buildscript {
         google() //添加行
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.0'
+        classpath 'com.android.tools.build:gradle:4.0.1'
 //        classpath 'com.tencent.bugly:tinker-support:1.1.5'
 
         // NOTE: Do not place your application dependencies here; they belong

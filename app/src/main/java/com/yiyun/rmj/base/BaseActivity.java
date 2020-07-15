@@ -131,14 +131,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 //                    ToastUtils.show("强度设置失败");
 //                }
                 break;
-            case NewBleBluetoothUtil.mode_mild:
+            case NewBleBluetoothUtil.mode_auto_mild:
 //                if(status == BluetoothGatt.GATT_SUCCESS){
 //                    ToastUtils.show("智能模式强度小设置成功");
 //                }else{
 //                    ToastUtils.show("智能模式强度小设置失败");
 //                }
                 break;
-            case NewBleBluetoothUtil.mode_middle:
+            case NewBleBluetoothUtil.mode_auto_middle:
 //                if(status == BluetoothGatt.GATT_SUCCESS){
 //                    ToastUtils.show("智能模式强度中设置成功");
 //                }else{

@@ -11,6 +11,7 @@ import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -57,9 +58,9 @@ public class NewBleBluetoothUtil {
     public static final byte setcleartime = 0x58; //设置清洗时长  10进制：88
     public static final byte readstate = 0x53;//读状态  10进制：83
     public static final byte mode_short = 0x40;//短喷  10进制：64
-    public static final byte mode_mild = 0x41;//智能轻度模式  10进制：65
-    public static final byte mode_middle = 0x42;//智能中度模式 10进制：66
-    public static final byte mode_strength = 0x43;//智能强度模式 10进制：67
+    public static final byte mode_auto_mild = 0x41;//智能轻度模式  10进制：65
+    public static final byte mode_auto_middle = 0x42;//智能中度模式 10进制：66
+    public static final byte mode_auto_strength = 0x43;//智能强度模式 10进制：67
     public static final byte mode_long = 0x44;//长喷 10进制：68
     public static final byte mode_short_long = 0x45;//长喷加短喷 10进制：69
     public static final byte state_boot = 0x01; //开机状态
@@ -74,6 +75,7 @@ public class NewBleBluetoothUtil {
     public BluetoothGattCharacteristic opencloseCharacter;
     public BluetoothGattCharacteristic readVersion;
     private IReadInfoListener readInfoCallBack;
+    private OnVersionListener readVersionBack;
     private int orderSum = 0;
 
     public static synchronized NewBleBluetoothUtil getInstance() {
@@ -177,6 +179,7 @@ public class NewBleBluetoothUtil {
 //            orderQuee.remove(0);
 //        }
     }
+
     public synchronized void removeAllOrder() {
         orderQuee.clear();
     }
@@ -346,6 +349,9 @@ public class NewBleBluetoothUtil {
             super.onCharacteristicRead(gatt, characteristic, status);
             byte[] values = characteristic.getValue();
             removeOrderOnQuee(values[0]);
+            if (readVersionBack != null) {
+                readVersionBack.callBack(values);
+            }
             readInfoCallBack.callBack(values);
             sendOrder();
         }
@@ -353,8 +359,20 @@ public class NewBleBluetoothUtil {
         @Override
         public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
             super.onCharacteristicWrite(gatt, characteristic, status);
-            byte[] values = characteristic.getValue();
+//
+//            if(status == BluetoothGatt.GATT_SUCCESS){
+//                Log.e("Pan","写入成功");
+//                for (int i = 0; i < orderQuee.size(); i++) {
+//
+//                }
+//            }else if (status == BluetoothGatt.GATT_FAILURE) {
+//                Log.e("onCharacteristicWrite中", "写入失败");
+//            } else if (status == BluetoothGatt.GATT_WRITE_NOT_PERMITTED) {
+//                Log.e("onCharacteristicWrite中", "没权限");
+//            }
 
+
+            byte[] values = characteristic.getValue();
             if (status == BluetoothGatt.GATT_SUCCESS) {//写入成功
                 Log.e("Pan", "写入成功" + values[0]);
                 removeOrderOnQuee(values[0]);
@@ -409,8 +427,121 @@ public class NewBleBluetoothUtil {
         }
     }
 
-    public void sendAllOrder() {
 
+    public void sendOrders() {
+        new Thread(() -> {
+            for (Order order : orderQuee) {
+                send(order);
+                SystemClock.sleep(500);
+            }
+        }).start();
+
+    }
+
+    private void send(Order order) {
+        byte[] data;
+        switch (order.getOrder()) {
+            case clearleft:
+                //清洗左喷头
+                data = new byte[1];
+                data[0] = clearleft;
+                dataSend(data, opencloseCharacter);
+                break;
+            case clearright:
+                //清洗右喷头
+                data = new byte[1];
+                data[0] = clearright;
+                dataSend(data, opencloseCharacter);
+                break;
+            case setpoweronclear:
+                //设置上电自动清洗
+                data = new byte[1];
+                data[0] = setpoweronclear;
+                dataSend(data, opencloseCharacter);
+                break;
+            case forbidsetpoweronclear:
+                //禁止上电自动清洗
+                data = new byte[1];
+                data[0] = forbidsetpoweronclear;
+                dataSend(data, opencloseCharacter);
+                break;
+            case shortTime:
+                //设置短喷时间
+                data = new byte[2];
+                data[0] = shortTime;
+                data[1] = OX_ORDER[order.getIntdata()];
+                dataSend(data, writeCharacter);
+                break;
+            case shortStrength:
+                //设置短喷强度
+                data = new byte[2];
+                data[0] = shortStrength;
+                data[1] = OX_ORDER[order.getIntdata()];
+                dataSend(data, writeCharacter);
+                break;
+            case longTime:
+                //设置短喷强度
+                data = new byte[2];
+                data[0] = longTime;
+                data[1] = OX_ORDER[order.getIntdata()];
+                dataSend(data, writeCharacter);
+                break;
+            case longStrength:
+                //设置短喷强度
+                data = new byte[2];
+                data[0] = longStrength;
+                data[1] = OX_ORDER[order.getIntdata()];
+                dataSend(data, writeCharacter);
+                break;
+            case setcleartime:
+                //设置清洗时长
+                data = new byte[2];
+                data[0] = setcleartime;
+                data[1] = OX_ORDER[order.getIntdata()];
+                dataSend(data, writeCharacter);
+                break;
+            case mode_short:
+                //设置普通模式
+                data = new byte[1];
+                data[0] = mode_short;
+                dataSend(data, opencloseCharacter);
+                break;
+            case mode_long:
+                data = new byte[1];
+                data[0] = mode_long;
+                dataSend(data, opencloseCharacter);
+                break;
+            case mode_short_long:
+                data = new byte[1];
+                data[0] = mode_short_long;
+                dataSend(data, opencloseCharacter);
+                break;
+            case mode_auto_mild:
+                data = new byte[1];
+                data[0] = mode_auto_mild;
+                dataSend(data, opencloseCharacter);
+                break;
+            case mode_auto_middle:
+                data = new byte[1];
+                data[0] = mode_auto_middle;
+                dataSend(data, opencloseCharacter);
+                break;
+            case shutdown:
+                data = new byte[1];
+                data[0] = shutdown;
+                dataSend(data, opencloseCharacter);
+                break;
+            case boot:
+                data = new byte[1];
+                data[0] = boot;
+                dataSend(data, opencloseCharacter);
+                break;
+
+            case readStatuss:
+                mBluetoothGatt.readCharacteristic(readCharacter);
+                break;
+
+        }
     }
 
     /**
@@ -471,20 +602,22 @@ public class NewBleBluetoothUtil {
                 sendClearTime(order.intdata);
                 break;
             case mode_short:
-                //设置普通模式
                 setMode_Short();
                 break;
             case mode_long:
-                setMode_strength();
+                setMode_Long();
                 break;
             case mode_short_long:
                 setMode_ShortLong();
                 break;
-            case mode_mild:
+            case mode_auto_mild:
                 setMode_mild();
                 break;
-            case mode_middle:
+            case mode_auto_middle:
                 setMode_middle();
+                break;
+            case mode_auto_strength:
+                setMode_strength();
                 break;
             case readStatuss:
                 mBluetoothGatt.readCharacteristic(readCharacter);
@@ -509,7 +642,7 @@ public class NewBleBluetoothUtil {
                 writeCharacter = character;
             } else if (character.getUuid().toString().equals(character_Read_Number)) {
                 readCharacter = character;
-            }else if (character.getUuid().toString().equals(character_Read_Version)) {
+            } else if (character.getUuid().toString().equals(character_Read_Version)) {
                 readVersion = character;
             }
         }
@@ -541,11 +674,12 @@ public class NewBleBluetoothUtil {
         readInfoCallBack = readCallBack;
         mBluetoothGatt.readCharacteristic(readCharacter);
     }
+
     /**
      * 读取版本号
      */
-    public void readVersion(IReadInfoListener readCallBack) {
-        readInfoCallBack = readCallBack;
+    public void readVersion(OnVersionListener readCallBack) {
+        readVersionBack = readCallBack;
         mBluetoothGatt.readCharacteristic(readVersion);
     }
 
@@ -556,6 +690,10 @@ public class NewBleBluetoothUtil {
     }
 
     public interface IReadInfoListener {
+        void callBack(byte[] values);
+    }
+
+    public interface OnVersionListener {
         void callBack(byte[] values);
     }
 
@@ -606,6 +744,15 @@ public class NewBleBluetoothUtil {
     }
 
     /**
+     * 设置短喷
+     */
+    public void setMode_Long() {
+        byte[] data = new byte[1];
+        data[0] = mode_long;
+        dataSend(data, opencloseCharacter);
+    }
+
+    /**
      * 设置短喷+长喷
      */
     public void setMode_ShortLong() {
@@ -619,7 +766,7 @@ public class NewBleBluetoothUtil {
      */
     public void setMode_mild() {
         byte[] data = new byte[1];
-        data[0] = mode_mild;
+        data[0] = mode_auto_mild;
         dataSend(data, opencloseCharacter);
     }
 
@@ -628,7 +775,7 @@ public class NewBleBluetoothUtil {
      */
     public void setMode_middle() {
         byte[] data = new byte[1];
-        data[0] = mode_middle;
+        data[0] = mode_auto_middle;
         dataSend(data, opencloseCharacter);
     }
 
@@ -637,7 +784,7 @@ public class NewBleBluetoothUtil {
      */
     public void setMode_strength() {
         byte[] data = new byte[1];
-        data[0] = mode_long;
+        data[0] = mode_auto_mild;
         dataSend(data, opencloseCharacter);
     }
 

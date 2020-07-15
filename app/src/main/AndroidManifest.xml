@@ -117,6 +117,7 @@
         <activity android:name=".activity.bluetooth.BluetoothMainActivity2" />
         <activity android:name=".activity.bluetooth.BluetoothControlDetailActivity" />
         <activity android:name=".activity.bluetooth.BluetoothControlDetailActivity2" />
+        <activity android:name=".activity.bluetooth.BluetoothControlDetailActivity3" />
 
         <activity android:name=".activity.bluetooth.BluetoothAddDeviceActivity" />
         <activity android:name=".activity.ClipHeaderActivity" />

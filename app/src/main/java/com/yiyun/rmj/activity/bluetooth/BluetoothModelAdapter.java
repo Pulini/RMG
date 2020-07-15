@@ -75,21 +75,21 @@ public class BluetoothModelAdapter extends CommonRecyclerViewAdapter<SettingList
 
         sw_choice.setTrackResource(R.drawable.switch_custom_track_selector);
         switch (data.getModel()) {
-            case NewBleBluetoothUtil.mode_mild:
+            case NewBleBluetoothUtil.mode_auto_mild:
                 //智能模式 阅读
                 iv_auto.setVisibility(View.VISIBLE);
                 tv_auto.setVisibility(View.VISIBLE);
                 iv_auto.setBackgroundResource(data.isSelected() ? R.mipmap.intelligent_model_select : R.mipmap.intelligent_model_unselect);
                 tv_auto.setText("阅读模式");
                 break;
-            case NewBleBluetoothUtil.mode_middle:
+            case NewBleBluetoothUtil.mode_auto_middle:
                 //智能模式 电竞
                 iv_auto.setVisibility(View.VISIBLE);
                 tv_auto.setVisibility(View.VISIBLE);
                 iv_auto.setBackgroundResource(data.isSelected() ? R.mipmap.intelligent_model_select : R.mipmap.intelligent_model_unselect);
                 tv_auto.setText("电竞模式");
                 break;
-            case NewBleBluetoothUtil.mode_strength:
+            case NewBleBluetoothUtil.mode_auto_strength:
                 //智能模式 美容
                 iv_auto.setVisibility(View.VISIBLE);
                 tv_auto.setVisibility(View.VISIBLE);
@@ -120,8 +120,9 @@ public class BluetoothModelAdapter extends CommonRecyclerViewAdapter<SettingList
                 iv_model.setVisibility(View.VISIBLE);
                 tv_long.setVisibility(View.VISIBLE);
                 tv_modify.setVisibility(View.VISIBLE);
-                iv_model.setBackgroundColor(data.isSelected() ? Color.parseColor("#029DF9") : Color.parseColor("#dddddd"));
+                iv_model.setBackgroundColor(data.isSelected() ? Color.parseColor("#24F7A8") : Color.parseColor("#dddddd"));
                 tv_long.setText("长喷： 强度：" + strStrenth[data.getLongStrength() / 2 - 1] + "  时间：" + data.getLongTime() + "分");
+                sw_choice.setTrackResource(R.drawable.switch_track_green_selector);
                 break;
         }
         sw_choice.setOnCheckedChangeListener(null);

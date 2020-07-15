@@ -14,11 +14,11 @@ import java.io.Serializable;
 
 public class SettingListModel implements Serializable {
 
-    private int model = NewBleBluetoothUtil.mode_short_long;
-    private int shortTime = 1;
+    private int model = NewBleBluetoothUtil.mode_short;
+    private int shortTime = 5;
     private int shortStrength = 1;
     private int longTime = 1;
-    private int longStrength = 1;
+    private int longStrength = 2;
     private String modelName = "设置";
     private boolean isSelected = false;
 

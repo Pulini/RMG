@@ -32,10 +32,7 @@ import com.yiyun.rmj.dialog.RoundEditDialog;
 import com.yiyun.rmj.utils.DisplayUtils;
 import com.yiyun.rmj.utils.LogUtils;
 import com.yiyun.rmj.utils.PermissionUtil;
-import com.yiyun.rmj.utils.SpfUtils;
 import com.yiyun.rmj.view.ElectricView;
-
-import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -390,19 +387,19 @@ public class BluetoothActivity extends BaseActivity implements View.OnClickListe
             public void onClick(View view) {
                 switch (selectStrength) {
                     case 1:
-                        if (currentWorkMode != NewBleBluetoothUtil.mode_mild) {
-                            bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_mild, 0);
+                        if (currentWorkMode != NewBleBluetoothUtil.mode_auto_mild) {
+                            bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_auto_mild, 0);
                         }
                         bluetoothUtil.sendOrder();
                         break;
                     case 2:
-                        if (currentWorkMode != NewBleBluetoothUtil.mode_middle) {
-                            bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_middle, 0);
+                        if (currentWorkMode != NewBleBluetoothUtil.mode_auto_middle) {
+                            bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_auto_middle, 0);
                         }
                         bluetoothUtil.sendOrder();
                         break;
                     case 3:
-                        if (currentWorkMode != NewBleBluetoothUtil.mode_middle) {
+                        if (currentWorkMode != NewBleBluetoothUtil.mode_auto_middle) {
                             bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_long, 0);
                         }
                         bluetoothUtil.sendOrder();

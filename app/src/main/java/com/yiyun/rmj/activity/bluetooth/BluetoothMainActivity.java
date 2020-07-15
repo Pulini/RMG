@@ -346,10 +346,10 @@ public class BluetoothMainActivity extends BaseActivity implements View.OnClickL
             case NewBleBluetoothUtil.shortStrength:
                 currentStrength = orderInfo[1];
                 break;
-            case NewBleBluetoothUtil.mode_mild:
+            case NewBleBluetoothUtil.mode_auto_mild:
                 currentMode = 0x41;
                 break;
-            case NewBleBluetoothUtil.mode_middle:
+            case NewBleBluetoothUtil.mode_auto_middle:
                 currentMode = 0x42;
                 break;
             case NewBleBluetoothUtil.mode_long:
@@ -519,8 +519,8 @@ public class BluetoothMainActivity extends BaseActivity implements View.OnClickL
                 switch (selectStrength) {
                     case 1:
 
-                        if (currentMode != NewBleBluetoothUtil.mode_mild) {
-                            bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_mild, 0);
+                        if (currentMode != NewBleBluetoothUtil.mode_auto_mild) {
+                            bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_auto_mild, 0);
                         }
 //                        readStatusToQuee();
                         bluetoothUtil.sendOrder();
@@ -528,15 +528,15 @@ public class BluetoothMainActivity extends BaseActivity implements View.OnClickL
                         break;
                     case 2:
 
-                        if (currentMode != NewBleBluetoothUtil.mode_middle) {
-                            bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_middle, 0);
+                        if (currentMode != NewBleBluetoothUtil.mode_auto_middle) {
+                            bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_auto_middle, 0);
                         }
 //                        readStatusToQuee();
                         bluetoothUtil.sendOrder();
 
                         break;
                     case 3:
-                        if (currentMode != NewBleBluetoothUtil.mode_middle) {
+                        if (currentMode != NewBleBluetoothUtil.mode_auto_middle) {
                             bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_long, 0);
                         }
 //                        readStatusToQuee();

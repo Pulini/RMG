@@ -23,16 +23,19 @@ public class BluetoothModel {
     private int LongStrength = 0x00;
 
     public BluetoothModel(byte[] data) {
-        State = data[1];
-        ElectricityQuantity = data[2];
-        CleanTime = data[3];
-        ShortTime = data[4];
-        ShortStrength = data[5];
-        AutoClean = data[6];
-        Model = data[7];
-        LongTime = data[8];
-        LongStrength = data[9];
-
+        try {
+            State = data[1];
+            ElectricityQuantity = data[2];
+            CleanTime = data[3];
+            ShortTime = data[4];
+            ShortStrength = data[5];
+            AutoClean = data[6];
+            Model = data[7];
+            LongTime = data[8];
+            LongStrength = data[9];
+        }catch (Exception e){
+            LogUtils.LogE("设备状态数据异常" + data.toString());
+        }
         LogUtils.LogE("开机状态=" + State);
         LogUtils.LogE("剩余电量=" + ElectricityQuantity);
         LogUtils.LogE("清洗时长=" + CleanTime);
