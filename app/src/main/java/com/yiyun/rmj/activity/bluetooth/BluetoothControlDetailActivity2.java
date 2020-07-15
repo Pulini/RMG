@@ -56,8 +56,8 @@ public class BluetoothControlDetailActivity2 extends BaseActivity {
 
     private SettingListModel bsm = new SettingListModel();
     private int type = 0;
-    private int shortTime = 0;
-    private int longTime = 0;
+    private int shortTime = 5;
+    private int longTime = 1;
 
     @Override
     protected int getLayoutId() {
@@ -199,7 +199,7 @@ public class BluetoothControlDetailActivity2 extends BaseActivity {
             }
             wv_short.select(shortList.indexOf(bsm.getShortTime()));
             wv_long.select(longList.indexOf(bsm.getLongTime()));
-            pb_short.setCurrentStep(bsm.getShortStrength() - 1);
+            pb_short.setCurrentStep(bsm.getShortStrength()-1);
             pb_long.setCurrentStep(bsm.getLongStrength() / 2 - 1);
             Log.e("Pan", "shortList=" + shortList.indexOf(bsm.getShortTime()));
             Log.e("Pan", "longList=" + longList.indexOf(bsm.getLongTime()));

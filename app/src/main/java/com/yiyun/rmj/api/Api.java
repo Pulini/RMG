@@ -230,6 +230,11 @@ public interface Api {
     Observable<GetVersionBean> getVersion(@Query("desParams") String desParams);
 
 
+    //设备绑定
+    @POST("/AppHome/addDeviceRecord")
+    Observable<String> addDeviceRecord(@Query("desParams") String desParams);
+
+
 
 
 

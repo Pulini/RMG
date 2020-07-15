@@ -1,5 +1,7 @@
 package com.yiyun.rmj.activity.bluetooth;
 
+import com.yiyun.rmj.bluetooth.NewBleBluetoothUtil;
+
 import java.io.Serializable;
 
 /**
@@ -12,11 +14,11 @@ import java.io.Serializable;
 
 public class SettingListModel implements Serializable {
 
-    private int model = 0;
-    private int shortTime = 0;
-    private int shortStrength = 0;
-    private int longTime = 0;
-    private int longStrength = 0;
+    private int model = NewBleBluetoothUtil.mode_short_long;
+    private int shortTime = 1;
+    private int shortStrength = 1;
+    private int longTime = 1;
+    private int longStrength = 1;
     private String modelName = "设置";
     private boolean isSelected = false;
 

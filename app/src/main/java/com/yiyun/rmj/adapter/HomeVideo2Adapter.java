@@ -80,21 +80,16 @@ public class HomeVideo2Adapter extends RecyclerView.Adapter<HomeVideo2Adapter.Ho
         //设置返回键
         holder.gsyvp_player.getBackButton().setVisibility(View.GONE);
         //设置全屏按键功能
-        holder.gsyvp_player.getFullscreenButton().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.gsyvp_player.startWindowFullscreen(context, false, true);
-            }
-        });
+//        holder.gsyvp_player.getFullscreenButton().setOnClickListener(v -> holder.gsyvp_player.startWindowFullscreen(context, false, true));
         //防止错位设置
         holder.gsyvp_player.setPlayTag(dataList.get(position).VideoUrl);
         holder.gsyvp_player.setPlayPosition(position);
         //是否根据视频尺寸，自动选择竖屏全屏或者横屏全屏
-        holder.gsyvp_player.setAutoFullWithSize(true);
+//        holder.gsyvp_player.setAutoFullWithSize(true);
         //音频焦点冲突时是否释放
         holder.gsyvp_player.setReleaseWhenLossAudio(false);
         //全屏动画
-        holder.gsyvp_player.setShowFullAnimation(true);
+//        holder.gsyvp_player.setShowFullAnimation(true);
         //小屏时不触摸滑动
         holder.gsyvp_player.setIsTouchWiget(false);
 

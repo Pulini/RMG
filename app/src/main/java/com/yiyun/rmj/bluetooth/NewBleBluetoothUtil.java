@@ -35,6 +35,8 @@ public class NewBleBluetoothUtil {
     public static final String character_Oen_Close_Number = "0000fff1-0000-1000-8000-00805f9b34fb"; //开关量命令特征号
     public static final String character_write_Number = "0000fff5-0000-1000-8000-00805f9b34fb"; //写特征号
     public static final String character_Read_Number = "0000fff6-0000-1000-8000-00805f9b34fb"; //读特征号
+    public static final String character_Read_Version = "0000fff2-0000-1000-8000-00805f9b34fb"; //读特版本
+
     public static final byte[] OX_ORDER = {
             0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, (byte) 0x0a, (byte) 0x0b, (byte) 0x0c, (byte) 0x0d, (byte) 0x0e, (byte) 0x0f,
             0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, (byte) 0x1a, (byte) 0x1b, (byte) 0x1c, (byte) 0x1d, (byte) 0x1e, (byte) 0x1f,
@@ -48,8 +50,10 @@ public class NewBleBluetoothUtil {
     public static final byte clearright = 0x20; //清洗右喷头 10进制：32
     public static final byte setpoweronclear = 0x31; //设置上电自动清洗  10进制：49
     public static final byte forbidsetpoweronclear = 0x30; //禁止上电自动清洗 10进制：48
-    public static final byte settimeinterval = 0x54; //设置时间间隔  10进制：84
-    public static final byte setstrenth = 0x57; //设置喷雾强度  10进制：87
+    public static final byte shortTime = 0x54; //设置短喷时间  10进制：84
+    public static final byte shortStrength = 0x57; //设置短喷强度  10进制：87
+    public static final byte longTime = 0x55; //设置长喷时间  10进制：87
+    public static final byte longStrength = 0x56; //设置长喷强度  10进制：87
     public static final byte setcleartime = 0x58; //设置清洗时长  10进制：88
     public static final byte readstate = 0x53;//读状态  10进制：83
     public static final byte mode_short = 0x40;//短喷  10进制：64
@@ -68,8 +72,9 @@ public class NewBleBluetoothUtil {
     public BluetoothGattCharacteristic readCharacter;
     public BluetoothGattCharacteristic writeCharacter;
     public BluetoothGattCharacteristic opencloseCharacter;
+    public BluetoothGattCharacteristic readVersion;
     private IReadInfoListener readInfoCallBack;
-    private int orderSum=0;
+    private int orderSum = 0;
 
     public static synchronized NewBleBluetoothUtil getInstance() {
         if (instance == null) {
@@ -85,7 +90,9 @@ public class NewBleBluetoothUtil {
 
     public interface OnBlutToothListener {
         void onStartSend(int Orders);
-        void onSending(int index,int Orders);
+
+        void onSending(int index, int Orders);
+
         void onSendFinish();
     }
 
@@ -148,6 +155,7 @@ public class NewBleBluetoothUtil {
     }
 
     public synchronized Order getOrderFromQuee() {
+        Log.e("Pan", "orderQuee=" + orderQuee.size());
         if (orderQuee.size() == 0) {
             return null;
         } else {
@@ -168,6 +176,9 @@ public class NewBleBluetoothUtil {
 //        if(orderQuee.size() != 0){
 //            orderQuee.remove(0);
 //        }
+    }
+    public synchronized void removeAllOrder() {
+        orderQuee.clear();
     }
 
     public boolean bluetoothEnable() {
@@ -348,17 +359,17 @@ public class NewBleBluetoothUtil {
                 Log.e("Pan", "写入成功" + values[0]);
                 removeOrderOnQuee(values[0]);
                 currentContext.showOrderMessage(values, status);
-                if(orderQuee.size()>0){
-                    if(listener!=null){
+                if (orderQuee.size() > 0) {
+                    if (listener != null) {
                         LogUtils.LogE("onSending-----------------");
-                        listener.onSending(orderSum-orderQuee.size(),orderSum);
+                        listener.onSending(orderSum - orderQuee.size(), orderSum);
                     }
                     Log.e("Pan", "发送下一条协议");
                     sendOrder();
                 }
-                if(orderQuee.size()==0){
-                    isSending=false;
-                    if(listener!=null){
+                if (orderQuee.size() == 0) {
+                    isSending = false;
+                    if (listener != null) {
                         LogUtils.LogE("onSendFinish-----------------");
                         listener.onSendFinish();
                     }
@@ -411,16 +422,16 @@ public class NewBleBluetoothUtil {
         if (order == null) {
             return;
         }
-
-        if(!isSending){
-            isSending=true;
+        Log.e("Pan", "isSending=" + isSending);
+        if (!isSending) {
+            isSending = true;
             if (listener != null) {
-                orderSum=orderQuee.size();
+                orderSum = orderQuee.size();
                 LogUtils.LogE("onStartSend-----------------");
                 listener.onStartSend(orderSum);
             }
         }
-        Log.e("bcz", "Order is :" + new Gson().toJson(order));
+        Log.e("bcz", "Order is :" + new Gson().toJson(order.getOrder()));
 
         switch (order.getOrder()) {
             case clearleft:
@@ -439,13 +450,21 @@ public class NewBleBluetoothUtil {
                 //禁止上电自动清洗
                 sendForbidClearOnPower();
                 break;
-            case settimeinterval:
-                //设置时间间隔
-                sendTimeinterval(order.intdata);
+            case shortTime:
+                //设置短喷时间
+                sendShortTime(order.intdata);
                 break;
-            case setstrenth:
-                //设置喷雾强度
-                sendStrenth(order.intdata);
+            case shortStrength:
+                //设置短喷强度
+                sendShortStrenth(order.intdata);
+                break;
+            case longTime:
+                //设置短喷强度
+                sendLongTime(order.intdata);
+                break;
+            case longStrength:
+                //设置短喷强度
+                sendLongStrenth(order.intdata);
                 break;
             case setcleartime:
                 //设置清洗时长
@@ -453,16 +472,19 @@ public class NewBleBluetoothUtil {
                 break;
             case mode_short:
                 //设置普通模式
-                setMode_normal();
+                setMode_Short();
+                break;
+            case mode_long:
+                setMode_strength();
+                break;
+            case mode_short_long:
+                setMode_ShortLong();
                 break;
             case mode_mild:
                 setMode_mild();
                 break;
             case mode_middle:
                 setMode_middle();
-                break;
-            case mode_long:
-                setMode_strength();
                 break;
             case readStatuss:
                 mBluetoothGatt.readCharacteristic(readCharacter);
@@ -487,6 +509,8 @@ public class NewBleBluetoothUtil {
                 writeCharacter = character;
             } else if (character.getUuid().toString().equals(character_Read_Number)) {
                 readCharacter = character;
+            }else if (character.getUuid().toString().equals(character_Read_Version)) {
+                readVersion = character;
             }
         }
     }
@@ -516,6 +540,13 @@ public class NewBleBluetoothUtil {
     public void readStatus(IReadInfoListener readCallBack) {
         readInfoCallBack = readCallBack;
         mBluetoothGatt.readCharacteristic(readCharacter);
+    }
+    /**
+     * 读取版本号
+     */
+    public void readVersion(IReadInfoListener readCallBack) {
+        readInfoCallBack = readCallBack;
+        mBluetoothGatt.readCharacteristic(readVersion);
     }
 
     public void readStatusToQuee(IReadInfoListener readCallBack) {
@@ -566,11 +597,20 @@ public class NewBleBluetoothUtil {
 
 
     /**
-     * 设置普通模式
+     * 设置短喷
      */
-    public void setMode_normal() {
+    public void setMode_Short() {
         byte[] data = new byte[1];
         data[0] = mode_short;
+        dataSend(data, opencloseCharacter);
+    }
+
+    /**
+     * 设置短喷+长喷
+     */
+    public void setMode_ShortLong() {
+        byte[] data = new byte[1];
+        data[0] = mode_short_long;
         dataSend(data, opencloseCharacter);
     }
 
@@ -606,9 +646,9 @@ public class NewBleBluetoothUtil {
      *
      * @param time 时间间隔
      */
-    public void sendTimeinterval(int time) {
+    public void sendShortTime(int time) {
         byte[] data = new byte[2];
-        data[0] = settimeinterval;
+        data[0] = shortTime;
         data[1] = OX_ORDER[time];
         dataSend(data, writeCharacter);
     }
@@ -618,10 +658,38 @@ public class NewBleBluetoothUtil {
      *
      * @param stength 强度
      */
-    public void sendStrenth(int stength) {
+    public void sendShortStrenth(int stength) {
         try {
             byte[] data = new byte[2];
-            data[0] = setstrenth;
+            data[0] = shortStrength;
+            data[1] = OX_ORDER[stength];
+            dataSend(data, writeCharacter);
+        } catch (ArrayIndexOutOfBoundsException e) {
+
+        }
+    }
+
+    /**
+     * 设置时间间隔
+     *
+     * @param time 时间间隔
+     */
+    public void sendLongTime(int time) {
+        byte[] data = new byte[2];
+        data[0] = longTime;
+        data[1] = OX_ORDER[time];
+        dataSend(data, writeCharacter);
+    }
+
+    /**
+     * 设置喷雾强度
+     *
+     * @param stength 强度
+     */
+    public void sendLongStrenth(int stength) {
+        try {
+            byte[] data = new byte[2];
+            data[0] = longStrength;
             data[1] = OX_ORDER[stength];
             dataSend(data, writeCharacter);
         } catch (ArrayIndexOutOfBoundsException e) {

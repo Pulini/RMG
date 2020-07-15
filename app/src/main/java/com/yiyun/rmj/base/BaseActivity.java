@@ -114,7 +114,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 }
                 break;
 
-            case NewBleBluetoothUtil.setstrenth:
+            case NewBleBluetoothUtil.shortStrength:
 //                if(status == BluetoothGatt.GATT_SUCCESS){
 //                    String strength = "阅读模式";
 //                    if(orderInfo[1] == 1){
@@ -154,13 +154,13 @@ public abstract class BaseActivity extends AppCompatActivity {
                 break;
 
             case NewBleBluetoothUtil.setcleartime:
-                if(status == BluetoothGatt.GATT_SUCCESS){
-                    ToastUtils.show("设置清洗时间成功，当前清洗时间：" + orderInfo[1] + "秒");
-                }else{
-                    ToastUtils.show("设置清洗时间失败");
-                }
+//                if(status == BluetoothGatt.GATT_SUCCESS){
+//                    ToastUtils.show("设置清洗时间成功，当前清洗时间：" + orderInfo[1] + "秒");
+//                }else{
+//                    ToastUtils.show("设置清洗时间失败");
+//                }
 
-            case NewBleBluetoothUtil.settimeinterval:
+            case NewBleBluetoothUtil.shortTime:
 //                if(status == BluetoothGatt.GATT_SUCCESS){
 //                    ToastUtils.show("设置间隔时间成功，当前间隔时间：" + orderInfo[1] + "秒");
 //                }else{
@@ -169,19 +169,19 @@ public abstract class BaseActivity extends AppCompatActivity {
                 break;
 
             case NewBleBluetoothUtil.clearleft:
-                if(status == BluetoothGatt.GATT_SUCCESS){
-                    ToastUtils.show("清洗左喷头指令发送成功");
-                }else{
-                    ToastUtils.show("清洗左喷头指令发送失败");
-                }
+//                if(status == BluetoothGatt.GATT_SUCCESS){
+//                    ToastUtils.show("清洗左喷头指令发送成功");
+//                }else{
+//                    ToastUtils.show("清洗左喷头指令发送失败");
+//                }
                 break;
 
             case NewBleBluetoothUtil.clearright:
-                if(status == BluetoothGatt.GATT_SUCCESS){
-                    ToastUtils.show("清洗右喷头指令发送成功");
-                }else{
-                    ToastUtils.show("清洗右喷头指令发送失败");
-                }
+//                if(status == BluetoothGatt.GATT_SUCCESS){
+//                    ToastUtils.show("清洗右喷头指令发送成功");
+//                }else{
+//                    ToastUtils.show("清洗右喷头指令发送失败");
+//                }
                 break;
         }
     }

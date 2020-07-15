@@ -24,7 +24,11 @@ public class BluetoothModelAdapter extends CommonRecyclerViewAdapter<SettingList
 
     public interface OnItemClickListener {
         void OnItemClick(int position);
-        void SettingAutoModel();
+
+        void SettingAutoModel(boolean isChecked);
+
+        void SelectModel(int position, boolean isChecked);
+
         void OnItemModifyClick(int position);
     }
 
@@ -43,8 +47,8 @@ public class BluetoothModelAdapter extends CommonRecyclerViewAdapter<SettingList
     public void convert(CommonRecyclerViewHolder h, SettingListModel data, int position) {
         h.itemView.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, SizeUtils.dp2px(context, 80)));
         h.itemView.setOnClickListener(view -> {
-            if (position>0) {
-                listener.OnItemClick(position);
+            if (position > 0) {
+                listener.OnItemClick(h.getAdapterPosition());
             }
         });
         TextView tv_remark = h.getView(R.id.tv_remark);
@@ -59,13 +63,6 @@ public class BluetoothModelAdapter extends CommonRecyclerViewAdapter<SettingList
 
         tv_modify.setOnClickListener(view -> listener.OnItemModifyClick(position));
 
-        sw_choice.setOnCheckedChangeListener(null);
-        sw_choice.setChecked(data.isSelected());
-        sw_choice.setOnCheckedChangeListener((compoundButton, b) -> {
-            if(position==0&&b){
-                listener.SettingAutoModel();
-            }
-        });
 
         iv_model.setVisibility(View.GONE);
         iv_auto.setVisibility(View.GONE);
@@ -76,7 +73,7 @@ public class BluetoothModelAdapter extends CommonRecyclerViewAdapter<SettingList
 
         tv_remark.setText(data.getModelName());
 
-
+        sw_choice.setTrackResource(R.drawable.switch_custom_track_selector);
         switch (data.getModel()) {
             case NewBleBluetoothUtil.mode_mild:
                 //智能模式 阅读
@@ -106,8 +103,9 @@ public class BluetoothModelAdapter extends CommonRecyclerViewAdapter<SettingList
                 tv_long.setVisibility(View.VISIBLE);
                 tv_modify.setVisibility(View.VISIBLE);
                 iv_model.setBackgroundColor(data.isSelected() ? Color.parseColor("#24F7A8") : Color.parseColor("#dddddd"));
-                tv_short.setText("短喷： 强度：" + strStrenth[data.getShortStrength()] + "  时间：" + data.getShortTime() + "秒");
-                tv_long.setText("长喷： 强度：" + strStrenth[data.getLongStrength()/2-1] + "  时间：" + data.getLongTime() + "分");
+                tv_short.setText("短喷： 强度：" + strStrenth[data.getShortStrength() - 1] + "  时间：" + data.getShortTime() + "秒");
+                tv_long.setText("长喷： 强度：" + strStrenth[data.getLongStrength() / 2 - 1] + "  时间：" + data.getLongTime() + "分");
+                sw_choice.setTrackResource(R.drawable.switch_track_green_selector);
                 break;
             case NewBleBluetoothUtil.mode_short:
                 //（短）模式
@@ -115,7 +113,7 @@ public class BluetoothModelAdapter extends CommonRecyclerViewAdapter<SettingList
                 tv_short.setVisibility(View.VISIBLE);
                 tv_modify.setVisibility(View.VISIBLE);
                 iv_model.setBackgroundColor(data.isSelected() ? Color.parseColor("#029DF9") : Color.parseColor("#dddddd"));
-                tv_short.setText("短喷： 强度：" + strStrenth[data.getShortStrength()] + "  时间：" + data.getShortTime() + "秒");
+                tv_short.setText("短喷： 强度：" + strStrenth[data.getShortStrength() - 1] + "  时间：" + data.getShortTime() + "秒");
                 break;
             case NewBleBluetoothUtil.mode_long:
                 //（长）模式
@@ -123,9 +121,25 @@ public class BluetoothModelAdapter extends CommonRecyclerViewAdapter<SettingList
                 tv_long.setVisibility(View.VISIBLE);
                 tv_modify.setVisibility(View.VISIBLE);
                 iv_model.setBackgroundColor(data.isSelected() ? Color.parseColor("#029DF9") : Color.parseColor("#dddddd"));
-                tv_long.setText("长喷： 强度：" + strStrenth[data.getLongStrength()/2-1] + "  时间：" + data.getLongTime() + "分");
+                tv_long.setText("长喷： 强度：" + strStrenth[data.getLongStrength() / 2 - 1] + "  时间：" + data.getLongTime() + "分");
                 break;
         }
+        sw_choice.setOnCheckedChangeListener(null);
+        sw_choice.setChecked(data.isSelected());
+        sw_choice.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (position == 0) {
+                listener.SettingAutoModel(b);
+            } else {
+                listener.SelectModel(h.getAdapterPosition(), b);
+            }
+            iv_auto.setBackgroundResource(data.isSelected() ? R.mipmap.intelligent_model_select : R.mipmap.intelligent_model_unselect);
+            iv_model.setBackgroundColor(
+                    data.isSelected() ?
+                            NewBleBluetoothUtil.mode_short_long == data.getModel() ?
+                                    Color.parseColor("#24F7A8") : Color.parseColor("#029DF9")
+                            : Color.parseColor("#dddddd")
+            );
+        });
     }
 
     @Override

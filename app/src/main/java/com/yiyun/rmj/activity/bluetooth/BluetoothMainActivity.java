@@ -38,11 +38,8 @@ import com.yiyun.rmj.dialog.RoundEditDialog;
 import com.yiyun.rmj.utils.DisplayUtils;
 import com.yiyun.rmj.utils.LogUtils;
 import com.yiyun.rmj.utils.PermissionUtil;
-import com.yiyun.rmj.utils.SpfUtils;
 import com.yiyun.rmj.utils.StatusBarUtil;
 import com.yiyun.rmj.view.ElectricView;
-
-import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -346,7 +343,7 @@ public class BluetoothMainActivity extends BaseActivity implements View.OnClickL
             case NewBleBluetoothUtil.boot:
                 currentBootState = 0x01;
                 break;
-            case NewBleBluetoothUtil.setstrenth:
+            case NewBleBluetoothUtil.shortStrength:
                 currentStrength = orderInfo[1];
                 break;
             case NewBleBluetoothUtil.mode_mild:
@@ -361,7 +358,7 @@ public class BluetoothMainActivity extends BaseActivity implements View.OnClickL
             case NewBleBluetoothUtil.mode_short:
                 currentMode = 0x40;
                 break;
-            case NewBleBluetoothUtil.settimeinterval:
+            case NewBleBluetoothUtil.shortTime:
                 currentIntervalTime = orderInfo[1];
                 break;
         }
@@ -711,8 +708,8 @@ public class BluetoothMainActivity extends BaseActivity implements View.OnClickL
                             listData.get(adapterPosition).delete();
                             listData.remove(adapterPosition);
                             if (listData.size() == 1) {
-                                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.settimeinterval, 5);
-                                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setstrenth, 64);
+                                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.shortTime, 5);
+                                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.shortStrength, 64);
                                 bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.boot, 0);
                                 bluetoothUtil.sendOrder();
                             }
@@ -892,12 +889,12 @@ public class BluetoothMainActivity extends BaseActivity implements View.OnClickL
                         if (settingBean_nodify.isSelected()) {
 
                             if (currentStrength != settingBean_nodify.getStrength()) {
-                                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setstrenth, settingBean_nodify.getStrength());
+                                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.shortStrength, settingBean_nodify.getStrength());
                                 bluetoothUtil.sendOrder();
                             }
 
                             if (currentIntervalTime != settingBean_nodify.getTime()) {
-                                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.settimeinterval, settingBean_nodify.getTime());
+                                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.shortTime, settingBean_nodify.getTime());
                                 bluetoothUtil.sendOrder();
                             }
 
@@ -1153,8 +1150,8 @@ public class BluetoothMainActivity extends BaseActivity implements View.OnClickL
                         }
                     }
                     if (isClose) {
-                        bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.settimeinterval, 5);
-                        bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setstrenth, 64);
+                        bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.shortTime, 5);
+                        bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.shortStrength, 64);
                         bluetoothUtil.sendOrder();
 //                        bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.boot, 0);
                     }
@@ -1239,13 +1236,13 @@ public class BluetoothMainActivity extends BaseActivity implements View.OnClickL
             //启动普通模式的强度指令
             BluetoothSettingBean settingBean = listData.get(position);
             if (settingBean.getTime() != currentIntervalTime) {
-                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.settimeinterval, settingBean.getTime());
+                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.shortTime, settingBean.getTime());
                 currentIntervalTime = settingBean.getTime();
                 bluetoothUtil.sendOrder();
             }
 
             if (settingBean.getStrength() != currentStrength) {
-                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setstrenth, settingBean.getStrength());
+                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.shortStrength, settingBean.getStrength());
                 currentStrength = settingBean.getStrength();
                 bluetoothUtil.sendOrder();
             }
