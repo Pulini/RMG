@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
+import com.shuyu.gsyvideoplayer.utils.GSYVideoHelper;
 import com.yiyun.rmj.R;
 import com.yiyun.rmj.activity.BannerHolder;
 import com.yiyun.rmj.bean.VideoModel;
@@ -37,6 +39,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final int TYPE_PRODUCT = 1;
     public static final int TYPE_VIDEO = 2;
     public static final int TYPE_FOOT = 3;
+
     public List<VideoModel> videoData = new ArrayList<>();
     public List<RotationBean.SlidePicture> bannerData = new ArrayList<>();
     public List<ProductBean.Data> productData = new ArrayList<>();

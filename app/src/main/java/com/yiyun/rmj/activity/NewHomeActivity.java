@@ -2,12 +2,15 @@ package com.yiyun.rmj.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -19,9 +22,13 @@ import android.widget.TextView;
 
 import com.hjq.toast.ToastUtils;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
+import com.shuyu.gsyvideoplayer.utils.GSYVideoHelper;
 import com.yiyun.rmj.R;
 import com.yiyun.rmj.activity.bluetooth.BluetoothSelectDeviceActivity;
 import com.yiyun.rmj.adapter.HomeAdapter;
+import com.yiyun.rmj.adapter.HomeVideo2Adapter;
+import com.yiyun.rmj.adapter.MyHomeAdapter;
 import com.yiyun.rmj.base.BaseActivity;
 import com.yiyun.rmj.bean.VideoModel;
 import com.yiyun.rmj.bean.apibase.BaseParm;
@@ -124,6 +131,7 @@ public class NewHomeActivity extends BaseActivity {
     };
     private Context context;
 
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_home2;
@@ -136,6 +144,13 @@ public class NewHomeActivity extends BaseActivity {
         findView();
         setView();
         initUpdateDialog();
+    }
+
+    public void stopVideo() {
+        HomeAdapter.VideoHolder videoHolder = (HomeAdapter.VideoHolder) rv_home.findViewHolderForAdapterPosition(3);
+
+//        videoHolder.gsyvp_player.setBackgroundColor(Color.parseColor("#55FFFF"));
+
     }
 
     public void findView() {
@@ -153,6 +168,7 @@ public class NewHomeActivity extends BaseActivity {
 
     public void setView() {
 
+
         ha = new HomeAdapter(this, getWindowManager().getDefaultDisplay().getWidth(), getWindowManager().getDefaultDisplay().getHeight());
         rv_home.setLayoutManager(new LinearLayoutManager(this));
         rv_home.setAdapter(ha);
@@ -167,9 +183,9 @@ public class NewHomeActivity extends BaseActivity {
             public void onClick(View v) {
 //                Ali.LoginIM(getApplicationContext());
                 String token = SpfUtils.getSpfUtils(getApplicationContext()).getToken();
-                if(token.isEmpty()){
+                if (token.isEmpty()) {
                     startlogin();
-                }else{
+                } else {
                     startActivity(new Intent(context, BluetoothSelectDeviceActivity.class));
                 }
             }
@@ -251,14 +267,14 @@ public class NewHomeActivity extends BaseActivity {
         parmDes = DESHelper.encrypt(parmStr);
         getCommodityList();
 
-        Log.e("Pan","isNeedUpdate="+SpfUtils.getSpfUtils(NewHomeActivity.this).isNeedUpdate());
+        Log.e("Pan", "isNeedUpdate=" + SpfUtils.getSpfUtils(NewHomeActivity.this).isNeedUpdate());
         //每次打开App的时候检测
         if (SpfUtils.getSpfUtils(NewHomeActivity.this).isNeedUpdate()) {
             SpfUtils.getSpfUtils(NewHomeActivity.this).setIsNeedUpdate(false);
             GetVersionParm getVersionParm = new GetVersionParm();
             getVersionParm.setDevice("android");
             String getVersionParms = DESHelper.encrypt(gson.toJson(getVersionParm));
-            Log.e("Pan","----------------检查更新------------------");
+            Log.e("Pan", "----------------检查更新------------------");
             getVersion(getVersionParms);
         }
     }
