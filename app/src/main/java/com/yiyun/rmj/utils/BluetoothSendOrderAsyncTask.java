@@ -109,35 +109,35 @@ public class BluetoothSendOrderAsyncTask extends AsyncTask<ArrayList<NewBleBluet
                 //设置短喷时间
                 data = new byte[2];
                 data[0] = shortTime;
-                data[1] = OX_ORDER[order.getIntdata()];
+                data[1] = OX_ORDER[order.getIntdata().get(0)];
                 dataSend(data, writeCharacter);
                 break;
             case shortStrength:
                 //设置短喷强度
                 data = new byte[2];
                 data[0] = shortStrength;
-                data[1] = OX_ORDER[order.getIntdata()];
+                data[1] = OX_ORDER[order.getIntdata().get(0)];
                 dataSend(data, writeCharacter);
                 break;
             case longTime:
                 //设置短喷强度
                 data = new byte[2];
                 data[0] = longTime;
-                data[1] = OX_ORDER[order.getIntdata()];
+                data[1] = OX_ORDER[order.getIntdata().get(0)];
                 dataSend(data, writeCharacter);
                 break;
             case longStrength:
                 //设置短喷强度
                 data = new byte[2];
                 data[0] = longStrength;
-                data[1] = OX_ORDER[order.getIntdata()];
+                data[1] = OX_ORDER[order.getIntdata().get(0)];
                 dataSend(data, writeCharacter);
                 break;
             case setcleartime:
                 //设置清洗时长
                 data = new byte[2];
                 data[0] = setcleartime;
-                data[1] = OX_ORDER[order.getIntdata()];
+                data[1] = OX_ORDER[order.getIntdata().get(0)];
                 dataSend(data, writeCharacter);
                 break;
             case mode_short:

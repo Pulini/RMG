@@ -42,7 +42,11 @@ public class NewBleBluetoothUtil {
             0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, (byte) 0x0a, (byte) 0x0b, (byte) 0x0c, (byte) 0x0d, (byte) 0x0e, (byte) 0x0f,
             0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, (byte) 0x1a, (byte) 0x1b, (byte) 0x1c, (byte) 0x1d, (byte) 0x1e, (byte) 0x1f,
             0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29, (byte) 0x2a, (byte) 0x2b, (byte) 0x2c, (byte) 0x2d, (byte) 0x2e, (byte) 0x2f,
-            0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, (byte) 0x3a, (byte) 0x3b, (byte) 0x3c, (byte) 0x3d, (byte) 0x3e, (byte) 0x3f
+            0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, (byte) 0x3a, (byte) 0x3b, (byte) 0x3c, (byte) 0x3d, (byte) 0x3e, (byte) 0x3f,
+            0x40, 0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47, 0x48, 0x49, (byte) 0x4a, (byte) 0x4b, (byte) 0x4c, (byte) 0x4d, (byte) 0x4e, (byte) 0x4f,
+            0x50, 0x51, 0x52, 0x53, 0x54, 0x55, 0x56, 0x57, 0x58, 0x59, (byte) 0x5a, (byte) 0x5b, (byte) 0x5c, (byte) 0x5d, (byte) 0x5e, (byte) 0x5f,
+            0x60, 0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, 0x68, 0x69, (byte) 0x3a, (byte) 0x6b, (byte) 0x6c, (byte) 0x6d, (byte) 0x6e, (byte) 0x6f,
+            0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x77, 0x78, 0x79, (byte) 0x7a, (byte) 0x7b, (byte) 0x7c, (byte) 0x7d, (byte) 0x7e, (byte) 0x7f,
     };
 
     public static final byte boot = 0x11; //开机
@@ -56,6 +60,7 @@ public class NewBleBluetoothUtil {
     public static final byte longTime = 0x55; //设置长喷时间  10进制：87
     public static final byte longStrength = 0x56; //设置长喷强度  10进制：87
     public static final byte setcleartime = 0x58; //设置清洗时长  10进制：88
+    public static final byte longOrder = 0x59; //设置清洗时长  10进制：89
     public static final byte readstate = 0x53;//读状态  10进制：83
     public static final byte mode_short = 0x40;//短喷  10进制：64
     public static final byte mode_auto_mild = 0x41;//智能轻度模式  10进制：65
@@ -140,10 +145,14 @@ public class NewBleBluetoothUtil {
      *
      * @param order
      */
-    public synchronized void addOrderToQuee(byte order, int param) {
+    public synchronized void addOrderToQuee(byte order, int... param) {
         for (Order b : orderQuee) {
             if (b.getOrder() == order) {
-                b.setIntdata(param);
+                List<Integer> list = new ArrayList<>();
+                for (int i : param) {
+                    list.add(i);
+                }
+                b.setIntdata(list);
                 return;
             }
         }
@@ -152,7 +161,11 @@ public class NewBleBluetoothUtil {
         //设置指令
         order1.setOrder(order);
         //设置指令参数
-        order1.setIntdata(param);
+        List<Integer> list = new ArrayList<>();
+        for (int i : param) {
+            list.add(i);
+        }
+        order1.setIntdata(list);
         orderQuee.add(order1);
     }
 
@@ -428,7 +441,7 @@ public class NewBleBluetoothUtil {
     }
 
 
-    public void sendOrders() {
+   /* public void sendOrders() {
         new Thread(() -> {
             for (Order order : orderQuee) {
                 send(order);
@@ -469,35 +482,35 @@ public class NewBleBluetoothUtil {
                 //设置短喷时间
                 data = new byte[2];
                 data[0] = shortTime;
-                data[1] = OX_ORDER[order.getIntdata()];
+                data[1] = OX_ORDER[order.getIntdata().get(0)];
                 dataSend(data, writeCharacter);
                 break;
             case shortStrength:
                 //设置短喷强度
                 data = new byte[2];
                 data[0] = shortStrength;
-                data[1] = OX_ORDER[order.getIntdata()];
+                data[1] = OX_ORDER[order.getIntdata().get(0)];
                 dataSend(data, writeCharacter);
                 break;
             case longTime:
                 //设置短喷强度
                 data = new byte[2];
                 data[0] = longTime;
-                data[1] = OX_ORDER[order.getIntdata()];
+                data[1] = OX_ORDER[order.getIntdata().get(0)];
                 dataSend(data, writeCharacter);
                 break;
             case longStrength:
                 //设置短喷强度
                 data = new byte[2];
                 data[0] = longStrength;
-                data[1] = OX_ORDER[order.getIntdata()];
+                data[1] = OX_ORDER[order.getIntdata().get(0)];
                 dataSend(data, writeCharacter);
                 break;
             case setcleartime:
                 //设置清洗时长
                 data = new byte[2];
                 data[0] = setcleartime;
-                data[1] = OX_ORDER[order.getIntdata()];
+                data[1] = OX_ORDER[order.getIntdata().get(0)];
                 dataSend(data, writeCharacter);
                 break;
             case mode_short:
@@ -543,6 +556,7 @@ public class NewBleBluetoothUtil {
 
         }
     }
+*/
 
     /**
      * 从队列中获取指令进行发送
@@ -583,23 +597,23 @@ public class NewBleBluetoothUtil {
                 break;
             case shortTime:
                 //设置短喷时间
-                sendShortTime(order.intdata);
+                sendShortTime(order.getIntdata().get(0));
                 break;
             case shortStrength:
                 //设置短喷强度
-                sendShortStrenth(order.intdata);
+                sendShortStrenth(order.getIntdata().get(0));
                 break;
             case longTime:
                 //设置短喷强度
-                sendLongTime(order.intdata);
+                sendLongTime(order.getIntdata().get(0));
                 break;
             case longStrength:
                 //设置短喷强度
-                sendLongStrenth(order.intdata);
+                sendLongStrenth(order.getIntdata().get(0));
                 break;
             case setcleartime:
                 //设置清洗时长
-                sendClearTime(order.intdata);
+                sendClearTime(order.getIntdata().get(0));
                 break;
             case mode_short:
                 setMode_Short();
@@ -628,6 +642,9 @@ public class NewBleBluetoothUtil {
             case boot:
                 sendBoot();
                 break;
+            case longOrder:
+                sendLongOrder(order.getIntdata());
+                break;
 
         }
     }
@@ -646,6 +663,40 @@ public class NewBleBluetoothUtil {
                 readVersion = character;
             }
         }
+    }
+
+    public byte getModel(int model){
+        if(model==mode_short){
+            return  mode_short;
+        }else if(model==mode_auto_mild){
+            return  mode_auto_mild;
+        }else if(model==mode_auto_middle){
+            return  mode_auto_middle;
+        }else if(model==mode_auto_strength){
+            return  mode_auto_strength;
+        }else if(model==mode_long){
+            return  mode_long;
+        }else if(model==mode_short_long){
+            return  mode_short_long;
+        }else{
+            return  mode_short;
+        }
+    }
+
+    public void sendLongOrder(List<Integer> intdata) {
+        byte[] data = new byte[8];
+        data[0] = longOrder;
+        data[1] = OX_ORDER[intdata.get(0)];
+        data[2] = OX_ORDER[intdata.get(1)];
+        data[3] = OX_ORDER[intdata.get(2)];
+        data[4] = OX_ORDER[intdata.get(3)];
+        data[5] = OX_ORDER[intdata.get(4)];
+        data[6] = OX_ORDER[intdata.get(5)];
+        data[7] = OX_ORDER[intdata.get(6)];
+//        data[7] =getModel(intdata.get(6));
+
+
+        dataSend(data, writeCharacter);
     }
 
     /**
@@ -880,7 +931,7 @@ public class NewBleBluetoothUtil {
 
     public class Order {
         private byte order;  //指令
-        private int intdata; //参数
+        private List<Integer> intdata; //参数
 
         public byte getOrder() {
             return order;
@@ -890,11 +941,11 @@ public class NewBleBluetoothUtil {
             this.order = order;
         }
 
-        public int getIntdata() {
+        public List<Integer> getIntdata() {
             return intdata;
         }
 
-        public void setIntdata(int intdata) {
+        public void setIntdata(List<Integer> intdata) {
             this.intdata = intdata;
         }
     }

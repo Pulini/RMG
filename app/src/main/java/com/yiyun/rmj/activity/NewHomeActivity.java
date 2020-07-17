@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.hjq.toast.ToastUtils;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
 import com.shuyu.gsyvideoplayer.utils.GSYVideoHelper;
 import com.yiyun.rmj.R;
@@ -147,10 +148,18 @@ public class NewHomeActivity extends BaseActivity {
     }
 
     public void stopVideo() {
-        HomeAdapter.VideoHolder videoHolder = (HomeAdapter.VideoHolder) rv_home.findViewHolderForAdapterPosition(3);
-
-//        videoHolder.gsyvp_player.setBackgroundColor(Color.parseColor("#55FFFF"));
-
+//        for (int i = 0; i < rv_home.getChildCount(); i++) {
+//            if(rv_home.findViewHolderForAdapterPosition(i) instanceof HomeAdapter.VideoHolder){
+//                HomeAdapter.VideoHolder videoHolder = (HomeAdapter.VideoHolder) rv_home.findViewHolderForAdapterPosition(i);
+//                Log.e("Pan", "video  getChildCount="+videoHolder.video.getChildCount() );
+//                for (int j = 0; j < videoHolder.video.getChildCount(); j++) {
+//                    HomeVideo2Adapter.HomeVideoViewHolder hvvh = (HomeVideo2Adapter.HomeVideoViewHolder) videoHolder.video.findViewHolderForAdapterPosition(j);
+//                    if (hvvh.gsyvp_player.isInPlayingState()) {
+//                        hvvh.gsyvp_player.onVideoPause();
+//                    }
+//                }
+//            }
+//        }
     }
 
     public void findView() {
@@ -570,9 +579,32 @@ public class NewHomeActivity extends BaseActivity {
         }
     }
 
+
     @Override
     public void onBackPressed() {
+        if (GSYVideoManager.backFromWindowFull(this)) {
+            return;
+        }
         System.exit(0);
         super.onBackPressed();
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        GSYVideoManager.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        GSYVideoManager.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        GSYVideoManager.releaseAllVideos();
     }
 }

@@ -115,7 +115,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
         findView();
         setClick();
         bluetoothUtil = NewBleBluetoothUtil.getInstance();
-        handler.sendEmptyMessageDelayed(2,3000);
+        handler.sendEmptyMessageDelayed(2, 3000);
         bluetoothUtil.setBlutToothListener(new NewBleBluetoothUtil.OnBlutToothListener() {
             @Override
             public void onStartSend(int Orders) {
@@ -282,29 +282,30 @@ public class BluetoothMainActivity2 extends BaseActivity {
         }
         device.getList().get(position).setSelected(isChecked);
 
-        boolean hasShort = false;
-        boolean hasLong = false;
-        for (SettingListModel settingListModel : device.getList()) {
-            if (settingListModel.isSelected()) {
-                if (settingListModel.getModel() == NewBleBluetoothUtil.mode_short) {
-                    hasShort = true;
+        int hasShort = -1;
+        int hasLong = -1;
+        for (int i = 0; i < device.getList().size(); i++) {
+            if (device.getList().get(i).isSelected()) {
+                if (device.getList().get(i).getModel() == NewBleBluetoothUtil.mode_short) {
+                    hasShort = i;
                 }
-                if (settingListModel.getModel() == NewBleBluetoothUtil.mode_long) {
-                    hasLong = true;
+                if (device.getList().get(i).getModel() == NewBleBluetoothUtil.mode_long) {
+                    hasLong = i;
                 }
             }
         }
+
         Log.e("Pan", "hasShort=" + hasShort);
         Log.e("Pan", "hasLong=" + hasLong);
         Log.e("Pan", "Model=" + device.getList().get(position).getModel());
-        if (hasShort && hasLong) {
-
+        if (hasShort!=-1 && hasLong!=-1) {
             bluetoothUtil.removeAllOrder();
-            Log.e("Pan", "getModel=" + bm.getModel());
+         /*
+         Log.e("Pan", "getModel=" + bm.getModel());
             if (bm.getModel() != NewBleBluetoothUtil.mode_short_long) {
                 bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_short_long, 0);
             }
-            if(device.getList().get(position).getModel()==NewBleBluetoothUtil.mode_short){
+            if (device.getList().get(position).getModel() == NewBleBluetoothUtil.mode_short) {
                 if (bm.getShortTime() != device.getList().get(position).getShortTime()) {
                     bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.shortTime, device.getList().get(position).getShortTime());
                 }
@@ -313,7 +314,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
                 }
             }
 
-            if(device.getList().get(position).getModel()==NewBleBluetoothUtil.mode_long) {
+            if (device.getList().get(position).getModel() == NewBleBluetoothUtil.mode_long) {
                 if (bm.getLongTime() != device.getList().get(position).getLongTime()) {
                     bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.longTime, device.getList().get(position).getLongTime());
                 }
@@ -322,6 +323,28 @@ public class BluetoothMainActivity2 extends BaseActivity {
                     bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.longStrength, device.getList().get(position).getLongStrength());
                 }
             }
+*/
+            if (bm.getCleanTime()!=5||
+                    bm.getAutoClean()!=NewBleBluetoothUtil.setpoweronclear||
+                    bm.getShortTime() != device.getList().get(hasShort).getShortTime() ||
+                    bm.getShortStrength() != device.getList().get(hasShort).getShortStrength() ||
+                    bm.getLongTime() != device.getList().get(hasLong).getLongTime() ||
+                    bm.getLongStrength() != device.getList().get(hasLong).getLongStrength() ||
+                    bm.getModel() != NewBleBluetoothUtil.mode_short_long
+            ) {
+                bluetoothUtil.addOrderToQuee(
+                        NewBleBluetoothUtil.longOrder,
+                        5,
+                        bm.getAutoClean(),
+                        device.getList().get(hasShort).getShortTime(),
+                        device.getList().get(hasShort).getShortStrength(),
+                        device.getList().get(hasLong).getLongTime(),
+                        device.getList().get(hasLong).getLongStrength(),
+                        NewBleBluetoothUtil.mode_short_long
+                );
+            }
+
+
 
             if (bluetoothUtil.getOrderFromQuee() != null) {
                 handler.removeMessages(0);
@@ -329,9 +352,10 @@ public class BluetoothMainActivity2 extends BaseActivity {
             }
             Log.e("Pan", "设置长短喷");
         } else {
-            if (hasShort) {
+            if (hasShort!=-1) {
 
                 bluetoothUtil.removeAllOrder();
+            /*
                 if (bm.getModel() != NewBleBluetoothUtil.mode_short) {
                     bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_short, 0);
                 }
@@ -343,16 +367,33 @@ public class BluetoothMainActivity2 extends BaseActivity {
                 if (bm.getShortStrength() != device.getList().get(position).getShortStrength()) {
                     bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.shortStrength, device.getList().get(position).getShortStrength());
                 }
-
+*/
+                if (bm.getShortTime() != device.getList().get(hasShort).getShortTime() ||
+                        bm.getShortStrength() != device.getList().get(hasShort).getShortStrength() ||
+                        bm.getModel() != NewBleBluetoothUtil.mode_short
+                ) {
+                    bluetoothUtil.addOrderToQuee(
+                            NewBleBluetoothUtil.longOrder,
+                            5,
+                            bm.getAutoClean(),
+                            device.getList().get(hasShort).getShortTime(),
+                            device.getList().get(hasShort).getShortStrength(),
+                            bm.getLongTime(),
+                            bm.getLongStrength(),
+                            NewBleBluetoothUtil.mode_short
+                    );
+                }
                 if (bluetoothUtil.getOrderFromQuee() != null) {
                     handler.removeMessages(0);
                     bluetoothUtil.sendOrder();
                 }
                 Log.e("Pan", "设置短喷");
             }
-            if (hasLong) {
+            if (hasLong!=-1) {
 
                 bluetoothUtil.removeAllOrder();
+/*
+
                 if (bm.getModel() != NewBleBluetoothUtil.mode_long) {
                     bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_long, 0);
                 }
@@ -362,6 +403,22 @@ public class BluetoothMainActivity2 extends BaseActivity {
 
                 if (bm.getLongStrength() != device.getList().get(position).getLongStrength()) {
                     bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.longStrength, device.getList().get(position).getLongStrength());
+                }
+*/
+                if (bm.getLongTime() != device.getList().get(hasLong).getLongTime() ||
+                        bm.getLongStrength() != device.getList().get(hasLong).getLongStrength() ||
+                        bm.getModel() != NewBleBluetoothUtil.mode_long
+                ) {
+                    bluetoothUtil.addOrderToQuee(
+                            NewBleBluetoothUtil.longOrder,
+                            5,
+                            bm.getAutoClean(),
+                            bm.getShortTime(),
+                            bm.getShortStrength(),
+                            device.getList().get(hasLong).getLongTime(),
+                            device.getList().get(hasLong).getLongStrength(),
+                            NewBleBluetoothUtil.mode_long
+                    );
                 }
                 if (bluetoothUtil.getOrderFromQuee() != null) {
                     handler.removeMessages(0);
@@ -493,7 +550,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
     private void readStatus() {
         bluetoothUtil.readStatus(values -> {
 
-                    if(bluetoothUtil.getOrderFromQuee()!=null){
+                    if (bluetoothUtil.getOrderFromQuee() != null) {
                         handler.removeMessages(0);
                         handler.sendEmptyMessageDelayed(0, 1000 * 10);
                         return;
@@ -847,8 +904,8 @@ public class BluetoothMainActivity2 extends BaseActivity {
                     break;
                 case TYPE_MODIFY:
                     device.getList().set(index, bsm);
-                    if(device.getList().get(index).isSelected()){
-                        setModel(index,true);
+                    if (device.getList().get(index).isSelected()) {
+                        setModel(index, true);
                     }
                     break;
             }

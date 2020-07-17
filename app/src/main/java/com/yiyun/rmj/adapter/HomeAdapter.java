@@ -7,14 +7,18 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.shuyu.gsyvideoplayer.utils.GSYVideoHelper;
 import com.yiyun.rmj.R;
@@ -23,6 +27,7 @@ import com.yiyun.rmj.bean.VideoModel;
 import com.yiyun.rmj.bean.apibean.ProductBean;
 import com.yiyun.rmj.bean.apibean.RotationBean;
 import com.yiyun.rmj.utils.LogUtils;
+import com.yiyun.rmj.view.SampleCoverVideo;
 import com.yiyun.rmj.view.indicatorseekbar.SizeUtils;
 
 import java.util.ArrayList;
@@ -90,15 +95,11 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (productData.size() > 0) {
             hpa = new HomeProductAdapter(context, productData, Width);
             ProductListener = lis;
-            hpa.setOnItemClickListener(new HomeProductAdapter.OnItemClickListener() {
-                @Override
-                public void click(int ID) {
-                    ProductListener.ProductItemClick(ID);
-                }
-            });
+            hpa.setOnItemClickListener(ID -> ProductListener.ProductItemClick(ID));
             notifyItemChanged(1);
         }
     }
+
 
     @Override
     public int getItemViewType(int position) {
@@ -112,6 +113,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return TYPE_VIDEO;
         }
         return TYPE_FOOT;
+
     }
 
     @Override
@@ -130,6 +132,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
         switch (position) {
             case 0:
                 setBanner((BannerImageHolder) holder);
@@ -138,11 +141,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 setProduct((ProductHolder) holder);
                 break;
             case 2:
-                setVideo((VideoHolder) holder);
+                setVideo((VideoHolder) holder, position - 2);
                 break;
             case 3:
                 setFoot((FootHolder) holder);
                 break;
+
         }
 
 
@@ -151,12 +155,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private void setBanner(final BannerImageHolder holder) {
         holder.banner.setLayoutParams(new ConstraintLayout.LayoutParams(
                 ConstraintLayout.LayoutParams.MATCH_PARENT, Height / 4));
-        holder.banner.setPages(new CBViewHolderCreator<com.yiyun.rmj.activity.BannerHolder>() {
-            @Override
-            public BannerHolder createHolder() {
-                return new BannerHolder();
-            }
-        }, bannerData).setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT)
+        holder.banner.setPages((CBViewHolderCreator<BannerHolder>) () -> new BannerHolder(), bannerData).setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT)
                 .setPageIndicator(new int[]{R.mipmap.home_lunbo_button01, R.mipmap.home_lunbo_button02})
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
                 .setScrollDuration(1500);
@@ -188,7 +187,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     }
 
-    private void setVideo(VideoHolder holder) {
+    private void setVideo(VideoHolder holder, int position) {
         holder.video.setLayoutManager(new LinearLayoutManager(context));
         holder.video.setAdapter(hva);
         holder.video.addItemDecoration(new SpacesItemDecoration(QMUIDisplayHelper.dp2px(context, 2)));
@@ -198,8 +197,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         );
     }
 
+
     public void setFoot(FootHolder holder) {
-        holder.itemView.setLayoutParams(new LinearLayout.LayoutParams(
+        holder.cl_foot.setLayoutParams(new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 SizeUtils.dp2px(context, 100))
         );
@@ -238,9 +238,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public class FootHolder extends RecyclerView.ViewHolder {
+        public ConstraintLayout cl_foot;
 
         public FootHolder(View itemView) {
             super(itemView);
+
+            cl_foot = itemView.findViewById(R.id.cl_foot);
         }
     }
 
