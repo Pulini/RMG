@@ -136,7 +136,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
                 }
 
                 handler.sendEmptyMessageDelayed(1, 1000 * 5);
-                handler.sendEmptyMessageDelayed(0, 1000 * 10);
+                handler.sendEmptyMessageDelayed(0, 1000 * 5);
 
 //                readStatus();
             }
@@ -707,7 +707,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
                             }
                         }
                     });
-                    handler.sendEmptyMessageDelayed(0, 1000 * 30);
+                    handler.sendEmptyMessageDelayed(0, 1000 * 5);
                 }
         );
 
