@@ -49,6 +49,8 @@ public class NewBleBluetoothUtil {
             0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x77, 0x78, 0x79, (byte) 0x7a, (byte) 0x7b, (byte) 0x7c, (byte) 0x7d, (byte) 0x7e, (byte) 0x7f,
     };
 
+
+    public static final byte modeNull = -99; //开机
     public static final byte boot = 0x11; //开机
     public static final byte shutdown = 0x10; //关机  10进制：16
     public static final byte clearleft = 0x21; //清洗左喷头  10进制：33
@@ -835,7 +837,7 @@ public class NewBleBluetoothUtil {
      */
     public void setMode_strength() {
         byte[] data = new byte[1];
-        data[0] = mode_auto_mild;
+        data[0] = mode_auto_strength;
         dataSend(data, opencloseCharacter);
     }
 

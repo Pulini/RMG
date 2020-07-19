@@ -69,7 +69,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
 
     private int deviceId = 0;
     private int index = 0;
-    private BluetoothModelAdapter bma;
+    private BluetoothModelAdapter2 bma;
     private BluetoothBean device;
     private FRDialog dialog;
     private int settingModel = 0;
@@ -155,7 +155,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
         tv_deviceName.setText(device.getDeviceName());
 
         rv_deviceList.setLayoutManager(new LinearLayoutManager(this));
-        bma = new BluetoothModelAdapter(this, device.getList(), new BluetoothModelAdapter.OnItemClickListener() {
+        bma = new BluetoothModelAdapter2(this, device.getList(), new BluetoothModelAdapter2.OnItemClickListener() {
             @Override
             public void OnItemClick(int position) {
                 if (device.getList().size() == position)
@@ -298,7 +298,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
         Log.e("Pan", "hasShort=" + hasShort);
         Log.e("Pan", "hasLong=" + hasLong);
         Log.e("Pan", "Model=" + device.getList().get(position).getModel());
-        if (hasShort!=-1 && hasLong!=-1) {
+        if (hasShort != -1 && hasLong != -1) {
             bluetoothUtil.removeAllOrder();
          /*
          Log.e("Pan", "getModel=" + bm.getModel());
@@ -324,14 +324,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
                 }
             }
 */
-            if (bm.getCleanTime()!=5||
-                    bm.getAutoClean()!=NewBleBluetoothUtil.setpoweronclear||
-                    bm.getShortTime() != device.getList().get(hasShort).getShortTime() ||
-                    bm.getShortStrength() != device.getList().get(hasShort).getShortStrength() ||
-                    bm.getLongTime() != device.getList().get(hasLong).getLongTime() ||
-                    bm.getLongStrength() != device.getList().get(hasLong).getLongStrength() ||
-                    bm.getModel() != NewBleBluetoothUtil.mode_short_long
-            ) {
+
                 bluetoothUtil.addOrderToQuee(
                         NewBleBluetoothUtil.longOrder,
                         5,
@@ -342,9 +335,6 @@ public class BluetoothMainActivity2 extends BaseActivity {
                         device.getList().get(hasLong).getLongStrength(),
                         NewBleBluetoothUtil.mode_short_long
                 );
-            }
-
-
 
             if (bluetoothUtil.getOrderFromQuee() != null) {
                 handler.removeMessages(0);
@@ -352,7 +342,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
             }
             Log.e("Pan", "设置长短喷");
         } else {
-            if (hasShort!=-1) {
+            if (hasShort != -1) {
 
                 bluetoothUtil.removeAllOrder();
             /*
@@ -368,10 +358,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
                     bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.shortStrength, device.getList().get(position).getShortStrength());
                 }
 */
-                if (bm.getShortTime() != device.getList().get(hasShort).getShortTime() ||
-                        bm.getShortStrength() != device.getList().get(hasShort).getShortStrength() ||
-                        bm.getModel() != NewBleBluetoothUtil.mode_short
-                ) {
+
                     bluetoothUtil.addOrderToQuee(
                             NewBleBluetoothUtil.longOrder,
                             5,
@@ -382,14 +369,13 @@ public class BluetoothMainActivity2 extends BaseActivity {
                             bm.getLongStrength(),
                             NewBleBluetoothUtil.mode_short
                     );
-                }
                 if (bluetoothUtil.getOrderFromQuee() != null) {
                     handler.removeMessages(0);
                     bluetoothUtil.sendOrder();
                 }
                 Log.e("Pan", "设置短喷");
             }
-            if (hasLong!=-1) {
+            if (hasLong != -1) {
 
                 bluetoothUtil.removeAllOrder();
 /*
@@ -405,10 +391,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
                     bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.longStrength, device.getList().get(position).getLongStrength());
                 }
 */
-                if (bm.getLongTime() != device.getList().get(hasLong).getLongTime() ||
-                        bm.getLongStrength() != device.getList().get(hasLong).getLongStrength() ||
-                        bm.getModel() != NewBleBluetoothUtil.mode_long
-                ) {
+
                     bluetoothUtil.addOrderToQuee(
                             NewBleBluetoothUtil.longOrder,
                             5,
@@ -419,7 +402,6 @@ public class BluetoothMainActivity2 extends BaseActivity {
                             device.getList().get(hasLong).getLongStrength(),
                             NewBleBluetoothUtil.mode_long
                     );
-                }
                 if (bluetoothUtil.getOrderFromQuee() != null) {
                     handler.removeMessages(0);
                     bluetoothUtil.sendOrder();
@@ -697,12 +679,18 @@ public class BluetoothMainActivity2 extends BaseActivity {
                             }
                             setData();
 
+                            formatData();
+
                             Log.e("Pan", "device=" + new Gson().toJson(device));
                             bma.notifyDataSetChanged();
                             SpfUtils.saveBluetoothSetList(device.getList(), deviceId);
-                            if (bm.getCleanTime() != 5) {
+
+                            if(bm.getAutoClean()==NewBleBluetoothUtil.forbidsetpoweronclear){
                                 bluetoothUtil.removeAllOrder();
-                                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, 5);
+                                if (bm.getCleanTime() != 5) {
+                                    bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, 5);
+                                }
+                                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setpoweronclear, 0);
                                 bluetoothUtil.sendOrder();
                             }
                         }
@@ -819,26 +807,22 @@ public class BluetoothMainActivity2 extends BaseActivity {
             bluetoothUtil.removeAllOrder();
             Log.e("Pan", "settingModel=" + settingModel);
             Log.e("Pan", "getModel=" + device.getList().get(0).getModel());
+            Log.e("Pan", "bm=" + bm.getModel());
+            Log.e("Pan", "isSelected=" + device.getList().get(0).isSelected());
             switch (settingModel) {
                 case NewBleBluetoothUtil.mode_auto_mild:
-                    if (device.getList().get(0).getModel() != NewBleBluetoothUtil.mode_auto_mild) {
-                        if (bm.getModel() != NewBleBluetoothUtil.mode_auto_mild) {
-                            bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_auto_mild, 0);
-                        }
+                    if (bm.getModel() != NewBleBluetoothUtil.mode_auto_mild) {
+                        bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_auto_mild, 0);
                     }
                     break;
                 case NewBleBluetoothUtil.mode_auto_middle:
-                    if (device.getList().get(0).getModel() != NewBleBluetoothUtil.mode_auto_middle) {
-                        if (bm.getModel() != NewBleBluetoothUtil.mode_auto_middle) {
-                            bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_auto_middle, 0);
-                        }
+                    if (bm.getModel() != NewBleBluetoothUtil.mode_auto_middle) {
+                        bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_auto_middle, 0);
                     }
                     break;
                 case NewBleBluetoothUtil.mode_auto_strength:
-                    if (device.getList().get(0).getModel() != NewBleBluetoothUtil.mode_auto_strength) {
-                        if (bm.getModel() != NewBleBluetoothUtil.mode_auto_strength) {
-                            bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_auto_strength, 0);
-                        }
+                    if (bm.getModel() != NewBleBluetoothUtil.mode_auto_strength) {
+                        bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_auto_strength, 0);
                     }
                     break;
             }
@@ -909,8 +893,68 @@ public class BluetoothMainActivity2 extends BaseActivity {
                     }
                     break;
             }
+            formatData();
+
             SpfUtils.saveBluetoothSetList(device.getList(), deviceId);
             bma.notifyDataSetChanged();
         }
+    }
+
+    public void formatData() {
+
+        Log.e("Pan", "device.getList()=" + device.getList().size());
+        SettingListModel dataNull = new SettingListModel();
+        dataNull.setModel(NewBleBluetoothUtil.modeNull);
+
+        SettingListModel smart = new SettingListModel();
+
+        List<SettingListModel> shortList = new ArrayList<>();
+
+        List<SettingListModel> longList = new ArrayList<>();
+
+        for (SettingListModel slm : device.getList()) {
+            if (slm.getModel() == NewBleBluetoothUtil.mode_short) {
+                boolean has = false;
+                for (SettingListModel slm2 : shortList) {
+                    if (slm2.getShortTime() == slm.getShortTime() && slm2.getShortStrength() == slm.getShortStrength()) {
+                        has = true;
+                        break;
+                    }
+                }
+                if (!has) {
+                    shortList.add(slm);
+                }
+            }
+            if (slm.getModel() == NewBleBluetoothUtil.mode_long) {
+                boolean has = false;
+                for (SettingListModel slm2 : longList) {
+                    if (slm2.getLongTime() == slm.getLongTime() && slm2.getLongStrength() == slm.getLongStrength()) {
+                        has = true;
+                        break;
+                    }
+                }
+                if (!has) {
+                    longList.add(slm);
+                }
+            }
+            if (slm.getModel() == NewBleBluetoothUtil.mode_auto_mild ||
+                    slm.getModel() == NewBleBluetoothUtil.mode_auto_middle ||
+                    slm.getModel() == NewBleBluetoothUtil.mode_auto_strength) {
+                smart = slm;
+            }
+        }
+        device.getList().clear();
+        device.getList().add(smart);
+        device.getList().add(dataNull);
+
+        device.getList().addAll(shortList);
+        device.getList().add(dataNull);
+
+        device.getList().addAll(longList);
+        device.getList().add(dataNull);
+
+        Log.e("Pan", "shortList=" + new Gson().toJson(shortList));
+        Log.e("Pan", "longList=" + new Gson().toJson(longList));
+        Log.e("Pan", "smart=" + new Gson().toJson(smart));
     }
 }
