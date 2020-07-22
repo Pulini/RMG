@@ -21,6 +21,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hjq.toast.ToastUtils;
+import com.hyphenate.chat.ChatClient;
+import com.hyphenate.helpdesk.callback.Callback;
+import com.hyphenate.helpdesk.easeui.util.IntentBuilder;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
@@ -147,6 +150,39 @@ public class NewHomeActivity extends BaseActivity {
         initUpdateDialog();
     }
 
+    public void line(){
+        if (ChatClient.getInstance().isLoggedInBefore()) {
+            Log.e("Pan","已经登录");
+            Intent intent = new IntentBuilder(context)
+                    .setServiceIMNumber("kefuchannelimid_264622") //获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“IM服务号”
+                    .setTitleName("客服中心")
+                    .build();
+            startActivity(intent);
+            //已经登录，可以直接进入会话界面
+        } else {
+            Log.e("Pan","未登录");
+            ChatClient.getInstance().login( SpfUtils.getSpfUtils(context).getHXName(), SpfUtils.getSpfUtils(context).getHXPwd(), new Callback() {
+                @Override
+                public void onSuccess() {
+                    Log.e("Pan","登录成功");
+                    Intent intent = new IntentBuilder(context)
+                            .setServiceIMNumber("kefuchannelimid_264622") //获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“IM服务号”
+                            .build();
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onError(int code, String error) {
+                    Log.e("Pan",code+"登录失败="+error);
+                }
+
+                @Override
+                public void onProgress(int progress, String status) {
+
+                }
+            });
+        }
+    }
     public void stopVideo() {
 //        for (int i = 0; i < rv_home.getChildCount(); i++) {
 //            if(rv_home.findViewHolderForAdapterPosition(i) instanceof HomeAdapter.VideoHolder){
@@ -208,7 +244,8 @@ public class NewHomeActivity extends BaseActivity {
         tv_custom_service.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.show();
+//                dialog.show();
+                line();
             }
         });
         dialog = new CustomerServiceDialog(context, new CustomerServiceDialog.ICallBack() {

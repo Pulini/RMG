@@ -2,6 +2,7 @@ package com.yiyun.rmj.activity;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.hjq.toast.ToastUtils;
+import com.hyphenate.chat.ChatClient;
+import com.hyphenate.helpdesk.callback.Callback;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -255,15 +258,59 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                             if(isRelogin){
                                 SpfUtils.getSpfUtils(LoginActivity.this).setToken(obj.getInfo().getData().getToken());
                                 SpfUtils.getSpfUtils(LoginActivity.this).setAccount(et_username.getText().toString().trim());
-                                finish();
+                                ChatClient.getInstance().register( et_username.getText().toString().trim(), et_password.getText().toString().trim(), new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        Log.e("Pan","环信注册成功");
+                                        SpfUtils.getSpfUtils(LoginActivity.this).setHXName(et_username.getText().toString().trim());
+                                        SpfUtils.getSpfUtils(LoginActivity.this).setHXPwd(et_password.getText().toString().trim());
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onError(int code, String error) {
+                                        Log.e("Pan","环信注册失败:code="+code+"   error="+error);
+                                        SpfUtils.getSpfUtils(LoginActivity.this).setHXName(et_username.getText().toString().trim());
+                                        SpfUtils.getSpfUtils(LoginActivity.this).setHXPwd(et_password.getText().toString().trim());
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onProgress(int progress, String status) {
+
+                                    }
+                                });
                             }else{
                                 SpfUtils.getSpfUtils(LoginActivity.this).setToken(obj.getInfo().getData().getToken());
                                 SpfUtils.getSpfUtils(LoginActivity.this).setAccount(et_username.getText().toString().trim());
-                                Intent intent = new Intent(LoginActivity.this, NewHomeActivity.class);
-                                LoginActivity.this.startActivity(intent);
-                                finish();
-                            }
 
+                                ChatClient.getInstance().register( et_username.getText().toString().trim(), et_password.getText().toString().trim(), new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        Log.e("Pan","环信注册成功");
+                                        SpfUtils.getSpfUtils(LoginActivity.this).setHXName(et_username.getText().toString().trim());
+                                        SpfUtils.getSpfUtils(LoginActivity.this).setHXPwd(et_password.getText().toString().trim());
+                                        Intent intent = new Intent(LoginActivity.this, NewHomeActivity.class);
+                                        LoginActivity.this.startActivity(intent);
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onError(int code, String error) {
+                                        Log.e("Pan","环信注册失败:code="+code+"   error="+error);
+                                        SpfUtils.getSpfUtils(LoginActivity.this).setHXName(et_username.getText().toString().trim());
+                                        SpfUtils.getSpfUtils(LoginActivity.this).setHXPwd(et_password.getText().toString().trim());
+                                        Intent intent = new Intent(LoginActivity.this, NewHomeActivity.class);
+                                        LoginActivity.this.startActivity(intent);
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void onProgress(int progress, String status) {
+
+                                    }
+                                });
+                            }
                         }else if(obj.getState() == 3){
                             ToastUtils.show(obj.getInfo().getMessage());
                             Intent intent = new Intent(LoginActivity.this, RegisterOrForgetPassActivity.class);

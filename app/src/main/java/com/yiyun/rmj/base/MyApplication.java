@@ -10,6 +10,9 @@ import androidx.annotation.NonNull;
 //import com.alibaba.mobileim.YWIMKit;
 //import com.alibaba.wxlib.util.SysUtil;
 import com.hjq.toast.ToastUtils;
+import com.hyphenate.chat.ChatClient;
+import com.hyphenate.helpdesk.callback.Callback;
+import com.hyphenate.helpdesk.easeui.UIProvider;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.api.RefreshFooter;
@@ -41,7 +44,7 @@ public class MyApplication extends Application {
             @NonNull
             @Override
             public RefreshHeader createRefreshHeader(@NonNull Context context, @NonNull RefreshLayout layout) {
-                layout.setPrimaryColorsId( android.R.color.transparent,R.color.colorPrimary);//全局设置主题颜色
+                layout.setPrimaryColorsId(android.R.color.transparent, R.color.colorPrimary);//全局设置主题颜色
                 return new ClassicsHeader(context);//.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
             }
         });
@@ -54,10 +57,13 @@ public class MyApplication extends Application {
         });
 
     }
+
     private static SharedPreferences mSharedPreferences;
+
     public static SharedPreferences getSP() {
         return mSharedPreferences;
     }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -71,7 +77,7 @@ public class MyApplication extends Application {
 //                .setImageLoader(new FrescoImageLoader())
 //                .build());
 
-        UMConfigure.init(this,"5cbe8432570df3dc3600102c","wzsjkj",UMConfigure.DEVICE_TYPE_PHONE,"");
+        UMConfigure.init(this, "5cbe8432570df3dc3600102c", "wzsjkj", UMConfigure.DEVICE_TYPE_PHONE, "");
         UMConfigure.setLogEnabled(true);
         PlatformConfig.setWeixin("wxd05a2356c3312721", "c4a3b38e018d7e008f6103537fe1fff3");
         PlatformConfig.setQQZone("101573070", "a6c9826c42a370f88895485c244f88c7");
@@ -93,6 +99,11 @@ public class MyApplication extends Application {
 //            YWAPI.init(this, "23015524");
 //        }
 
+        // Kefu SDK 初始化
+        ChatClient.getInstance().init(this, new ChatClient.Options().setAppkey("1416200721025416#kefuchannelapp83706").setTenantId("83706"));
+        // Kefu EaseUI的初始化
+        UIProvider.getInstance().init(this);
+        ChatClient.getInstance().init(this, new ChatClient.Options().setConsoleLog(true));
 
 
     }

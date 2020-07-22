@@ -175,4 +175,23 @@ public class SpfUtils {
         edit.commit();
     }
 
+    public void setHXName(String userName) {
+        editor.putString("HX_Name", userName);
+        editor.commit();
+    }
+
+    public String getHXName() {
+        return spf.getString("HX_Name", "");
+    }
+
+    public void setHXPwd(String pwd) {
+        editor.putString("HX_Pwd", pwd);
+        editor.commit();
+    }
+
+    public String getHXPwd() {
+        return spf.getString("HX_Pwd", "");
+    }
+
+
 }
