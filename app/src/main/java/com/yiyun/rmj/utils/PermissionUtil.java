@@ -69,10 +69,41 @@ public class PermissionUtil {
         }
     }
 
+
     public static void requestStorageCameraPermission(final Activity activity, final IRequestPermissionCallBack callback) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             RxPermissions rx = new RxPermissions(activity);
-            rx.request(Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+            rx.request(Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    .subscribe(new Subscriber<Boolean>() {
+                        @Override
+                        public void onCompleted() {
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                        }
+
+                        @Override
+                        public void onNext(Boolean aBoolean) {
+                            if (aBoolean) {
+                                callback.permissionSuccess();
+                            } else {
+                                Toast.makeText(activity,"打开权限才能使用这个功能哦!~",Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    });
+
+        }else{
+            callback.permissionSuccess();
+        }
+    }
+
+    public static void requestHXPermission(final Activity activity, final IRequestPermissionCallBack callback) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            RxPermissions rx = new RxPermissions(activity);
+            rx.request(Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     .subscribe(new Subscriber<Boolean>() {
                         @Override
                         public void onCompleted() {

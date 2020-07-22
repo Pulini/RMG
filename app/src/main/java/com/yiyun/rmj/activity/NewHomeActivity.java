@@ -3,6 +3,8 @@ package com.yiyun.rmj.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -11,6 +13,7 @@ import android.os.Message;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -151,37 +154,43 @@ public class NewHomeActivity extends BaseActivity {
     }
 
     public void line(){
-        if (ChatClient.getInstance().isLoggedInBefore()) {
-            Log.e("Pan","已经登录");
-            Intent intent = new IntentBuilder(context)
-                    .setServiceIMNumber("kefuchannelimid_264622") //获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“IM服务号”
-                    .setTitleName("客服中心")
-                    .build();
-            startActivity(intent);
-            //已经登录，可以直接进入会话界面
-        } else {
-            Log.e("Pan","未登录");
-            ChatClient.getInstance().login( SpfUtils.getSpfUtils(context).getHXName(), SpfUtils.getSpfUtils(context).getHXPwd(), new Callback() {
-                @Override
-                public void onSuccess() {
-                    Log.e("Pan","登录成功");
-                    Intent intent = new IntentBuilder(context)
-                            .setServiceIMNumber("kefuchannelimid_264622") //获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“IM服务号”
-                            .build();
-                    startActivity(intent);
-                }
 
-                @Override
-                public void onError(int code, String error) {
-                    Log.e("Pan",code+"登录失败="+error);
-                }
 
-                @Override
-                public void onProgress(int progress, String status) {
+            if (ChatClient.getInstance().isLoggedInBefore()) {
+                Log.e("Pan","已经登录");
+                Intent intent = new IntentBuilder(context)
+                        .setServiceIMNumber("kefuchannelimid_264622") //获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“IM服务号”
+                        .setTitleName("客服中心")
+                        .setShowUserNick(true)
+                        .build();
+                startActivity(intent);
+                //已经登录，可以直接进入会话界面
+            } else {
+                Log.e("Pan","未登录");
+                ChatClient.getInstance().login( SpfUtils.getSpfUtils(context).getHXName(), SpfUtils.getSpfUtils(context).getHXPwd(), new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Log.e("Pan","登录成功");
+                        Intent intent = new IntentBuilder(context)
+                                .setServiceIMNumber("kefuchannelimid_264622") //获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“IM服务号”
+                                .setTitleName("客服中心")
+                                .setShowUserNick(true)
+                                .build();
+                        startActivity(intent);
+                    }
 
-                }
-            });
-        }
+                    @Override
+                    public void onError(int code, String error) {
+                        Log.e("Pan",code+"登录失败="+error);
+                    }
+
+                    @Override
+                    public void onProgress(int progress, String status) {
+
+                    }
+                });
+            }
+
     }
     public void stopVideo() {
 //        for (int i = 0; i < rv_home.getChildCount(); i++) {
@@ -245,7 +254,22 @@ public class NewHomeActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 //                dialog.show();
-                line();
+                String token = SpfUtils.getSpfUtils(getApplicationContext()).getToken();
+                if (token.isEmpty()) {
+                    startlogin();
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        if(!getPackageManager().canRequestPackageInstalls()){
+                            Uri packageURI = Uri.parse("package:" + getPackageName());
+                            Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, packageURI);
+                            startActivityForResult(intent, 10086);
+                        }else{
+                            line();
+                        }
+                    }else{
+                        line();
+                    }
+                }
             }
         });
         dialog = new CustomerServiceDialog(context, new CustomerServiceDialog.ICallBack() {
@@ -616,7 +640,13 @@ public class NewHomeActivity extends BaseActivity {
         }
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 10086) {
+            line();
+        }
+    }
     @Override
     public void onBackPressed() {
         if (GSYVideoManager.backFromWindowFull(this)) {
