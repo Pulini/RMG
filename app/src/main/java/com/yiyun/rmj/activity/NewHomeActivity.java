@@ -42,6 +42,7 @@ import com.yiyun.rmj.bean.apibase.BaseParm;
 import com.yiyun.rmj.bean.apibean.GetVersionBean;
 import com.yiyun.rmj.bean.apibean.ProductBean;
 import com.yiyun.rmj.bean.apibean.RotationBean;
+import com.yiyun.rmj.bean.apiparm.AddressParm;
 import com.yiyun.rmj.bean.apiparm.GetVersionParm;
 import com.yiyun.rmj.dialog.CustomerServiceDialog;
 import com.yiyun.rmj.utils.Ali;
@@ -137,6 +138,7 @@ public class NewHomeActivity extends BaseActivity {
         }
     };
     private Context context;
+    private FRDialog needPermissionDialog;
 
 
     @Override
@@ -260,9 +262,19 @@ public class NewHomeActivity extends BaseActivity {
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         if(!getPackageManager().canRequestPackageInstalls()){
-                            Uri packageURI = Uri.parse("package:" + getPackageName());
-                            Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, packageURI);
-                            startActivityForResult(intent, 10086);
+                            if(needPermissionDialog==null){
+                                needPermissionDialog =new FRDialog.CommonBuilder(context).setContentView(R.layout.dialog_need_permission).create();
+                            }
+                            needPermissionDialog.show();
+                            TextView tv_sure = needPermissionDialog.getView(R.id.tv_sure);
+                            TextView tv_cancel = needPermissionDialog.getView(R.id.tv_cancel);
+                            tv_cancel.setOnClickListener(view -> needPermissionDialog.dismiss());
+                            tv_sure.setOnClickListener(view -> {
+                                Uri packageURI = Uri.parse("package:" + getPackageName());
+                                Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, packageURI);
+                                startActivityForResult(intent, 10086);
+                                needPermissionDialog.dismiss();
+                            });
                         }else{
                             line();
                         }
@@ -283,6 +295,8 @@ public class NewHomeActivity extends BaseActivity {
                 startActivity(new Intent(context, CustomServiceActivity.class).putExtra("type", CustomServiceActivity.TYPE_PRE_SERVICE));
             }
         });
+
+
         iv_menu_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
