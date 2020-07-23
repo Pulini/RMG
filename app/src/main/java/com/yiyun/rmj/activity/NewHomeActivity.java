@@ -300,12 +300,7 @@ public class NewHomeActivity extends BaseActivity {
         });
 
 
-        iv_menu_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeMenuButtonState();
-            }
-        });
+        iv_menu_btn.setOnClickListener(v -> changeMenuButtonState());
 
         rv_home.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -667,11 +662,12 @@ public class NewHomeActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if (GSYVideoManager.backFromWindowFull(this)) {
-            return;
+        if (GSYVideoManager.isFullState(this)) {
+            GSYVideoManager.backFromWindowFull(context);
         }
-        System.exit(0);
-        super.onBackPressed();
+//        else {
+//            System.exit(0);
+//        }
     }
 
 

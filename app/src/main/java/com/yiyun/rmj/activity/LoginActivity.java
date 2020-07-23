@@ -33,7 +33,7 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener{
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
 
     private EditText et_username;
@@ -61,6 +61,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
          */
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+            String json = gson.toJson(data);
+            Log.e("Pan", "json=" + json);
             SpfUtils spf = SpfUtils.getSpfUtils(LoginActivity.this);
 
             //设置登录类型
@@ -83,6 +85,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             loginParm.setType(currentLoginType);
             loginParm.setOpenid(uid);
             String parmStr = gson.toJson(loginParm);
+            Log.e("Pan", "parmStr=" + parmStr);
             String parmEnpcept = DESHelper.encrypt(parmStr);
             login(parmEnpcept);
         }
@@ -96,7 +99,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         @Override
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
 
-            Toast.makeText(LoginActivity.this, "失败：" + t.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(LoginActivity.this, "失败：" + t.getMessage(), Toast.LENGTH_LONG).show();
         }
 
         /**
@@ -116,13 +119,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     }
 
 
-
-
     @Override
     protected void initView() {
         Button btn_login = findViewById(R.id.btn_login);
         btn_login.setOnClickListener(this);
-        isRelogin = getIntent().getBooleanExtra("relogin",false);
+        isRelogin = getIntent().getBooleanExtra("relogin", false);
 
         //注册按钮
         TextView tv_register = findViewById(R.id.tv_register_now);
@@ -157,7 +158,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        switch(view.getId()){
+        switch (view.getId()) {
             case R.id.btn_login:
 
                 //测试
@@ -166,7 +167,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 //                finish();
 
                 currentLoginType = 0;
-                if(checkLoginInput()){
+                if (checkLoginInput()) {
                     LoginParm loginParm = new LoginParm();
                     loginParm.setPhone(et_username.getText().toString().trim());
                     loginParm.setPassword(et_password.getText().toString().trim());
@@ -180,42 +181,42 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             case R.id.tv_register_now:
                 Intent intentRegister = new Intent();
                 intentRegister.setClassName(LoginActivity.this, "com.yiyun.rmj.activity.RegisterOrForgetPassActivity");
-                intentRegister.putExtra("type",RegisterOrForgetPassActivity.TYPE_REGISTER);
-                intentRegister.putExtra("relogin",isRelogin);
+                intentRegister.putExtra("type", RegisterOrForgetPassActivity.TYPE_REGISTER);
+                intentRegister.putExtra("relogin", isRelogin);
                 LoginActivity.this.startActivity(intentRegister);
-               // LoginActivity.this.overridePendingTransition(R.anim.activity_open, R.anim.activity_close);
+                // LoginActivity.this.overridePendingTransition(R.anim.activity_open, R.anim.activity_close);
                 break;
 
             case R.id.tv_foget_password:
                 Intent intentForget = new Intent();
                 intentForget.setClassName(LoginActivity.this, "com.yiyun.rmj.activity.RegisterOrForgetPassActivity");
-                intentForget.putExtra("type",RegisterOrForgetPassActivity.TYPE_FORGET);
-                intentForget.putExtra("relogin",isRelogin);
+                intentForget.putExtra("type", RegisterOrForgetPassActivity.TYPE_FORGET);
+                intentForget.putExtra("relogin", isRelogin);
                 LoginActivity.this.startActivity(intentForget);
                 //LoginActivity.this.overridePendingTransition(R.anim.activity_open, R.anim.activity_close);
                 break;
 
             case R.id.iv_weixin:
                 currentLoginType = 2;
-                Toast.makeText(this,"点击微信",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "点击微信", Toast.LENGTH_SHORT).show();
                 UMShareAPI.get(LoginActivity.this).getPlatformInfo(LoginActivity.this, SHARE_MEDIA.WEIXIN, authListener);
                 break;
 
             case R.id.iv_qq:
                 currentLoginType = 1;
-                Toast.makeText(this,"点击QQ",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "点击QQ", Toast.LENGTH_SHORT).show();
                 UMShareAPI.get(LoginActivity.this).getPlatformInfo(LoginActivity.this, SHARE_MEDIA.QQ, authListener);
-            break;
+                break;
         }
     }
 
-    public boolean checkLoginInput(){
-        if(TextUtils.isEmpty(et_username.getText().toString().trim())){
+    public boolean checkLoginInput() {
+        if (TextUtils.isEmpty(et_username.getText().toString().trim())) {
             ToastUtils.show("账号不能为空");
             return false;
         }
 
-        if(TextUtils.isEmpty(et_password.getText().toString().trim())){
+        if (TextUtils.isEmpty(et_password.getText().toString().trim())) {
             ToastUtils.show("密码不能为空");
             return false;
         }
@@ -233,8 +234,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         super.onDestroy();
         UMShareAPI.get(this).release();
     }
-
+    String user="";
+    String password="";
     public void login(String desparms) {
+
         showProgressDialog("正在登录");
         api.login(desparms)
                 .subscribeOn(Schedulers.io())
@@ -252,26 +255,35 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
                     @Override
                     public void onNext(BaseBean obj) {
+
+                         user=et_username.getText().toString().trim();
+                         password=et_password.getText().toString().trim();
+                        if(user.isEmpty()){
+                            user= SpfUtils.getSpfUtils(LoginActivity.this).getOpenId();
+                        }
+                        if(password.isEmpty()){
+                            password="123456";
+                        }
                         dismissProgressDialog();
                         LogUtils.LogE("login-onNext:" + gson.toJson(obj));
-                        if(obj.getState() == 1){
-                            if(isRelogin){
+                        if (obj.getState() == 1) {
+                            if (isRelogin) {
                                 SpfUtils.getSpfUtils(LoginActivity.this).setToken(obj.getInfo().getData().getToken());
                                 SpfUtils.getSpfUtils(LoginActivity.this).setAccount(et_username.getText().toString().trim());
-                                ChatClient.getInstance().register( et_username.getText().toString().trim(), et_password.getText().toString().trim(), new Callback() {
+                                ChatClient.getInstance().register(user, password, new Callback() {
                                     @Override
                                     public void onSuccess() {
-                                        Log.e("Pan","环信注册成功");
-                                        SpfUtils.getSpfUtils(LoginActivity.this).setHXName(et_username.getText().toString().trim());
-                                        SpfUtils.getSpfUtils(LoginActivity.this).setHXPwd(et_password.getText().toString().trim());
+                                        Log.e("Pan", "环信注册成功");
+                                        SpfUtils.getSpfUtils(LoginActivity.this).setHXName(user);
+                                        SpfUtils.getSpfUtils(LoginActivity.this).setHXPwd(password);
                                         finish();
                                     }
 
                                     @Override
                                     public void onError(int code, String error) {
-                                        Log.e("Pan","环信注册失败:code="+code+"   error="+error);
-                                        SpfUtils.getSpfUtils(LoginActivity.this).setHXName(et_username.getText().toString().trim());
-                                        SpfUtils.getSpfUtils(LoginActivity.this).setHXPwd(et_password.getText().toString().trim());
+                                        Log.e("Pan", "环信注册失败:code=" + code + "   error=" + error);
+                                        SpfUtils.getSpfUtils(LoginActivity.this).setHXName(user);
+                                        SpfUtils.getSpfUtils(LoginActivity.this).setHXPwd(password);
                                         finish();
                                     }
 
@@ -280,16 +292,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
                                     }
                                 });
-                            }else{
+                            } else {
                                 SpfUtils.getSpfUtils(LoginActivity.this).setToken(obj.getInfo().getData().getToken());
                                 SpfUtils.getSpfUtils(LoginActivity.this).setAccount(et_username.getText().toString().trim());
 
-                                ChatClient.getInstance().register( et_username.getText().toString().trim(), et_password.getText().toString().trim(), new Callback() {
+                                ChatClient.getInstance().register(user, password, new Callback() {
                                     @Override
                                     public void onSuccess() {
-                                        Log.e("Pan","环信注册成功");
-                                        SpfUtils.getSpfUtils(LoginActivity.this).setHXName(et_username.getText().toString().trim());
-                                        SpfUtils.getSpfUtils(LoginActivity.this).setHXPwd(et_password.getText().toString().trim());
+                                        Log.e("Pan", "环信注册成功");
+                                        SpfUtils.getSpfUtils(LoginActivity.this).setHXName(user);
+                                        SpfUtils.getSpfUtils(LoginActivity.this).setHXPwd(password);
                                         Intent intent = new Intent(LoginActivity.this, NewHomeActivity.class);
                                         LoginActivity.this.startActivity(intent);
                                         finish();
@@ -297,9 +309,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
                                     @Override
                                     public void onError(int code, String error) {
-                                        Log.e("Pan","环信注册失败:code="+code+"   error="+error);
-                                        SpfUtils.getSpfUtils(LoginActivity.this).setHXName(et_username.getText().toString().trim());
-                                        SpfUtils.getSpfUtils(LoginActivity.this).setHXPwd(et_password.getText().toString().trim());
+                                        Log.e("Pan", "环信注册失败:code=" + code + "   error=" + error);
+                                        SpfUtils.getSpfUtils(LoginActivity.this).setHXName(user);
+                                        SpfUtils.getSpfUtils(LoginActivity.this).setHXPwd(password);
                                         Intent intent = new Intent(LoginActivity.this, NewHomeActivity.class);
                                         LoginActivity.this.startActivity(intent);
                                         finish();
@@ -311,16 +323,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                                     }
                                 });
                             }
-                        }else if(obj.getState() == 3){
+                        } else if (obj.getState() == 3) {
                             ToastUtils.show(obj.getInfo().getMessage());
                             Intent intent = new Intent(LoginActivity.this, RegisterOrForgetPassActivity.class);
-                            intent.putExtra("type",RegisterOrForgetPassActivity.TYPE_BINDPHONE);
+                            intent.putExtra("type", RegisterOrForgetPassActivity.TYPE_BINDPHONE);
                             intent.putExtra("loginType", currentLoginType);
-                            intent.putExtra("relogin",isRelogin);
+                            intent.putExtra("relogin", isRelogin);
                             startActivity(intent);
                             finish();
 
-                        }else{
+                        } else {
                             showConnectError(obj.getInfo().getMessage());
                         }
                     }
@@ -331,6 +343,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     protected void setStatusBar() {
-        StatusBarUtil.setImmersiveStatusBar(this,true);
+        StatusBarUtil.setImmersiveStatusBar(this, true);
     }
 }
