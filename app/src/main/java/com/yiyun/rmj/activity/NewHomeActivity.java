@@ -155,45 +155,45 @@ public class NewHomeActivity extends BaseActivity {
         initUpdateDialog();
     }
 
-    public void line(){
+    public void line() {
 
+        if (ChatClient.getInstance().isLoggedInBefore()) {
+            Log.e("Pan", "已经登录");
+            Intent intent = new IntentBuilder(context)
+                    .setServiceIMNumber("kefuchannelimid_264622") //获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“IM服务号”
+                    .setTitleName("客服中心")
+                    .setShowUserNick(true)
+                    .build();
+            startActivity(intent);
+            //已经登录，可以直接进入会话界面
+        } else {
+            Log.e("Pan", "未登录");
+            ChatClient.getInstance().login(SpfUtils.getSpfUtils(context).getHXName(), SpfUtils.getSpfUtils(context).getHXPwd(), new Callback() {
+                @Override
+                public void onSuccess() {
+                    Log.e("Pan", "登录成功");
+                    Intent intent = new IntentBuilder(context)
+                            .setServiceIMNumber("kefuchannelimid_264622") //获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“IM服务号”
+                            .setTitleName("客服中心")
+                            .setShowUserNick(true)
+                            .build();
+                    startActivity(intent);
+                }
 
-            if (ChatClient.getInstance().isLoggedInBefore()) {
-                Log.e("Pan","已经登录");
-                Intent intent = new IntentBuilder(context)
-                        .setServiceIMNumber("kefuchannelimid_264622") //获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“IM服务号”
-                        .setTitleName("客服中心")
-                        .setShowUserNick(true)
-                        .build();
-                startActivity(intent);
-                //已经登录，可以直接进入会话界面
-            } else {
-                Log.e("Pan","未登录");
-                ChatClient.getInstance().login( SpfUtils.getSpfUtils(context).getHXName(), SpfUtils.getSpfUtils(context).getHXPwd(), new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        Log.e("Pan","登录成功");
-                        Intent intent = new IntentBuilder(context)
-                                .setServiceIMNumber("kefuchannelimid_264622") //获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“IM服务号”
-                                .setTitleName("客服中心")
-                                .setShowUserNick(true)
-                                .build();
-                        startActivity(intent);
-                    }
+                @Override
+                public void onError(int code, String error) {
+                    Log.e("Pan", code + "登录失败=" + error);
+                }
 
-                    @Override
-                    public void onError(int code, String error) {
-                        Log.e("Pan",code+"登录失败="+error);
-                    }
+                @Override
+                public void onProgress(int progress, String status) {
 
-                    @Override
-                    public void onProgress(int progress, String status) {
-
-                    }
-                });
-            }
+                }
+            });
+        }
 
     }
+
     public void stopVideo() {
 //        for (int i = 0; i < rv_home.getChildCount(); i++) {
 //            if(rv_home.findViewHolderForAdapterPosition(i) instanceof HomeAdapter.VideoHolder){
@@ -261,24 +261,27 @@ public class NewHomeActivity extends BaseActivity {
                     startlogin();
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        if(!getPackageManager().canRequestPackageInstalls()){
-                            if(needPermissionDialog==null){
-                                needPermissionDialog =new FRDialog.CommonBuilder(context).setContentView(R.layout.dialog_need_permission).create();
+                        if (!getPackageManager().canRequestPackageInstalls()) {
+                            if (needPermissionDialog == null) {
+                                needPermissionDialog = new FRDialog.CommonBuilder(context).setContentView(R.layout.dialog_need_permission).create();
                             }
                             needPermissionDialog.show();
                             TextView tv_sure = needPermissionDialog.getView(R.id.tv_sure);
                             TextView tv_cancel = needPermissionDialog.getView(R.id.tv_cancel);
-                            tv_cancel.setOnClickListener(view -> needPermissionDialog.dismiss());
+                            tv_cancel.setOnClickListener(view -> {
+                                needPermissionDialog.dismiss();
+                                line();
+                            });
                             tv_sure.setOnClickListener(view -> {
                                 Uri packageURI = Uri.parse("package:" + getPackageName());
                                 Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, packageURI);
                                 startActivityForResult(intent, 10086);
                                 needPermissionDialog.dismiss();
                             });
-                        }else{
+                        } else {
                             line();
                         }
-                    }else{
+                    } else {
                         line();
                     }
                 }
@@ -661,6 +664,7 @@ public class NewHomeActivity extends BaseActivity {
             line();
         }
     }
+
     @Override
     public void onBackPressed() {
         if (GSYVideoManager.backFromWindowFull(this)) {
