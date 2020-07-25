@@ -62,6 +62,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
     private TextView tv_bootState;
     private Switch sw_bootSwitch;
     private TextView tv_deviceName;
+    private TextView tv_version;
     private SwipeRecyclerView rv_deviceList;
     private Button bt_cleanLeft;
     private Button bt_cleanRight;
@@ -95,14 +96,31 @@ public class BluetoothMainActivity2 extends BaseActivity {
                     break;
                 case 2:
                     bluetoothUtil.readVersion(values -> {
-                        for (byte value : values) {
-                            Log.e("Pan", "value=" + value);
-                        }
+                        tv_version.setText("版本号:"+getVersion(values));
                     });
                     break;
             }
         }
     };
+
+    private String getVersion(byte[] values){
+        String bt="";
+        for (byte aByte : values) {
+            bt+=aByte & 0xFF;
+        }
+        String bts="";
+        for (int i = 0; i < bt.length(); i++) {
+            if(i== bt.length()-1){
+                bts+= bt.charAt(i);
+            }else{
+                bts+= bt.charAt(i)+".";
+            }
+        }
+        Log.e("Pan","bt="+bt);
+        Log.e("Pan","bts="+bts);
+        return bts;
+    }
+
     private BluetoothModel bm;
 
     @Override
@@ -475,6 +493,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
         sw_bootSwitch = findViewById(R.id.sw_bootSwitch);
         tv_deviceName = findViewById(R.id.tv_deviceName);
         rv_deviceList = findViewById(R.id.rv_deviceList);
+        tv_version = findViewById(R.id.tv_version);
         bt_cleanLeft = findViewById(R.id.bt_cleanLeft);
         bt_cleanRight = findViewById(R.id.bt_cleanRight);
 
@@ -687,8 +706,8 @@ public class BluetoothMainActivity2 extends BaseActivity {
 
                             if(bm.getAutoClean()==NewBleBluetoothUtil.forbidsetpoweronclear){
                                 bluetoothUtil.removeAllOrder();
-                                if (bm.getCleanTime() != 5) {
-                                    bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, 5);
+                                if (bm.getCleanTime() != 50) {
+                                    bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, 50);
                                 }
                                 bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setpoweronclear, 0);
                                 bluetoothUtil.sendOrder();

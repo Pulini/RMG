@@ -45,6 +45,7 @@ import com.yiyun.rmj.bean.apibean.RotationBean;
 import com.yiyun.rmj.bean.apiparm.AddressParm;
 import com.yiyun.rmj.bean.apiparm.GetVersionParm;
 import com.yiyun.rmj.dialog.CustomerServiceDialog;
+import com.yiyun.rmj.hx.ChatActivity;
 import com.yiyun.rmj.utils.Ali;
 import com.yiyun.rmj.utils.DESHelper;
 import com.yiyun.rmj.utils.LogUtils;
@@ -52,6 +53,7 @@ import com.yiyun.rmj.utils.PackageUpdateUtil;
 import com.yiyun.rmj.utils.PermissionUtil;
 import com.yiyun.rmj.utils.SpfUtils;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -158,13 +160,23 @@ public class NewHomeActivity extends BaseActivity {
     public void line() {
 
         if (ChatClient.getInstance().isLoggedInBefore()) {
-            Log.e("Pan", "已经登录");
+
             Intent intent = new IntentBuilder(context)
+                    .setTargetClass(ChatActivity.class)
                     .setServiceIMNumber("kefuchannelimid_264622") //获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“IM服务号”
                     .setTitleName("客服中心")
                     .setShowUserNick(true)
                     .build();
             startActivity(intent);
+
+
+            Log.e("Pan", "已经登录");
+//            Intent intent = new IntentBuilder(context)
+//                    .setServiceIMNumber("kefuchannelimid_264622") //获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“IM服务号”
+//                    .setTitleName("客服中心")
+//                    .setShowUserNick(true)
+//                    .build();
+//            startActivity(intent);
             //已经登录，可以直接进入会话界面
         } else {
             Log.e("Pan", "未登录");
@@ -173,6 +185,7 @@ public class NewHomeActivity extends BaseActivity {
                 public void onSuccess() {
                     Log.e("Pan", "登录成功");
                     Intent intent = new IntentBuilder(context)
+                            .setTargetClass(ChatActivity.class)
                             .setServiceIMNumber("kefuchannelimid_264622") //获取地址：kefu.easemob.com，“管理员模式 > 渠道管理 > 手机APP”页面的关联的“IM服务号”
                             .setTitleName("客服中心")
                             .setShowUserNick(true)
@@ -218,13 +231,9 @@ public class NewHomeActivity extends BaseActivity {
         ll_portrait_menu = findViewById(R.id.ll_portrait_menu);
         tv_custom_service = findViewById(R.id.tv_custom_service);
         tv_person_center = findViewById(R.id.tv_person_center);
-
     }
 
-
     public void setView() {
-
-
         ha = new HomeAdapter(this, getWindowManager().getDefaultDisplay().getWidth(), getWindowManager().getDefaultDisplay().getHeight());
         rv_home.setLayoutManager(new LinearLayoutManager(this));
         rv_home.setAdapter(ha);
@@ -234,57 +243,23 @@ public class NewHomeActivity extends BaseActivity {
         smf.setEnableLoadMore(false);
         smf.setOnRefreshListener(refreshlayout -> getCommodityList());
 
-        iv_control.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        iv_control.setOnClickListener(v -> {
 //                Ali.LoginIM(getApplicationContext());
-                String token = SpfUtils.getSpfUtils(getApplicationContext()).getToken();
-                if (token.isEmpty()) {
-                    startlogin();
-                } else {
-                    startActivity(new Intent(context, BluetoothSelectDeviceActivity.class));
-                }
+            String token = SpfUtils.getSpfUtils(getApplicationContext()).getToken();
+            if (token.isEmpty()) {
+                startlogin();
+            } else {
+                startActivity(new Intent(context, BluetoothSelectDeviceActivity.class));
             }
         });
-        tv_person_center.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(context, PersonCenterActivity.class));
-            }
-        });
-        tv_custom_service.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        tv_person_center.setOnClickListener(v -> startActivity(new Intent(context, PersonCenterActivity.class)));
+        tv_custom_service.setOnClickListener(v -> {
 //                dialog.show();
-                String token = SpfUtils.getSpfUtils(getApplicationContext()).getToken();
-                if (token.isEmpty()) {
-                    startlogin();
-                } else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        if (!getPackageManager().canRequestPackageInstalls()) {
-                            if (needPermissionDialog == null) {
-                                needPermissionDialog = new FRDialog.CommonBuilder(context).setContentView(R.layout.dialog_need_permission).create();
-                            }
-                            needPermissionDialog.show();
-                            TextView tv_sure = needPermissionDialog.getView(R.id.tv_sure);
-                            TextView tv_cancel = needPermissionDialog.getView(R.id.tv_cancel);
-                            tv_cancel.setOnClickListener(view -> {
-                                needPermissionDialog.dismiss();
-                                line();
-                            });
-                            tv_sure.setOnClickListener(view -> {
-                                Uri packageURI = Uri.parse("package:" + getPackageName());
-                                Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, packageURI);
-                                startActivityForResult(intent, 10086);
-                                needPermissionDialog.dismiss();
-                            });
-                        } else {
-                            line();
-                        }
-                    } else {
-                        line();
-                    }
-                }
+            String token = SpfUtils.getSpfUtils(getApplicationContext()).getToken();
+            if (token.isEmpty()) {
+                startlogin();
+            } else {
+                line();
             }
         });
         dialog = new CustomerServiceDialog(context, new CustomerServiceDialog.ICallBack() {

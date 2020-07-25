@@ -9,6 +9,7 @@ android {
         targetSdkVersion 30
         versionCode 23
         versionName "1.0.2"
+        //http://geapp.goldemperor.com:8020/AndroidUpdate/GoldEmperor/RMG1.0.2.apk
 //        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 //        multiDexEnabled true
     }
@@ -133,7 +134,9 @@ dependencies {
     //侧滑删除
     implementation 'com.yanzhenjie.recyclerview:x:1.3.2'
 
-    implementation 'com.hyphenate:kefu-easeui-android:1.1.9r2' //或者 compile 'com.hyphenate:kefu-easeui-android:1.1.9r2'
+    implementation 'com.hyphenate:kefu-easeui-android:1.1.9' //或者 compile 'com.hyphenate:kefu-easeui-android:1.1.9'
+
+//    implementation 'com.droidninja:filepicker:2.2.4'
 }
 
 // 依赖插件脚本
