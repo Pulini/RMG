@@ -152,7 +152,9 @@ public class BluetoothMainActivity2 extends BaseActivity {
                 if (handler.hasMessages(0)) {
                     handler.removeMessages(0);
                 }
-
+                if(handler.hasMessages(1)){
+                    handler.removeMessages(1);
+                }
                 handler.sendEmptyMessageDelayed(1, 1000 * 5);
                 handler.sendEmptyMessageDelayed(0, 1000 * 5);
 
@@ -522,6 +524,10 @@ public class BluetoothMainActivity2 extends BaseActivity {
             }
             bt_cleanLeft.setBackgroundResource(R.drawable.btn_cleanright);
             cleanType = 1;
+            if(handler.hasMessages(1)){
+                handler.removeMessages(1);
+            }
+            handler.sendEmptyMessageDelayed(1, 1000 * 10);
         });
 
         bt_cleanRight.setOnClickListener(view -> {
@@ -533,6 +539,10 @@ public class BluetoothMainActivity2 extends BaseActivity {
             }
             bt_cleanRight.setBackgroundResource(R.drawable.btn_cleanright);
             cleanType = 2;
+            if(handler.hasMessages(1)){
+                handler.removeMessages(1);
+            }
+            handler.sendEmptyMessageDelayed(1, 1000 * 10);
         });
 
 
@@ -704,14 +714,14 @@ public class BluetoothMainActivity2 extends BaseActivity {
                             bma.notifyDataSetChanged();
                             SpfUtils.saveBluetoothSetList(device.getList(), deviceId);
 
+                            bluetoothUtil.removeAllOrder();
                             if(bm.getAutoClean()==NewBleBluetoothUtil.forbidsetpoweronclear){
-                                bluetoothUtil.removeAllOrder();
-                                if (bm.getCleanTime() != 50) {
-                                    bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, 50);
-                                }
                                 bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setpoweronclear, 0);
-                                bluetoothUtil.sendOrder();
                             }
+                            if (bm.getCleanTime() != 50) {
+                                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, 50);
+                            }
+                            bluetoothUtil.sendOrder();
                         }
                     });
                     handler.sendEmptyMessageDelayed(0, 1000 * 5);
@@ -964,13 +974,21 @@ public class BluetoothMainActivity2 extends BaseActivity {
         }
         device.getList().clear();
         device.getList().add(smart);
-        device.getList().add(dataNull);
 
-        device.getList().addAll(shortList);
-        device.getList().add(dataNull);
+        if(shortList.size()>0||longList.size()>0){
+            device.getList().add(dataNull);
+        }
 
-        device.getList().addAll(longList);
-        device.getList().add(dataNull);
+        if(shortList.size()>0){
+            device.getList().addAll(shortList);
+            device.getList().add(dataNull);
+        }
+
+        if(longList.size()>0){
+            device.getList().addAll(longList);
+            device.getList().add(dataNull);
+        }
+
 
         Log.e("Pan", "shortList=" + new Gson().toJson(shortList));
         Log.e("Pan", "longList=" + new Gson().toJson(longList));

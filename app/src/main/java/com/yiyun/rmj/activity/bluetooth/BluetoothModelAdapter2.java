@@ -110,40 +110,45 @@ public class BluetoothModelAdapter2 extends RecyclerView.Adapter<RecyclerView.Vi
                 //智能模式 阅读
                 holder.iv_auto.setVisibility(View.VISIBLE);
                 holder.tv_auto.setVisibility(View.VISIBLE);
-                holder.iv_auto.setBackgroundResource(list.get(position).isSelected() ? R.mipmap.intelligent_model_select : R.mipmap.intelligent_model_unselect);
+//                holder.iv_auto.setBackgroundResource(list.get(position).isSelected() ? R.mipmap.intelligent_model_select : R.mipmap.intelligent_model_unselect);
+                holder.iv_auto.setBackgroundResource(R.mipmap.intelligent_model_select);
                 holder.tv_auto.setText("阅读模式");
                 break;
             case NewBleBluetoothUtil.mode_auto_middle:
                 //智能模式 电竞
                 holder.iv_auto.setVisibility(View.VISIBLE);
                 holder.tv_auto.setVisibility(View.VISIBLE);
-                holder.iv_auto.setBackgroundResource(list.get(position).isSelected() ? R.mipmap.intelligent_model_select : R.mipmap.intelligent_model_unselect);
+//                holder.iv_auto.setBackgroundResource(list.get(position).isSelected() ? R.mipmap.intelligent_model_select : R.mipmap.intelligent_model_unselect);
+                holder.iv_auto.setBackgroundResource(R.mipmap.intelligent_model_select);
                 holder.tv_auto.setText("电竞模式");
                 break;
             case NewBleBluetoothUtil.mode_auto_strength:
                 //智能模式 美容
                 holder.iv_auto.setVisibility(View.VISIBLE);
                 holder.tv_auto.setVisibility(View.VISIBLE);
-                holder.iv_auto.setBackgroundResource(list.get(position).isSelected() ? R.mipmap.intelligent_model_select : R.mipmap.intelligent_model_unselect);
-                holder.tv_auto.setText("美容模式");
+//                holder.iv_auto.setBackgroundResource(list.get(position).isSelected() ? R.mipmap.intelligent_model_select : R.mipmap.intelligent_model_unselect);
+                holder.iv_auto.setBackgroundResource(R.mipmap.intelligent_model_select);
+               holder.tv_auto.setText("美容模式");
                 break;
-            case NewBleBluetoothUtil.mode_short_long:
+/*            case NewBleBluetoothUtil.mode_short_long:
                 //（短+长）模式
                 holder.iv_model.setVisibility(View.VISIBLE);
                 holder.tv_short.setVisibility(View.VISIBLE);
                 holder.tv_long.setVisibility(View.VISIBLE);
                 holder.tv_modify.setVisibility(View.VISIBLE);
-                holder.iv_model.setBackgroundColor(list.get(position).isSelected() ? Color.parseColor("#24F7A8") : Color.parseColor("#dddddd"));
+//                holder.iv_model.setBackgroundColor(list.get(position).isSelected() ? Color.parseColor("#24F7A8") : Color.parseColor("#dddddd"));
+                holder.iv_model.setBackgroundColor(Color.parseColor("#24F7A8"));
                 holder.tv_short.setText("短喷： 强度：" + strStrenth[list.get(position).getShortStrength() - 1] + "  时间：" + list.get(position).getShortTime() + "秒");
                 holder.tv_long.setText("长喷： 强度：" + strStrenth[list.get(position).getLongStrength() / 2 - 1] + "  时间：" + list.get(position).getLongTime() + "分");
                 holder.sw_choice.setTrackResource(R.drawable.switch_track_green_selector);
-                break;
+                break;*/
             case NewBleBluetoothUtil.mode_short:
                 //（短）模式
                 holder.iv_model.setVisibility(View.VISIBLE);
                 holder.tv_short.setVisibility(View.VISIBLE);
                 holder.tv_modify.setVisibility(View.VISIBLE);
-                holder.iv_model.setBackgroundColor(list.get(position).isSelected() ? Color.parseColor("#029DF9") : Color.parseColor("#dddddd"));
+//                holder.iv_model.setBackgroundColor(list.get(position).isSelected() ? Color.parseColor("#029DF9") : Color.parseColor("#dddddd"));
+                holder.iv_model.setBackgroundColor(Color.parseColor("#FFC81E"));
                 holder.tv_short.setText("短喷： 强度：" + strStrenth[list.get(position).getShortStrength() - 1] + "  时间：" + list.get(position).getShortTime() + "秒");
                 break;
             case NewBleBluetoothUtil.mode_long:
@@ -151,7 +156,8 @@ public class BluetoothModelAdapter2 extends RecyclerView.Adapter<RecyclerView.Vi
                 holder.iv_model.setVisibility(View.VISIBLE);
                 holder.tv_long.setVisibility(View.VISIBLE);
                 holder.tv_modify.setVisibility(View.VISIBLE);
-                holder.iv_model.setBackgroundColor(list.get(position).isSelected() ? Color.parseColor("#24F7A8") : Color.parseColor("#dddddd"));
+//                holder.iv_model.setBackgroundColor(list.get(position).isSelected() ? Color.parseColor("#24F7A8") : Color.parseColor("#dddddd"));
+                holder.iv_model.setBackgroundColor(Color.parseColor("#24F7A8"));
                 holder.tv_long.setText("长喷： 强度：" + strStrenth[list.get(position).getLongStrength() / 2 - 1] + "  时间：" + list.get(position).getLongTime() + "分");
                 holder.sw_choice.setTrackResource(R.drawable.switch_track_green_selector);
                 break;
@@ -164,7 +170,7 @@ public class BluetoothModelAdapter2 extends RecyclerView.Adapter<RecyclerView.Vi
             } else {
                 listener.SelectModel(holder.getAdapterPosition(), b);
             }
-            holder.iv_auto.setBackgroundResource(list.get(position).isSelected() ? R.mipmap.intelligent_model_select : R.mipmap.intelligent_model_unselect);
+//            holder.iv_auto.setBackgroundResource(list.get(position).isSelected() ? R.mipmap.intelligent_model_select : R.mipmap.intelligent_model_unselect);
             holder.iv_model.setBackgroundColor(
                     list.get(position).isSelected() ?
                             NewBleBluetoothUtil.mode_short_long == list.get(position).getModel() ?
