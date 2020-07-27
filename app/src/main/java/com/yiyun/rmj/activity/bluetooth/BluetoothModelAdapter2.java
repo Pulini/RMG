@@ -150,6 +150,7 @@ public class BluetoothModelAdapter2 extends RecyclerView.Adapter<RecyclerView.Vi
 //                holder.iv_model.setBackgroundColor(list.get(position).isSelected() ? Color.parseColor("#029DF9") : Color.parseColor("#dddddd"));
                 holder.iv_model.setBackgroundColor(Color.parseColor("#FFC81E"));
                 holder.tv_short.setText("短喷： 强度：" + strStrenth[list.get(position).getShortStrength() - 1] + "  时间：" + list.get(position).getShortTime() + "秒");
+                holder.sw_choice.setTrackResource(R.drawable.switch_track_yellow_selector);
                 break;
             case NewBleBluetoothUtil.mode_long:
                 //（长）模式

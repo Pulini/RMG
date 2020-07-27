@@ -366,6 +366,7 @@ public class NewBleBluetoothUtil {
             removeOrderOnQuee(values[0]);
             if (readVersionBack != null) {
                 readVersionBack.callBack(values);
+                readVersionBack=null;
             }
             readInfoCallBack.callBack(values);
             sendOrder();
