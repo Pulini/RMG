@@ -100,10 +100,19 @@ public class BluetoothMainActivity2 extends BaseActivity {
                         cleanType = 0;
                     }
                     break;
+                case 2:
+                    Log.e("Pan", "设置喷雾状态");
+                    if(DevcieVersion.isEmpty()){
+                        isFirst=true;
+                    }else{
+                        String version  = DevcieVersion + "-" + bm.getAutoClean() + "-" + bm.getCleanTime();
+                        tv_version.setText(version);
+                    }
+                    break;
                 case 22:
                     Log.e("Pan", "设置版本号：" + DevcieVersion);
                     tv_version.setText(DevcieVersion);
-                    DevcieVersion = "";
+//                    DevcieVersion = "";
                     break;
 
             }
@@ -160,10 +169,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
                 if (handler.hasMessages(0)) {
                     handler.removeMessages(0);
                 }
-                if (handler.hasMessages(1)) {
-                    handler.removeMessages(1);
-                }
-                handler.sendEmptyMessageDelayed(1, 1000 * 5);
+
                 handler.sendEmptyMessageDelayed(0, 1000 * 5);
 
 //                readStatus();
@@ -551,7 +557,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
             if (handler.hasMessages(1)) {
                 handler.removeMessages(1);
             }
-            handler.sendEmptyMessageDelayed(1, 1000 * 10);
+            handler.sendEmptyMessageDelayed(1, 1000 * 5);
         });
 
         bt_cleanRight.setOnClickListener(view -> {
@@ -566,14 +572,14 @@ public class BluetoothMainActivity2 extends BaseActivity {
             if (handler.hasMessages(1)) {
                 handler.removeMessages(1);
             }
-            handler.sendEmptyMessageDelayed(1, 1000 * 10);
+            handler.sendEmptyMessageDelayed(1, 1000 * 5);
         });
 
 
     }
 
     FRDialog setDialog;
-    int cleartime=5;
+    int cleartime = 5;
 
     private void showSetDialog() {
         if (setDialog == null) {
@@ -587,16 +593,16 @@ public class BluetoothMainActivity2 extends BaseActivity {
         sure.setOnClickListener(view -> {
             String num = number.getText().toString();
             if (num.isEmpty()) {
-                num="0";
+                num = "0";
             }
-            int numb=Integer.parseInt(num);
-            if (numb<=0) {
-              numb=1;
+            int numb = Integer.parseInt(num);
+            if (numb <= 0) {
+                numb = 1;
             }
-            if(numb>50){
-                numb=50;
+            if (numb > 50) {
+                numb = 50;
             }
-            cleartime= numb;
+            cleartime = numb;
             bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setpoweronclear, 0);
             bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, cleartime);
             bluetoothUtil.sendOrder();
@@ -628,6 +634,9 @@ public class BluetoothMainActivity2 extends BaseActivity {
                     runOnUiThread(() -> {
                         if (values.length > 0 && values.length != 2) {
                             bm = new BluetoothModel(values);
+                            handler.sendEmptyMessage(2);
+
+
                             if (bm.getLongTime() < 1) {
                                 bm.setLongTime(1);
                             }
@@ -776,9 +785,9 @@ public class BluetoothMainActivity2 extends BaseActivity {
                             if (bm.getAutoClean() == NewBleBluetoothUtil.forbidsetpoweronclear) {
                                 bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setpoweronclear, 0);
                             }
-                            if (bm.getCleanTime() != cleartime) {
-                                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, cleartime);
-                            }
+//                            if (bm.getCleanTime() != cleartime) {
+////                                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, cleartime);
+////                            }
                             bluetoothUtil.sendOrder();
                         }
                     });
