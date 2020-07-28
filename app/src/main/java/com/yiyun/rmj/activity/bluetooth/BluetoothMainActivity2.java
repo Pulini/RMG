@@ -573,6 +573,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
     }
 
     FRDialog setDialog;
+    int cleartime=5;
 
     private void showSetDialog() {
         if (setDialog == null) {
@@ -595,8 +596,9 @@ public class BluetoothMainActivity2 extends BaseActivity {
             if(numb>50){
                 numb=50;
             }
+            cleartime= numb;
             bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setpoweronclear, 0);
-            bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, numb);
+            bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, cleartime);
             bluetoothUtil.sendOrder();
             setDialog.dismiss();
         });
@@ -774,8 +776,8 @@ public class BluetoothMainActivity2 extends BaseActivity {
                             if (bm.getAutoClean() == NewBleBluetoothUtil.forbidsetpoweronclear) {
                                 bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setpoweronclear, 0);
                             }
-                            if (bm.getCleanTime() != 5) {
-                                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, 5);
+                            if (bm.getCleanTime() != cleartime) {
+                                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, cleartime);
                             }
                             bluetoothUtil.sendOrder();
                         }

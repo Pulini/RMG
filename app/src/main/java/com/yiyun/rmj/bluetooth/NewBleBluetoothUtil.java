@@ -62,7 +62,7 @@ public class NewBleBluetoothUtil {
     public static final byte longTime = 0x55; //设置长喷时间  10进制：87
     public static final byte longStrength = 0x56; //设置长喷强度  10进制：87
     public static final byte setcleartime = 0x58; //设置清洗时长  10进制：88
-    public static final byte longOrder = 0x59; //设置清洗时长  10进制：89
+    public static final byte longOrder = 0x59; //设置清洗指令  10进制：89
     public static final byte readstate = 0x53;//读状态  10进制：83
     public static final byte mode_short = 0x40;//短喷  10进制：64
     public static final byte mode_auto_mild = 0x41;//智能轻度模式  10进制：65
