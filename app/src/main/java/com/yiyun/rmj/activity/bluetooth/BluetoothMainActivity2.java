@@ -357,7 +357,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
 
             bluetoothUtil.addOrderToQuee(
                     NewBleBluetoothUtil.longOrder,
-                    5,
+                    SpfUtils.getSpfUtils(this).getCleanTime(),
                     bm.getAutoClean(),
                     device.getList().get(hasShort).getShortTime(),
                     device.getList().get(hasShort).getShortStrength(),
@@ -391,7 +391,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
 
                 bluetoothUtil.addOrderToQuee(
                         NewBleBluetoothUtil.longOrder,
-                        5,
+                        SpfUtils.getSpfUtils(this).getCleanTime(),
                         bm.getAutoClean(),
                         device.getList().get(hasShort).getShortTime(),
                         device.getList().get(hasShort).getShortStrength(),
@@ -424,7 +424,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
 
                 bluetoothUtil.addOrderToQuee(
                         NewBleBluetoothUtil.longOrder,
-                        5,
+                        SpfUtils.getSpfUtils(this).getCleanTime(),
                         bm.getAutoClean(),
                         bm.getShortTime(),
                         bm.getShortStrength(),
@@ -603,6 +603,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
                 numb = 50;
             }
             cleartime = numb;
+            SpfUtils.getSpfUtils(this).setCleanTime(cleartime);
             bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setpoweronclear, 0);
             bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, cleartime);
             bluetoothUtil.sendOrder();
@@ -786,6 +787,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
                                 bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setpoweronclear, 0);
                             }
                             if (bm.getCleanTime() != 10) {
+                                SpfUtils.getSpfUtils(this).setCleanTime(10);
                                 bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, 10);
                             }
                             bluetoothUtil.sendOrder();

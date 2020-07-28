@@ -193,5 +193,14 @@ public class SpfUtils {
         return spf.getString("HX_Pwd", "");
     }
 
+  public void setCleanTime(int time) {
+        editor.putInt("CleanTime", time);
+        editor.commit();
+    }
+
+    public Integer getCleanTime() {
+        return spf.getInt("CleanTime", 10);
+    }
+
 
 }
