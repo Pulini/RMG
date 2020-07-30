@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.gson.Gson;
 
+import com.hjq.toast.ToastUtils;
 import com.yanzhenjie.recyclerview.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 import com.yiyun.rmj.R;
@@ -150,6 +151,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
         findView();
         setClick();
         cleanTime = SpfUtils.getSpfUtils(getApplicationContext()).getCleanTime();
+        tv_cleanValue.setText("雾化量: " + cleanTime);
         sb_cleanValue.setProgress(cleanTime);
         bluetoothUtil = NewBleBluetoothUtil.getInstance();
 
@@ -569,6 +571,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
             SpfUtils.getSpfUtils(getApplicationContext()).setCleanTime(cleanTime);
             bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, cleanTime);
             bluetoothUtil.sendOrder();
+            ToastUtils.show("设置物化量："+cleanTime);
         });
         bt_cleanLeft.setOnClickListener(view -> {
             if (!cleanLeft) {
