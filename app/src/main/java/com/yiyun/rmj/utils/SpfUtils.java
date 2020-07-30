@@ -199,7 +199,7 @@ public class SpfUtils {
     }
 
     public Integer getCleanTime() {
-        return spf.getInt("CleanTime", 10);
+        return spf.getInt("CleanTime", 5);
     }
 
 

@@ -4,18 +4,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,7 +26,6 @@ import com.yiyun.rmj.R;
 import com.yiyun.rmj.base.BaseActivity;
 import com.yiyun.rmj.bean.AddDeviceParm;
 import com.yiyun.rmj.bean.BluetoothBean;
-import com.yiyun.rmj.bean.apiparm.AddressParm;
 import com.yiyun.rmj.bluetooth.NewBleBluetoothUtil;
 import com.yiyun.rmj.dialog.RoundEditDialog;
 import com.yiyun.rmj.utils.DESHelper;
@@ -68,6 +65,9 @@ public class BluetoothMainActivity2 extends BaseActivity {
     private Switch sw_bootSwitch;
     private TextView tv_deviceName;
     private TextView tv_version;
+    private TextView tv_cleanValue;
+    private SeekBar sb_cleanValue;
+    private Button bt_sure;
     private SwipeRecyclerView rv_deviceList;
     private Button bt_cleanLeft;
     private Button bt_cleanRight;
@@ -90,11 +90,11 @@ public class BluetoothMainActivity2 extends BaseActivity {
                     readStatus();
                     break;
                 case 1:
-                    cleanLeft=false;
+                    cleanLeft = false;
                     bt_cleanLeft.setBackgroundResource(R.drawable.btn_cleanleft);
                     break;
                 case 4:
-                    cleanRight=false;
+                    cleanRight = false;
                     bt_cleanRight.setBackgroundResource(R.drawable.btn_cleanleft);
                     break;
                 case 2:
@@ -137,6 +137,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
         return bts;
     }
 
+    int cleanTime = 5;
     private BluetoothModel bm;
 
     @Override
@@ -148,6 +149,8 @@ public class BluetoothMainActivity2 extends BaseActivity {
     protected void initView() {
         findView();
         setClick();
+        cleanTime = SpfUtils.getSpfUtils(getApplicationContext()).getCleanTime();
+        sb_cleanValue.setProgress(cleanTime);
         bluetoothUtil = NewBleBluetoothUtil.getInstance();
 
         bluetoothUtil.setBlutToothListener(new NewBleBluetoothUtil.OnBlutToothListener() {
@@ -357,7 +360,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
 
             bluetoothUtil.addOrderToQuee(
                     NewBleBluetoothUtil.longOrder,
-                    SpfUtils.getSpfUtils(this).getCleanTime(),
+                    cleanTime,
                     bm.getAutoClean(),
                     device.getList().get(hasShort).getShortTime(),
                     device.getList().get(hasShort).getShortStrength(),
@@ -391,7 +394,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
 
                 bluetoothUtil.addOrderToQuee(
                         NewBleBluetoothUtil.longOrder,
-                        SpfUtils.getSpfUtils(this).getCleanTime(),
+                        cleanTime,
                         bm.getAutoClean(),
                         device.getList().get(hasShort).getShortTime(),
                         device.getList().get(hasShort).getShortStrength(),
@@ -424,7 +427,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
 
                 bluetoothUtil.addOrderToQuee(
                         NewBleBluetoothUtil.longOrder,
-                        SpfUtils.getSpfUtils(this).getCleanTime(),
+                        cleanTime,
                         bm.getAutoClean(),
                         bm.getShortTime(),
                         bm.getShortStrength(),
@@ -505,8 +508,12 @@ public class BluetoothMainActivity2 extends BaseActivity {
         tv_bootState = findViewById(R.id.tv_bootState);
         sw_bootSwitch = findViewById(R.id.sw_bootSwitch);
         tv_deviceName = findViewById(R.id.tv_deviceName);
-        rv_deviceList = findViewById(R.id.rv_deviceList);
         tv_version = findViewById(R.id.tv_version);
+        tv_cleanValue = findViewById(R.id.tv_cleanValue);
+        sb_cleanValue = findViewById(R.id.sb_cleanValue);
+        bt_sure = findViewById(R.id.bt_sure);
+
+        rv_deviceList = findViewById(R.id.rv_deviceList);
         bt_cleanLeft = findViewById(R.id.bt_cleanLeft);
         bt_cleanRight = findViewById(R.id.bt_cleanRight);
 
@@ -517,16 +524,16 @@ public class BluetoothMainActivity2 extends BaseActivity {
     long[] mHits = new long[COUNTS];
 
     public void setClick() {
-        tv_eleQty.setOnClickListener(view -> {
-            //每次点击时，数组向前移动一位
-            System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
-            //为数组最后一位赋值
-            mHits[mHits.length - 1] = SystemClock.uptimeMillis();
-            if (mHits[0] >= (SystemClock.uptimeMillis() - DURATION)) {
-                mHits = new long[COUNTS];//重新初始化数组
-                showSetDialog();
-            }
-        });
+//        tv_eleQty.setOnClickListener(view -> {
+//            //每次点击时，数组向前移动一位
+//            System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
+//            //为数组最后一位赋值
+//            mHits[mHits.length - 1] = SystemClock.uptimeMillis();
+//            if (mHits[0] >= (SystemClock.uptimeMillis() - DURATION)) {
+//                mHits = new long[COUNTS];//重新初始化数组
+//                showSetDialog();
+//            }
+//        });
 
         iv_back.setOnClickListener(view -> {
             bluetoothUtil.disconnectDevice();
@@ -541,6 +548,28 @@ public class BluetoothMainActivity2 extends BaseActivity {
         );
 
 
+        sb_cleanValue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                cleanTime = i;
+                tv_cleanValue.setText("雾化量: " + cleanTime);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        bt_sure.setOnClickListener(view -> {
+            SpfUtils.getSpfUtils(getApplicationContext()).setCleanTime(cleanTime);
+            bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, cleanTime);
+            bluetoothUtil.sendOrder();
+        });
         bt_cleanLeft.setOnClickListener(view -> {
             if (!cleanLeft) {
                 cleanLeft = true;
@@ -578,39 +607,39 @@ public class BluetoothMainActivity2 extends BaseActivity {
 
     }
 
-    FRDialog setDialog;
-    int cleartime = 10;
-
-    private void showSetDialog() {
-        if (setDialog == null) {
-            setDialog = new FRDialog.CommonBuilder(this).setContentView(R.layout.dialog_set).create();
-        }
-        setDialog.setCanceledOnTouchOutside(false);
-        TextView sure = setDialog.getView(R.id.tv_sure);
-        TextView cancel = setDialog.getView(R.id.tv_cancel);
-        EditText number = setDialog.getView(R.id.et_number);
-        cancel.setOnClickListener(view -> setDialog.dismiss());
-        sure.setOnClickListener(view -> {
-            String num = number.getText().toString();
-            if (num.isEmpty()) {
-                num = "0";
-            }
-            int numb = Integer.parseInt(num);
-            if (numb <= 0) {
-                numb = 1;
-            }
-            if (numb > 50) {
-                numb = 50;
-            }
-            cleartime = numb;
-            SpfUtils.getSpfUtils(this).setCleanTime(cleartime);
-            bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setpoweronclear, 0);
-            bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, cleartime);
-            bluetoothUtil.sendOrder();
-            setDialog.dismiss();
-        });
-        setDialog.show();
-    }
+//    FRDialog setDialog;
+//
+//
+//    private void showSetDialog() {
+//        if (setDialog == null) {
+//            setDialog = new FRDialog.CommonBuilder(this).setContentView(R.layout.dialog_set).create();
+//        }
+//        setDialog.setCanceledOnTouchOutside(false);
+//        TextView sure = setDialog.getView(R.id.tv_sure);
+//        TextView cancel = setDialog.getView(R.id.tv_cancel);
+//        EditText number = setDialog.getView(R.id.et_number);
+//        cancel.setOnClickListener(view -> setDialog.dismiss());
+//        sure.setOnClickListener(view -> {
+//            String num = number.getText().toString();
+//            if (num.isEmpty()) {
+//                num = "0";
+//            }
+//            int numb = Integer.parseInt(num);
+//            if (numb <= 0) {
+//                numb = 1;
+//            }
+//            if (numb > 50) {
+//                numb = 50;
+//            }
+//            clearTime = numb;
+//            SpfUtils.getSpfUtils(this).setCleanTime(clearTime);
+//            bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setpoweronclear, 0);
+//            bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, clearTime);
+//            bluetoothUtil.sendOrder();
+//            setDialog.dismiss();
+//        });
+//        setDialog.show();
+//    }
 
     private CompoundButton.OnCheckedChangeListener checkedListener = (compoundButton, b) -> {
         tv_bootState.setText(b ? "关机" : "开机");
@@ -786,9 +815,9 @@ public class BluetoothMainActivity2 extends BaseActivity {
                             if (bm.getAutoClean() == NewBleBluetoothUtil.forbidsetpoweronclear) {
                                 bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setpoweronclear, 0);
                             }
-                            if (bm.getCleanTime() != 10) {
-                                SpfUtils.getSpfUtils(this).setCleanTime(10);
-                                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, 10);
+                            if (bm.getCleanTime() != cleanTime) {
+                                SpfUtils.getSpfUtils(this).setCleanTime(cleanTime);
+                                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, cleanTime);
                             }
                             bluetoothUtil.sendOrder();
                         }

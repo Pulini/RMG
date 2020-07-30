@@ -168,15 +168,66 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_sbbh"
         tools:text="版本号:1.0.1.1" />
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_version">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_cleanValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="雾化量"
+                android:textColor="#333333"
+                android:textSize="14sp"
+                android:layout_marginStart="10dp"/>
+
+            <SeekBar
+                android:id="@+id/sb_cleanValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:progressDrawable="@drawable/seekbar_bkg"
+                android:max="30"
+                android:min="5"
+                android:splitTrack="false"
+                android:background="@null"
+                android:maxHeight="5dp"
+                android:minHeight="5dp"
+                android:progress="10"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"/>
+            <Button
+                android:id="@+id/bt_sure"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:text="确定"
+                android:textSize="14sp"
+                android:layout_marginEnd="10dp"
+                android:textColor="@color/lightblue"
+                android:background="@drawable/shape_stroke_btn_bg_blue"
+
+                />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
     <com.yanzhenjie.recyclerview.SwipeRecyclerView
         android:id="@+id/rv_deviceList"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintBottom_toTopOf="@+id/bt_cleanLeft"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_version" />
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
     <Button
         android:id="@+id/bt_cleanLeft"
