@@ -196,8 +196,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:progressDrawable="@drawable/seekbar_bkg"
-                android:max="30"
-                android:min="5"
+                android:max="5"
                 android:splitTrack="false"
                 android:background="@null"
                 android:maxHeight="5dp"
@@ -212,8 +211,8 @@
                 android:text="确定"
                 android:textSize="14sp"
                 android:layout_marginEnd="10dp"
-                android:textColor="@color/lightblue"
-                android:background="@drawable/shape_stroke_btn_bg_blue"
+                android:textColor="@drawable/selector_bt_text_color"
+                android:background="@drawable/selector_bt_sure"
 
                 />
         </LinearLayout>
