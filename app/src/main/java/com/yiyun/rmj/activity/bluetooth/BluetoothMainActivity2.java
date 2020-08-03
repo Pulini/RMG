@@ -826,14 +826,15 @@ public class BluetoothMainActivity2 extends BaseActivity {
 //                            bluetoothUtil.removeAllOrder();
                             if (bm.getAutoClean() == NewBleBluetoothUtil.forbidsetpoweronclear) {
                                 bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setpoweronclear, 0);
+                                bluetoothUtil.sendOrder();
                             }
-                            Log.e("Pan","getCleanTime="+bm.getCleanTime());
-                            if (bm.getCleanTime() != cleanTime) {
-                                Log.e("Pan","----------cleanTime="+cleanTime);
-                                SpfUtils.getSpfUtils(this).setCleanTime(cleanTime);
-                                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, cleanTime);
-                            }
-                            bluetoothUtil.sendOrder();
+//                            Log.e("Pan","getCleanTime="+bm.getCleanTime());
+//                            if (bm.getCleanTime() != cleanTime) {
+//                                Log.e("Pan","----------cleanTime="+cleanTime);
+//                                SpfUtils.getSpfUtils(this).setCleanTime(cleanTime);
+//                                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, cleanTime);
+//                            }
+
                         }
                     });
                     if (isFirst) {
