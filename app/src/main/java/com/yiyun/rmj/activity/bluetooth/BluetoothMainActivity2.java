@@ -151,8 +151,9 @@ public class BluetoothMainActivity2 extends BaseActivity {
         findView();
         setClick();
         cleanTime = SpfUtils.getSpfUtils(getApplicationContext()).getCleanTime();
-        tv_cleanValue.setText("出液量: " + getV(cleanTime/5)+"%");
-        sb_cleanValue.setProgress(cleanTime);
+        Log.e("Pan","cleanTime="+cleanTime);
+        tv_cleanValue.setText("出液量: " + getV((cleanTime-1)/5)+"%");
+        sb_cleanValue.setProgress((cleanTime-1)/5);
         bluetoothUtil = NewBleBluetoothUtil.getInstance();
 
         bluetoothUtil.setBlutToothListener(new NewBleBluetoothUtil.OnBlutToothListener() {
@@ -524,7 +525,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
     long[] mHits = new long[COUNTS];
 
     public int getV(int i){
-        int v=--i*20;
+        int v=i*20;
         if(v==0){
             v=1;
         }
@@ -559,7 +560,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
         sb_cleanValue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                cleanTime = ++i*5;
+                cleanTime = (i+1)*5;
                 tv_cleanValue.setText("出液量: " + getV(i)+"%");
             }
 
@@ -579,7 +580,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
             bluetoothUtil.sendOrder();
             bm.setCleanTime(cleanTime);
             handler.sendEmptyMessage(2);
-            ToastUtils.show("设置物化量：" + getV(cleanTime/5)+"%");
+            ToastUtils.show("设置出液量：" + getV((cleanTime-1)/5)+"%");
         });
         bt_cleanLeft.setOnClickListener(view -> {
             if (!cleanLeft) {
@@ -826,7 +827,9 @@ public class BluetoothMainActivity2 extends BaseActivity {
                             if (bm.getAutoClean() == NewBleBluetoothUtil.forbidsetpoweronclear) {
                                 bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setpoweronclear, 0);
                             }
+                            Log.e("Pan","getCleanTime="+bm.getCleanTime());
                             if (bm.getCleanTime() != cleanTime) {
+                                Log.e("Pan","----------cleanTime="+cleanTime);
                                 SpfUtils.getSpfUtils(this).setCleanTime(cleanTime);
                                 bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, cleanTime);
                             }

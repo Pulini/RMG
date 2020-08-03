@@ -84,7 +84,8 @@
             android:src="@mipmap/icon_shandian"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_eleQty"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"/>
 
         <com.yiyun.rmj.view.ElectricView
             android:id="@+id/ev_electricityQuantity"
@@ -206,12 +207,12 @@
                 android:layout_marginEnd="10dp"/>
             <Button
                 android:id="@+id/bt_sure"
-                android:layout_width="80dp"
+                android:layout_width="60dp"
                 android:layout_height="30dp"
                 android:text="确定"
                 android:textSize="14sp"
                 android:layout_marginEnd="10dp"
-                android:textColor="@drawable/selector_bt_text_color"
+                android:textColor="#ffffff"
                 android:background="@drawable/selector_bt_sure"
 
                 />
