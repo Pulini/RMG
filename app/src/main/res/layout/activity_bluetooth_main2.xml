@@ -169,55 +169,51 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_sbbh"
         tools:text="版本号:1.0.1.1" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/tv_version">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center">
+        <TextView
+            android:id="@+id/tv_cleanValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="出液量"
+            android:textColor="@color/color66"
+            android:textSize="@dimen/textsize12"/>
 
-            <TextView
-                android:id="@+id/tv_cleanValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="雾化量"
-                android:textColor="#333333"
-                android:textSize="14sp"
-                android:layout_marginStart="10dp"/>
+        <SeekBar
+            android:id="@+id/sb_cleanValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:max="5"
+            android:maxHeight="5dp"
+            android:minHeight="5dp"
+            android:progress="10"
+            android:progressDrawable="@drawable/seekbar_bkg"
+            android:splitTrack="false" />
 
-            <SeekBar
-                android:id="@+id/sb_cleanValue"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:progressDrawable="@drawable/seekbar_bkg"
-                android:max="5"
-                android:splitTrack="false"
-                android:background="@null"
-                android:maxHeight="5dp"
-                android:minHeight="5dp"
-                android:progress="10"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"/>
-            <Button
-                android:id="@+id/bt_sure"
-                android:layout_width="60dp"
-                android:layout_height="30dp"
-                android:text="确定"
-                android:textSize="14sp"
-                android:layout_marginEnd="10dp"
-                android:textColor="#ffffff"
-                android:background="@drawable/selector_bt_sure"
+        <Button
+            android:id="@+id/bt_sure"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/selector_bt_sure"
+            android:text="确定"
+            android:textColor="#ffffff"
+            android:textSize="14sp"
 
-                />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+            />
+    </LinearLayout>
+
 
     <com.yanzhenjie.recyclerview.SwipeRecyclerView
         android:id="@+id/rv_deviceList"
@@ -227,7 +223,7 @@
         app:layout_constraintBottom_toTopOf="@+id/bt_cleanLeft"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <Button
         android:id="@+id/bt_cleanLeft"
