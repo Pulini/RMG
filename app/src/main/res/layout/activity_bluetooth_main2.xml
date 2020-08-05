@@ -208,7 +208,7 @@
                 android:textSize="14sp"
                 android:layout_marginEnd="10dp"
                 android:textColor="#ffffff"
-                android:background="@drawable/shape_stroke_btn_bg_orange"
+                android:background="@drawable/shape_stroke_btn_bg_purple"
 
             />
     </LinearLayout>

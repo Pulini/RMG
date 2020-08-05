@@ -152,7 +152,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
         Log.e("Pan","cleanTime="+cleanTime);
         tv_cleanValue.setText("出液量: " + ((cleanTime-6)/3+2)*10+"%");
         sb_cleanValue.setProgress((cleanTime-6)/3);
-        bt_sure.setBackgroundResource(R.drawable.shape_stroke_btn_bg_orange);
+        bt_sure.setBackgroundResource(R.drawable.shape_stroke_btn_bg_purple);
         bluetoothUtil = NewBleBluetoothUtil.getInstance();
 
         bluetoothUtil.setBlutToothListener(new NewBleBluetoothUtil.OnBlutToothListener() {
@@ -554,9 +554,9 @@ public class BluetoothMainActivity2 extends BaseActivity {
         sb_cleanValue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                bt_sure.setBackgroundResource(R.drawable.shape_stroke_btn_bg_blue);
+                bt_sure.setBackgroundResource(R.drawable.shape_stroke_btn_bg_gray2);
                 cleanTime = i*3+6;
-                tv_cleanValue.setText("出液量: " + (i+2)*10+"%");
+                tv_cleanValue.setText("出液量: " + ((cleanTime-6)/3+2)*10+"%");
             }
 
             @Override
@@ -570,7 +570,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
             }
         });
         bt_sure.setOnClickListener(view -> {
-            bt_sure.setBackgroundResource(R.drawable.shape_stroke_btn_bg_orange);
+            bt_sure.setBackgroundResource(R.drawable.shape_stroke_btn_bg_purple);
             SpfUtils.getSpfUtils(getApplicationContext()).setCleanTime(cleanTime);
             bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, cleanTime);
             bluetoothUtil.sendOrder();
@@ -847,8 +847,8 @@ public class BluetoothMainActivity2 extends BaseActivity {
                             //0 20 40 60 80 100
                             //5 10 15 20 25 30
                             cleanTime = bm.getCleanTime();
-                            tv_cleanValue.setText("出液量: " + getV((cleanTime - 1) / 5) + "%");
-                            sb_cleanValue.setProgress(cleanTime / 5 - 1);
+                            tv_cleanValue.setText("出液量: " + ((cleanTime-6)/3+2)*10 + "%");
+                            sb_cleanValue.setProgress((cleanTime-6)/3);
 //                        handler.sendEmptyMessage(3);
                             handler.sendEmptyMessageDelayed(0, 1000 * 5);
                         });
