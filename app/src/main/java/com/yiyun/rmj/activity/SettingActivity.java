@@ -55,7 +55,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             super.dispatchMessage(msg);
             switch(msg.what){
                 case 1:
-                    //更新进度
+                    //进度
                     rl_progress.setVisibility(View.VISIBLE);
                     Bundle bundle = msg.getData();
                     int progress = bundle.getInt("progress");

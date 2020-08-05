@@ -256,7 +256,7 @@ public class NewBleBluetoothUtil {
         }
     }
 
-
+    public MyBluetoothGattCallback BluetoothListener=new MyBluetoothGattCallback();
     /**
      * 连接设备
      *
@@ -272,7 +272,7 @@ public class NewBleBluetoothUtil {
             connectingCallback.connectFailed();
             connectingCallback = null;
         } else {
-            mBluetoothGatt = bleDevice.connectGatt(context, false, new MyBluetoothGattCallback());
+            mBluetoothGatt = bleDevice.connectGatt(context, false, BluetoothListener);
         }
     }
 
@@ -364,11 +364,12 @@ public class NewBleBluetoothUtil {
             super.onCharacteristicRead(gatt, characteristic, status);
             byte[] values = characteristic.getValue();
             removeOrderOnQuee(values[0]);
-            if (readVersionBack != null) {
+            if (characteristic==readVersion) {
                 readVersionBack.callBack(values);
-                readVersionBack=null;
             }
-            readInfoCallBack.callBack(values);
+            if(characteristic==readCharacter){
+                readInfoCallBack.callBack(values);
+            }
             sendOrder();
         }
 
