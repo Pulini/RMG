@@ -154,6 +154,12 @@ public class BluetoothControlDetailActivity3 extends BaseActivity {
         bsm.setModel(NewBleBluetoothUtil.mode_short);
         bsm.setShortTime(shortTime);
         bsm.setShortStrength(pb_short.getCurrentStep() + 1);
+        if (type == BluetoothMainActivity.TYPE_ADD) {
+            bsm.setModelName("短喷设置");
+        }
+        if(type==BluetoothMainActivity.TYPE_MODIFY&&(bsm.getModelName().equals("长喷设置")||bsm.getModelName().equals("设置"))){
+                bsm.setModelName("短喷设置");
+        }
         setResult(RESULT_OK, new Intent().putExtra("Model", bsm));
         finish();
     }
@@ -162,6 +168,12 @@ public class BluetoothControlDetailActivity3 extends BaseActivity {
         bsm.setModel(NewBleBluetoothUtil.mode_long);
         bsm.setLongTime(longTime);
         bsm.setLongStrength((pb_long.getCurrentStep() + 1) * 2);
+        if (type == BluetoothMainActivity.TYPE_ADD) {
+            bsm.setModelName("长喷设置");
+        }
+        if(type==BluetoothMainActivity.TYPE_MODIFY&&(bsm.getModelName().equals("短喷设置")||bsm.getModelName().equals("设置"))){
+            bsm.setModelName("长喷设置");
+        }
         setResult(RESULT_OK, new Intent().putExtra("Model", bsm));
         finish();
     }
@@ -177,7 +189,6 @@ public class BluetoothControlDetailActivity3 extends BaseActivity {
                 wv_short.select(shortList.indexOf(bsm.getShortTime()));
                 wv_long.select(longList.indexOf(bsm.getLongTime()));
             }
-
             if (bsm.getModel() == NewBleBluetoothUtil.mode_long) {
                 pb_short.setCurrentStep(bsm.getShortStrength() - 1);
                 pb_long.setCurrentStep(bsm.getLongStrength() / 2 - 1);

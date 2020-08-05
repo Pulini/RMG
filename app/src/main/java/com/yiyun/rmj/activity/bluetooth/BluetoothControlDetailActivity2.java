@@ -171,9 +171,15 @@ public class BluetoothControlDetailActivity2 extends BaseActivity {
         } else {
             if (sw_shortSwitch.isChecked()) {
                 bsm.setModel(NewBleBluetoothUtil.mode_short);
+                if(type == BluetoothMainActivity.TYPE_ADD){
+                    bsm.setModelName("短喷设置");
+                }
             }
             if (sw_longSwitch.isChecked()) {
                 bsm.setModel(NewBleBluetoothUtil.mode_long);
+                if(type == BluetoothMainActivity.TYPE_ADD){
+                    bsm.setModelName("长喷设置");
+                }
             }
         }
         bsm.setShortTime(shortTime);

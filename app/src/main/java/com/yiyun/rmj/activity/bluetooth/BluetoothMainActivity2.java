@@ -104,7 +104,11 @@ public class BluetoothMainActivity2 extends BaseActivity {
                         isFirst = true;
                     } else {
                         String version = DevcieVersion + "-" + bm.getAutoClean() + "-" + bm.getCleanTime();
+                        cleanTime=bm.getCleanTime();
                         tv_version.setText(version);
+                        sb_cleanValue.setProgress((cleanTime-6)/3);
+                        bt_sure.setBackgroundResource(R.drawable.shape_stroke_btn_bg_orange);
+                        tv_cleanValue.setText("出液量: " + ((cleanTime-6)/3+2)*10+"%");
                     }
                     break;
                 case 22:
@@ -152,8 +156,9 @@ public class BluetoothMainActivity2 extends BaseActivity {
         setClick();
         cleanTime = SpfUtils.getSpfUtils(getApplicationContext()).getCleanTime();
         Log.e("Pan","cleanTime="+cleanTime);
-        tv_cleanValue.setText("出液量: " + getV((cleanTime-1)/5)+"%");
-        sb_cleanValue.setProgress((cleanTime-1)/5);
+        tv_cleanValue.setText("出液量: " + ((cleanTime-6)/3+2)*10+"%");
+        sb_cleanValue.setProgress((cleanTime-6)/3);
+        bt_sure.setBackgroundResource(R.drawable.shape_stroke_btn_bg_orange);
         bluetoothUtil = NewBleBluetoothUtil.getInstance();
 
         bluetoothUtil.setBlutToothListener(new NewBleBluetoothUtil.OnBlutToothListener() {
@@ -524,13 +529,6 @@ public class BluetoothMainActivity2 extends BaseActivity {
     long DURATION = (3 * 1000);//规定有效时间
     long[] mHits = new long[COUNTS];
 
-    public int getV(int i){
-        int v=i*20;
-        if(v==0){
-            v=1;
-        }
-        return v;
-    }
 
     public void setClick() {
 //        tv_eleQty.setOnClickListener(view -> {
@@ -560,8 +558,9 @@ public class BluetoothMainActivity2 extends BaseActivity {
         sb_cleanValue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                cleanTime = (i+1)*5;
-                tv_cleanValue.setText("出液量: " + getV(i)+"%");
+                bt_sure.setBackgroundResource(R.drawable.shape_stroke_btn_bg_blue);
+                cleanTime = i*3+6;
+                tv_cleanValue.setText("出液量: " + (i+2)*10+"%");
             }
 
             @Override
@@ -575,12 +574,13 @@ public class BluetoothMainActivity2 extends BaseActivity {
             }
         });
         bt_sure.setOnClickListener(view -> {
+            bt_sure.setBackgroundResource(R.drawable.shape_stroke_btn_bg_orange);
             SpfUtils.getSpfUtils(getApplicationContext()).setCleanTime(cleanTime);
             bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, cleanTime);
             bluetoothUtil.sendOrder();
             bm.setCleanTime(cleanTime);
             handler.sendEmptyMessage(2);
-            ToastUtils.show("设置出液量：" + getV((cleanTime-1)/5)+"%");
+            ToastUtils.show("设置出液量：" + ((cleanTime-6)/3+2)*10+"%");
         });
         bt_cleanLeft.setOnClickListener(view -> {
             if (!cleanLeft) {
@@ -1036,9 +1036,11 @@ public class BluetoothMainActivity2 extends BaseActivity {
             SettingListModel bsm = (SettingListModel) data.getExtras().getSerializable("Model");
             switch (requestCode) {
                 case TYPE_ADD:
+                    Log.e("Pan","添加");
                     device.getList().add(bsm);
                     break;
                 case TYPE_MODIFY:
+                    Log.e("Pan","修改");
                     device.getList().set(index, bsm);
                     if (device.getList().get(index).isSelected()) {
                         setModel(index, true);
