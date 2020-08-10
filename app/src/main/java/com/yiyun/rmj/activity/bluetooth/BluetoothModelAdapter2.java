@@ -149,7 +149,7 @@ public class BluetoothModelAdapter2 extends RecyclerView.Adapter<RecyclerView.Vi
                 holder.tv_modify.setVisibility(View.VISIBLE);
 //                holder.iv_model.setBackgroundColor(list.get(position).isSelected() ? Color.parseColor("#029DF9") : Color.parseColor("#dddddd"));
 //                holder.iv_model.setBackgroundColor(Color.parseColor("#FFC81E"));
-                holder.iv_model.setBackgroundColor(Color.parseColor("#6155E9"));
+                holder.iv_model.setBackgroundColor(Color.parseColor("#F98802"));
                 holder.tv_short.setText("短喷： 强度：" + strStrenth[list.get(position).getShortStrength() - 1] + "  时间：" + list.get(position).getShortTime() + "秒");
                 holder.sw_choice.setTrackResource(R.drawable.switch_track_yellow_selector);
                 break;
@@ -160,7 +160,6 @@ public class BluetoothModelAdapter2 extends RecyclerView.Adapter<RecyclerView.Vi
                 holder.tv_modify.setVisibility(View.VISIBLE);
 //                holder.iv_model.setBackgroundColor(list.get(position).isSelected() ? Color.parseColor("#24F7A8") : Color.parseColor("#dddddd"));
 //                holder.iv_model.setBackgroundColor(Color.parseColor("#24F7A8"));
-                holder.iv_model.setBackgroundColor(Color.parseColor("#408AF5"));
                 holder.tv_long.setText("长喷： 强度：" + strStrenth[list.get(position).getLongStrength() / 2 - 1] + "  时间：" + list.get(position).getLongTime() + "分");
                 holder.sw_choice.setTrackResource(R.drawable.switch_track_green_selector);
                 break;

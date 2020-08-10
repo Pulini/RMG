@@ -554,7 +554,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
         sb_cleanValue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                bt_sure.setBackgroundResource(R.drawable.shape_stroke_btn_bg_gray2);
+                bt_sure.setBackgroundResource(R.drawable.shape_stroke_btn_bg_purple);
                 cleanTime = i*3+6;
                 tv_cleanValue.setText("出液量: " + ((cleanTime-6)/3+2)*10+"%");
             }
@@ -570,7 +570,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
             }
         });
         bt_sure.setOnClickListener(view -> {
-            bt_sure.setBackgroundResource(R.drawable.shape_stroke_btn_bg_purple);
+            bt_sure.setBackgroundResource(R.drawable.shape_stroke_btn_bg_blue);
             SpfUtils.getSpfUtils(getApplicationContext()).setCleanTime(cleanTime);
             bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, cleanTime);
             bluetoothUtil.sendOrder();
