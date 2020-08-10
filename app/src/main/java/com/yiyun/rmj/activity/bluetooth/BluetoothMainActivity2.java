@@ -116,6 +116,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
     private boolean cleanLeft = false;
     private boolean cleanRight = false;
     private boolean isSending = false;
+    private boolean isSetting=false;
 
 
     private String getVersion(byte[] values) {
@@ -152,7 +153,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
         Log.e("Pan","cleanTime="+cleanTime);
         tv_cleanValue.setText("出液量: " + ((cleanTime-6)/3+2)*10+"%");
         sb_cleanValue.setProgress((cleanTime-6)/3);
-        bt_sure.setBackgroundResource(R.drawable.shape_stroke_btn_bg_purple);
+        bt_sure.setBackgroundResource(R.drawable.shape_stroke_btn_bg_blue);
         bluetoothUtil = NewBleBluetoothUtil.getInstance();
 
         bluetoothUtil.setBlutToothListener(new NewBleBluetoothUtil.OnBlutToothListener() {
@@ -570,6 +571,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
             }
         });
         bt_sure.setOnClickListener(view -> {
+            isSetting=true;
             bt_sure.setBackgroundResource(R.drawable.shape_stroke_btn_bg_blue);
             SpfUtils.getSpfUtils(getApplicationContext()).setCleanTime(cleanTime);
             bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, cleanTime);
@@ -846,9 +848,22 @@ public class BluetoothMainActivity2 extends BaseActivity {
                             //0 1  2  3  4  5
                             //0 20 40 60 80 100
                             //5 10 15 20 25 30
-                            cleanTime = bm.getCleanTime();
-                            tv_cleanValue.setText("出液量: " + ((cleanTime-6)/3+2)*10 + "%");
-                            sb_cleanValue.setProgress((cleanTime-6)/3);
+                            if(isSetting){
+                                if(cleanTime==bm.getCleanTime()){
+                                    isSetting=false;
+                                    tv_cleanValue.setText("出液量: " + ((cleanTime-6)/3+2)*10 + "%");
+                                    sb_cleanValue.setProgress((cleanTime-6)/3);
+                                }else{
+                                    Log.e("Pan","设置中.....");
+                                    bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, cleanTime);
+                                    bluetoothUtil.sendOrder();
+                                }
+                            }else{
+                                cleanTime = bm.getCleanTime();
+                                tv_cleanValue.setText("出液量: " + ((cleanTime-6)/3+2)*10 + "%");
+                                sb_cleanValue.setProgress((cleanTime-6)/3);
+                            }
+
 //                        handler.sendEmptyMessage(3);
                             handler.sendEmptyMessageDelayed(0, 1000 * 5);
                         });
