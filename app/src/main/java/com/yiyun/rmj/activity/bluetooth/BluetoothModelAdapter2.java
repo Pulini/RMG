@@ -87,9 +87,9 @@ public class BluetoothModelAdapter2 extends RecyclerView.Adapter<RecyclerView.Vi
     private void setHolder1(Holder1 holder, int position) {
         holder.itemView.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, SizeUtils.dp2px(context, 80)));
         holder.itemView.setOnClickListener(view -> {
-            if (position > 0) {
+//            if (position > 0) {
                 listener.OnItemClick(holder.getAdapterPosition());
-            }
+//            }
         });
 
         holder.tv_modify.setOnClickListener(view -> listener.OnItemModifyClick(position));
