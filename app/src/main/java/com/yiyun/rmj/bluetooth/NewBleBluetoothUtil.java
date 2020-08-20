@@ -95,7 +95,6 @@ public class NewBleBluetoothUtil {
     }
 
     OnBlutToothListener listener;
-    boolean isSending = false;
 
     public interface OnBlutToothListener {
         void onStartSend(int Orders);
@@ -403,7 +402,6 @@ public class NewBleBluetoothUtil {
                     sendOrder();
                 }
                 if (orderQuee.size() == 0) {
-                    isSending = false;
                     if (listener != null) {
                         LogUtils.LogE("onSendFinish-----------------");
                         listener.onSendFinish();
@@ -571,15 +569,11 @@ public class NewBleBluetoothUtil {
         if (order == null) {
             return;
         }
-        Log.e("Pan", "isSending=" + isSending);
-        if (!isSending) {
-            isSending = true;
             if (listener != null) {
                 orderSum = orderQuee.size();
                 LogUtils.LogE("onStartSend-----------------");
                 listener.onStartSend(orderSum);
             }
-        }
         Log.e("bcz", "Order is :" + new Gson().toJson(order.getOrder()));
 
         switch (order.getOrder()) {

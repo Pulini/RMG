@@ -32,7 +32,7 @@ import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
 import com.shuyu.gsyvideoplayer.utils.GSYVideoHelper;
 import com.yiyun.rmj.R;
-import com.yiyun.rmj.activity.bluetooth.BluetoothSelectDeviceActivity;
+import com.yiyun.rmj.activity.bluetooth.BluetoothSelectDeviceActivity2;
 import com.yiyun.rmj.adapter.HomeAdapter;
 import com.yiyun.rmj.adapter.HomeVideo2Adapter;
 import com.yiyun.rmj.adapter.MyHomeAdapter;
@@ -249,7 +249,7 @@ public class NewHomeActivity extends BaseActivity {
             if (token.isEmpty()) {
                 startlogin();
             } else {
-                startActivity(new Intent(context, BluetoothSelectDeviceActivity.class));
+                startActivity(new Intent(context, BluetoothSelectDeviceActivity2.class));
             }
         });
         tv_person_center.setOnClickListener(v -> startActivity(new Intent(context, PersonCenterActivity.class)));

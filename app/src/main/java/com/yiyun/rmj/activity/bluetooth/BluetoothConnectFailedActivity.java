@@ -8,15 +8,16 @@ import android.widget.TextView;
 
 import com.yiyun.rmj.R;
 import com.yiyun.rmj.base.BaseActivity;
+import com.yiyun.rmj.base.BaseActivity2;
 
-public class BluetoothConnectFailedActivity extends BaseActivity implements View.OnClickListener {
+public class BluetoothConnectFailedActivity extends BaseActivity2 implements View.OnClickListener {
 
     public int deviceId;
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.iv_back_white:
-                Intent selectIntent = new Intent(BluetoothConnectFailedActivity.this, BluetoothSelectDeviceActivity.class);
+                Intent selectIntent = new Intent(BluetoothConnectFailedActivity.this, BluetoothSelectDeviceActivity2.class);
                 selectIntent.putExtra("deviceId",deviceId);
                 startActivity(selectIntent);
                 overridePendingTransition(R.anim.activity_leftclick_in, R.anim.activity_leftclick_out);
@@ -24,7 +25,7 @@ public class BluetoothConnectFailedActivity extends BaseActivity implements View
                 break;
             case R.id.btn_reconnecting:
                 //重新连接按钮
-                Intent connectingIntent = new Intent(BluetoothConnectFailedActivity.this, BluetoothConnecttingDeviceActivity.class);
+                Intent connectingIntent = new Intent(BluetoothConnectFailedActivity.this, BluetoothConnecttingDeviceActivity2.class);
                 connectingIntent.putExtra("deviceId",deviceId);
                 startActivity(connectingIntent);
                 overridePendingTransition(R.anim.activity_rightclick_in, R.anim.activity_rightclick_out);

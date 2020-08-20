@@ -111,15 +111,19 @@
         <activity android:name=".activity.IntegrationActivity" />
         <activity android:name=".activity.IntegrationDesActivity" />
         <activity android:name=".activity.bluetooth.BluetoothSelectDeviceActivity" />
+        <activity android:name=".activity.bluetooth.BluetoothSelectDeviceActivity2" />
         <activity android:name=".activity.bluetooth.BluetoothConnecttingDeviceActivity" />
+        <activity android:name=".activity.bluetooth.BluetoothConnecttingDeviceActivity2" />
         <activity android:name=".activity.bluetooth.BluetoothConnectFailedActivity" />
         <activity android:name=".activity.bluetooth.BluetoothMainActivity" />
         <activity android:name=".activity.bluetooth.BluetoothMainActivity2" />
+        <activity android:name=".activity.bluetooth.BluetoothMainActivity3" />
         <activity android:name=".activity.bluetooth.BluetoothControlDetailActivity" />
         <activity android:name=".activity.bluetooth.BluetoothControlDetailActivity2" />
         <activity android:name=".activity.bluetooth.BluetoothControlDetailActivity3" />
 
         <activity android:name=".activity.bluetooth.BluetoothAddDeviceActivity" />
+        <activity android:name=".activity.bluetooth.BluetoothAddDeviceActivity2" />
         <activity android:name=".activity.ClipHeaderActivity" />
         <activity android:name=".activity.ShareRuleActivity" />
         <activity android:name=".activity.ShareRuleDetailActivity" />

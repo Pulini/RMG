@@ -185,6 +185,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
         deviceId = getIntent().getIntExtra("deviceId", 0);
         Log.e("Pan", "deviceId=" + deviceId);
         device = DataSupport.find(BluetoothBean.class, deviceId);
+        Log.e("Pan", "蓝牙设备=" + device.getDeviceName());
         device.setList(SpfUtils.getBluetoothSetList(deviceId));
         setData();
         tv_deviceName.setText(device.getDeviceName());
