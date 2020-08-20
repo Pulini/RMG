@@ -181,6 +181,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
         deviceId = getIntent().getIntExtra("deviceId", 0);
         bleDevice = getIntent().getParcelableExtra("bleDevice");
         Log.e("Pan", "deviceId=" + deviceId);
+        Log.e("Pan", "bleDevice=" + bleDevice.getName());
         device = DataSupport.find(BluetoothBean.class, deviceId);
         device.setList(SpfUtils.getBluetoothSetList(deviceId));
         setData();
