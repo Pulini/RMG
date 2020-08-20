@@ -148,12 +148,12 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
     BleWriteCallback callback = new BleWriteCallback() {
         @Override
         public void onWriteSuccess(int current, int total, byte[] justWrite) {
-
+            Log.e("Pan","指令发送成功");
         }
 
         @Override
         public void onWriteFailure(BleException exception) {
-
+            Log.e("Pan","指令发送失败："+exception);
         }
     };
 
@@ -1001,6 +1001,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
     }
 
     private void BLE_Write(byte[] data) {
+        Log.e("Pan","发送指令："+gson.toJson(data));
         BleManager.getInstance().write(
                 bleDevice,
                 BLEUtil.BLE_serviceUUid,
