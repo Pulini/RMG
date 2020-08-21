@@ -362,10 +362,12 @@ public class NewBleBluetoothUtil {
         public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
             super.onCharacteristicRead(gatt, characteristic, status);
             byte[] values = characteristic.getValue();
+            Log.e("Pan","values="+values);
             removeOrderOnQuee(values[0]);
             if (characteristic==readVersion) {
                 readVersionBack.callBack(values);
             }
+            Log.e("Pan","1111111111111");
             if(characteristic==readCharacter){
                 readInfoCallBack.callBack(values);
             }
@@ -378,9 +380,6 @@ public class NewBleBluetoothUtil {
 //
 //            if(status == BluetoothGatt.GATT_SUCCESS){
 //                Log.e("Pan","写入成功");
-//                for (int i = 0; i < orderQuee.size(); i++) {
-//
-//                }
 //            }else if (status == BluetoothGatt.GATT_FAILURE) {
 //                Log.e("onCharacteristicWrite中", "写入失败");
 //            } else if (status == BluetoothGatt.GATT_WRITE_NOT_PERMITTED) {
@@ -391,7 +390,7 @@ public class NewBleBluetoothUtil {
             byte[] values = characteristic.getValue();
             if (status == BluetoothGatt.GATT_SUCCESS) {//写入成功
                 Log.e("Pan", "写入成功" + values[0]);
-                removeOrderOnQuee(values[0]);
+                /*removeOrderOnQuee(values[0]);
                 currentContext.showOrderMessage(values, status);
                 if (orderQuee.size() > 0) {
                     if (listener != null) {
@@ -407,14 +406,14 @@ public class NewBleBluetoothUtil {
                         listener.onSendFinish();
                     }
                 }
-
+*/
             } else if (status == BluetoothGatt.GATT_FAILURE) {
-                sendOrder();
-                Log.e("onCharacteristicWrite中", "写入失败");
+                Log.e("Pan", "写入失败" + values[0]);
+//                sendOrder();
+//                Log.e("onCharacteristicWrite中", "写入失败");
             } else if (status == BluetoothGatt.GATT_WRITE_NOT_PERMITTED) {
                 Log.e("onCharacteristicWrite中", "没权限");
             }
-
 
 //            Log.e("bcz", "onCharacteristicWrite----------------begin---------------------");
 //            for (byte value : values) {
@@ -443,11 +442,16 @@ public class NewBleBluetoothUtil {
     }
 
 
-   /* public void sendOrders() {
+    public void sendOrders() {
         new Thread(() -> {
             for (Order order : orderQuee) {
                 send(order);
-                SystemClock.sleep(500);
+                SystemClock.sleep(300);
+            }
+            orderQuee.clear();
+            if (listener != null) {
+                LogUtils.LogE("onSendFinish-----------------");
+                listener.onSendFinish();
             }
         }).start();
 
@@ -458,107 +462,73 @@ public class NewBleBluetoothUtil {
         switch (order.getOrder()) {
             case clearleft:
                 //清洗左喷头
-                data = new byte[1];
-                data[0] = clearleft;
-                dataSend(data, opencloseCharacter);
+                sendClearLeft();
                 break;
             case clearright:
                 //清洗右喷头
-                data = new byte[1];
-                data[0] = clearright;
-                dataSend(data, opencloseCharacter);
+                sendClearRight();
                 break;
             case setpoweronclear:
                 //设置上电自动清洗
-                data = new byte[1];
-                data[0] = setpoweronclear;
-                dataSend(data, opencloseCharacter);
+                sendClearOnPower();
                 break;
             case forbidsetpoweronclear:
                 //禁止上电自动清洗
-                data = new byte[1];
-                data[0] = forbidsetpoweronclear;
-                dataSend(data, opencloseCharacter);
+                sendForbidClearOnPower();
                 break;
             case shortTime:
                 //设置短喷时间
-                data = new byte[2];
-                data[0] = shortTime;
-                data[1] = OX_ORDER[order.getIntdata().get(0)];
-                dataSend(data, writeCharacter);
+                sendShortTime(order.getIntdata().get(0));
                 break;
             case shortStrength:
                 //设置短喷强度
-                data = new byte[2];
-                data[0] = shortStrength;
-                data[1] = OX_ORDER[order.getIntdata().get(0)];
-                dataSend(data, writeCharacter);
+                sendShortStrenth(order.getIntdata().get(0));
                 break;
             case longTime:
                 //设置短喷强度
-                data = new byte[2];
-                data[0] = longTime;
-                data[1] = OX_ORDER[order.getIntdata().get(0)];
-                dataSend(data, writeCharacter);
+                sendLongTime(order.getIntdata().get(0));
                 break;
             case longStrength:
                 //设置短喷强度
-                data = new byte[2];
-                data[0] = longStrength;
-                data[1] = OX_ORDER[order.getIntdata().get(0)];
-                dataSend(data, writeCharacter);
+                sendLongStrenth(order.getIntdata().get(0));
                 break;
             case setcleartime:
                 //设置清洗时长
-                data = new byte[2];
-                data[0] = setcleartime;
-                data[1] = OX_ORDER[order.getIntdata().get(0)];
-                dataSend(data, writeCharacter);
+                sendClearTime(order.getIntdata().get(0));
                 break;
             case mode_short:
-                //设置普通模式
-                data = new byte[1];
-                data[0] = mode_short;
-                dataSend(data, opencloseCharacter);
+                setMode_Short();
                 break;
             case mode_long:
-                data = new byte[1];
-                data[0] = mode_long;
-                dataSend(data, opencloseCharacter);
+                setMode_Long();
                 break;
             case mode_short_long:
-                data = new byte[1];
-                data[0] = mode_short_long;
-                dataSend(data, opencloseCharacter);
+                setMode_ShortLong();
                 break;
             case mode_auto_mild:
-                data = new byte[1];
-                data[0] = mode_auto_mild;
-                dataSend(data, opencloseCharacter);
+                setMode_mild();
                 break;
             case mode_auto_middle:
-                data = new byte[1];
-                data[0] = mode_auto_middle;
-                dataSend(data, opencloseCharacter);
+                setMode_middle();
                 break;
-            case shutdown:
-                data = new byte[1];
-                data[0] = shutdown;
-                dataSend(data, opencloseCharacter);
+            case mode_auto_strength:
+                setMode_strength();
                 break;
-            case boot:
-                data = new byte[1];
-                data[0] = boot;
-                dataSend(data, opencloseCharacter);
-                break;
-
             case readStatuss:
                 mBluetoothGatt.readCharacteristic(readCharacter);
+                break;
+            case shutdown:
+                sendSurtDown();
+                break;
+            case boot:
+                sendBoot();
+                break;
+            case longOrder:
+                sendLongOrder(order.getIntdata());
                 break;
 
         }
     }
-*/
 
     /**
      * 从队列中获取指令进行发送

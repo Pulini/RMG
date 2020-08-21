@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,9 +90,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 0:
-                    if (!isFinishing()) {
-                        readStatus();
-                    }
+                    refresh();
                     break;
                 case 1:
                     cleanLeft = false;
@@ -124,38 +121,9 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
     private BleDevice bleDevice;
 
 
-    private String getVersion(byte[] values) {
-        String bt = "";
-        for (byte aByte : values) {
-            bt += aByte & 0xFF;
-        }
-        String bts = "";
-        for (int i = 0; i < bt.length(); i++) {
-            if (i == bt.length() - 1) {
-                bts += bt.charAt(i);
-            } else {
-                bts += bt.charAt(i) + ".";
-            }
-        }
-        Log.e("Pan", "bt=" + bt);
-        Log.e("Pan", "bts=" + bts);
-        return bts;
-    }
-
     int cleanTime = 5;
     private BluetoothModel bm;
 
-    BleWriteCallback callback = new BleWriteCallback() {
-        @Override
-        public void onWriteSuccess(int current, int total, byte[] justWrite) {
-            Log.e("Pan","指令发送成功");
-        }
-
-        @Override
-        public void onWriteFailure(BleException exception) {
-            Log.e("Pan","指令发送失败："+exception);
-        }
-    };
 
     @Override
     protected int getLayoutId() {
@@ -180,8 +148,10 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
 
         deviceId = getIntent().getIntExtra("deviceId", 0);
         bleDevice = getIntent().getParcelableExtra("bleDevice");
+//        BLE_Notify();
+
         Log.e("Pan", "deviceId=" + deviceId);
-        Log.e("Pan", "bleDevice=" + bleDevice.getName());
+        Log.e("Pan", "bleDevice=" + BleManager.getInstance().getConnectState(bleDevice));
         device = DataSupport.find(BluetoothBean.class, deviceId);
         device.setList(SpfUtils.getBluetoothSetList(deviceId));
         setData();
@@ -218,14 +188,14 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
                     }
                     device.getList().get(0).setSelected(true);
                     switch (device.getList().get(0).getModel()) {
-                        case BLEUtil.mode_auto_mild:
-                            BLE_Write(new byte[]{BLEUtil.mode_auto_mild});
+                        case BLEUtil.ble_Mode_Intelligent1:
+                            BLE_Write(new byte[]{BLEUtil.ble_Mode_Intelligent1}, BLEUtil.BLE_writeUUid_1);
                             break;
-                        case BLEUtil.mode_auto_middle:
-                            BLE_Write(new byte[]{BLEUtil.mode_auto_middle});
+                        case BLEUtil.ble_Mode_Intelligent2:
+                            BLE_Write(new byte[]{BLEUtil.ble_Mode_Intelligent2}, BLEUtil.BLE_writeUUid_1);
                             break;
-                        case BLEUtil.mode_auto_strength:
-                            BLE_Write(new byte[]{BLEUtil.mode_auto_strength});
+                        case BLEUtil.ble_Mode_Intelligent3:
+                            BLE_Write(new byte[]{BLEUtil.ble_Mode_Intelligent3}, BLEUtil.BLE_writeUUid_1);
                             break;
                     }
                     SpfUtils.saveBluetoothSetList(device.getList(), deviceId);
@@ -284,11 +254,11 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
                     device.getList().remove(adapterPosition);
                     SpfUtils.saveBluetoothSetList(device.getList(), deviceId);
                     if (device.getList().size() == 1) {
-                        if (bm.getModel() != BLEUtil.mode_auto_mild &&
-                                bm.getModel() != BLEUtil.mode_auto_middle &&
-                                bm.getModel() != BLEUtil.mode_auto_strength
+                        if (bm.getModel() != BLEUtil.ble_Mode_Intelligent1 &&
+                                bm.getModel() != BLEUtil.ble_Mode_Intelligent2 &&
+                                bm.getModel() != BLEUtil.ble_Mode_Intelligent3
                         ) {
-                            BLE_Write(new byte[]{BLEUtil.mode_auto_mild});
+                            BLE_Write(new byte[]{BLEUtil.ble_Mode_Intelligent1}, BLEUtil.BLE_writeUUid_1);
                         }
                         Log.e("Pan", "开机");
                     }
@@ -298,9 +268,9 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
         });
 
         rv_deviceList.setAdapter(bma);
-//        readStatus();
-
         AddDevice();
+//        refresh();
+//        readVersion();
     }
 
 
@@ -308,9 +278,9 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
         Log.e("Pan", "position=" + position);
         Log.e("Pan", "isChecked=" + isChecked);
         for (int i = device.getList().size() - 1; i >= 0; i--) {
-            if (device.getList().get(i).getModel() == BLEUtil.mode_auto_mild ||
-                    device.getList().get(i).getModel() == BLEUtil.mode_auto_middle ||
-                    device.getList().get(i).getModel() == BLEUtil.mode_auto_strength
+            if (device.getList().get(i).getModel() == BLEUtil.ble_Mode_Intelligent1 ||
+                    device.getList().get(i).getModel() == BLEUtil.ble_Mode_Intelligent2 ||
+                    device.getList().get(i).getModel() == BLEUtil.ble_Mode_Intelligent3
             ) {
                 device.getList().get(i).setSelected(false);
             }
@@ -325,10 +295,10 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
         int hasLong = -1;
         for (int i = 0; i < device.getList().size(); i++) {
             if (device.getList().get(i).isSelected()) {
-                if (device.getList().get(i).getModel() == BLEUtil.mode_short) {
+                if (device.getList().get(i).getModel() == BLEUtil.ble_Mode_Short) {
                     hasShort = i;
                 }
-                if (device.getList().get(i).getModel() == BLEUtil.mode_long) {
+                if (device.getList().get(i).getModel() == BLEUtil.ble_Mode_Long) {
                     hasLong = i;
                 }
             }
@@ -338,43 +308,42 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
         Log.e("Pan", "hasLong=" + hasLong);
         Log.e("Pan", "Model=" + device.getList().get(position).getModel());
         if (hasShort != -1 && hasLong != -1) {
-
             BLE_Write(new byte[]{
-                    BLEUtil.longOrder,
+                    BLEUtil.ble_LongOrder,
                     BLEUtil.OX_ORDER[cleanTime],
                     BLEUtil.OX_ORDER[bm.getAutoClean()],
                     BLEUtil.OX_ORDER[device.getList().get(hasShort).getShortTime()],
                     BLEUtil.OX_ORDER[device.getList().get(hasShort).getShortStrength()],
                     BLEUtil.OX_ORDER[device.getList().get(hasLong).getLongTime()],
                     BLEUtil.OX_ORDER[device.getList().get(hasLong).getLongStrength()],
-                    BLEUtil.OX_ORDER[BLEUtil.mode_short_long],
-            });
+                    BLEUtil.OX_ORDER[BLEUtil.ble_Mode_Short_Long],
+            }, BLEUtil.BLE_writeUUid_2);
             Log.e("Pan", "设置长短喷");
         } else {
             if (hasShort != -1) {
                 BLE_Write(new byte[]{
-                        BLEUtil.longOrder,
+                        BLEUtil.ble_LongOrder,
                         BLEUtil.OX_ORDER[cleanTime],
                         BLEUtil.OX_ORDER[bm.getAutoClean()],
                         BLEUtil.OX_ORDER[device.getList().get(hasShort).getShortTime()],
                         BLEUtil.OX_ORDER[device.getList().get(hasShort).getShortStrength()],
                         BLEUtil.OX_ORDER[bm.getLongTime()],
                         BLEUtil.OX_ORDER[bm.getLongStrength()],
-                        BLEUtil.OX_ORDER[BLEUtil.mode_short],
-                });
+                        BLEUtil.OX_ORDER[BLEUtil.ble_Mode_Short],
+                }, BLEUtil.BLE_writeUUid_2);
                 Log.e("Pan", "设置短喷");
             }
             if (hasLong != -1) {
                 BLE_Write(new byte[]{
-                        BLEUtil.longOrder,
+                        BLEUtil.ble_LongOrder,
                         BLEUtil.OX_ORDER[cleanTime],
                         BLEUtil.OX_ORDER[bm.getAutoClean()],
                         BLEUtil.OX_ORDER[bm.getShortTime()],
                         BLEUtil.OX_ORDER[bm.getShortStrength()],
                         BLEUtil.OX_ORDER[device.getList().get(hasLong).getLongTime()],
                         BLEUtil.OX_ORDER[device.getList().get(hasLong).getLongStrength()],
-                        BLEUtil.OX_ORDER[BLEUtil.mode_long],
-                });
+                        BLEUtil.OX_ORDER[BLEUtil.ble_Mode_Long],
+                }, BLEUtil.BLE_writeUUid_2);
                 Log.e("Pan", "设置长喷");
             }
         }
@@ -431,11 +400,6 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
 
     }
 
-    int COUNTS = 5; //点击次数
-    long DURATION = (3 * 1000);//规定有效时间
-    long[] mHits = new long[COUNTS];
-
-
     public void setClick() {
         iv_back.setOnClickListener(view -> {
             BleManager.getInstance().disconnect(bleDevice);
@@ -472,7 +436,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
             isSetting = true;
             bt_sure.setBackgroundResource(R.drawable.shape_stroke_btn_bg_blue);
             SpfUtils.getSpfUtils(getApplicationContext()).setCleanTime(cleanTime);
-            BLE_Write(new byte[]{BLEUtil.setcleartime, BLEUtil.OX_ORDER[cleanTime]});
+            BLE_Write(new byte[]{BLEUtil.ble_SprayQuantity, BLEUtil.OX_ORDER[cleanTime]}, BLEUtil.BLE_writeUUid_2);
             bm.setCleanTime(cleanTime);
             ToastUtils.show("设置出液量：" + ((cleanTime - 6) / 3 + 2) * 10 + "%");
             runOnUiThread(() -> {
@@ -487,7 +451,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
         bt_cleanLeft.setOnClickListener(view -> {
             if (!cleanLeft) {
                 cleanLeft = true;
-                BLE_Write(new byte[]{BLEUtil.clearleft});
+                BLE_Write(new byte[]{BLEUtil.ble_CleanLift}, BLEUtil.BLE_writeUUid_1);
                 bt_cleanLeft.setBackgroundResource(R.drawable.btn_cleanright);
                 if (handler.hasMessages(1)) {
                     handler.removeMessages(1);
@@ -499,7 +463,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
         bt_cleanRight.setOnClickListener(view -> {
             if (!cleanRight) {
                 cleanRight = true;
-                BLE_Write(new byte[]{BLEUtil.clearright});
+                BLE_Write(new byte[]{BLEUtil.ble_CleanRight}, BLEUtil.BLE_writeUUid_1);
                 bt_cleanRight.setBackgroundResource(R.drawable.btn_cleanright);
                 if (handler.hasMessages(4)) {
                     handler.removeMessages(4);
@@ -513,16 +477,15 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
 
     private CompoundButton.OnCheckedChangeListener checkedListener = (compoundButton, b) -> {
         tv_bootState.setText(b ? "关机" : "开机");
-        BLE_Write(new byte[]{b ? BLEUtil.boot : BLEUtil.shutdown});
+        BLE_Write(new byte[]{b ? BLEUtil.ble_PowerON : BLEUtil.ble_PowerOff}, BLEUtil.BLE_writeUUid_1);
     };
 
-    private void readStatus() {
-        Log.e("Pan", "开始读取蓝牙");
-//        if (isSending) {
-//            handler.removeMessages(0);
-//            handler.sendEmptyMessageDelayed(0, 1000);
-//            Log.e("Pan", "正在发送指令");
-//        } else {
+    private void refresh() {
+        Log.e("Pan", "刷新数据");
+        if (isFinishing()) {
+            Log.e("Pan", "Activity以关闭");
+            return;
+        }
         BleManager.getInstance().read(
                 bleDevice,
                 BLEUtil.BLE_serviceUUid,
@@ -530,9 +493,13 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
                 new BleReadCallback() {
                     @Override
                     public void onReadSuccess(byte[] values) {
+                        Log.e("Pan", "蓝牙数据读取完成");
+                        if (isSending) {
+                            Log.e("Pan", "蓝牙正在发送");
+                            return;
+                        }
                         //0x53+【开机状态】+【剩余电量】+【清洗时长】+【短喷间隔时间】+【短喷喷雾强度】+【开机清洗使能】 +【工作模式】+【长喷间隔时间】+【长喷喷雾强度】。
                         bm = new BluetoothModel(values);
-//                        handler.sendEmptyMessage(2);
                         if (!DevcieVersion.isEmpty()) {
                             String version1 = DevcieVersion + "-" + bm.getAutoClean() + "-" + bm.getCleanTime();
                             tv_version.setText(version1);
@@ -566,17 +533,17 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
                         int isAlreadyShort = -1;
                         int isAlreadyLong = -1;
 
-                        if (bm.getModel() == BLEUtil.mode_short_long) {
+                        if (bm.getModel() == BLEUtil.ble_Mode_Short_Long) {
                             Log.e("Pan", "长短模式");
                             for (int i = 0; i < device.getList().size(); i++) {
                                 device.getList().get(i).setSelected(false);
-                                if (device.getList().get(i).getModel() == BLEUtil.mode_short &&
+                                if (device.getList().get(i).getModel() == BLEUtil.ble_Mode_Short &&
                                         device.getList().get(i).getShortTime() == bm.getShortTime() &&
                                         device.getList().get(i).getShortStrength() == bm.getShortStrength()
                                 ) {
                                     isAlreadyShort = i;
                                 }
-                                if (device.getList().get(i).getModel() == BLEUtil.mode_long &&
+                                if (device.getList().get(i).getModel() == BLEUtil.ble_Mode_Long &&
                                         device.getList().get(i).getLongTime() == bm.getLongTime() &&
                                         device.getList().get(i).getLongStrength() == bm.getLongStrength()
                                 ) {
@@ -588,13 +555,13 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
                             for (int i = 0; i < device.getList().size(); i++) {
                                 device.getList().get(i).setSelected(false);
                                 if (
-                                        (bm.getModel() == BLEUtil.mode_auto_mild ||
-                                                bm.getModel() == BLEUtil.mode_auto_middle ||
-                                                bm.getModel() == BLEUtil.mode_auto_strength
+                                        (bm.getModel() == BLEUtil.ble_Mode_Intelligent1 ||
+                                                bm.getModel() == BLEUtil.ble_Mode_Intelligent2 ||
+                                                bm.getModel() == BLEUtil.ble_Mode_Intelligent3
                                         ) &&
-                                                (device.getList().get(i).getModel() == BLEUtil.mode_auto_mild ||
-                                                        device.getList().get(i).getModel() == BLEUtil.mode_auto_middle ||
-                                                        device.getList().get(i).getModel() == BLEUtil.mode_auto_strength
+                                                (device.getList().get(i).getModel() == BLEUtil.ble_Mode_Intelligent1 ||
+                                                        device.getList().get(i).getModel() == BLEUtil.ble_Mode_Intelligent2 ||
+                                                        device.getList().get(i).getModel() == BLEUtil.ble_Mode_Intelligent3
                                                 )
                                 ) {
                                     device.getList().get(i).setModelName("智能模式");
@@ -603,14 +570,14 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
                                     continue;
                                 }
                                 if (device.getList().get(i).getModel() == bm.getModel()) {
-                                    if (bm.getModel() == BLEUtil.mode_short) {
+                                    if (bm.getModel() == BLEUtil.ble_Mode_Short) {
                                         //（短）模式
                                         if (device.getList().get(i).getShortTime() == bm.getShortTime() &&
                                                 device.getList().get(i).getShortStrength() == bm.getShortStrength()) {
                                             isAlreadyShort = i;
                                         }
                                     }
-                                    if (bm.getModel() == BLEUtil.mode_long) {
+                                    if (bm.getModel() == BLEUtil.ble_Mode_Long) {
                                         if (device.getList().get(i).getLongTime() == bm.getLongTime() &&
                                                 device.getList().get(i).getLongStrength() == bm.getLongStrength()) {
                                             isAlreadyLong = i;
@@ -637,9 +604,9 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
 
                         boolean hasAuto = false;
                         for (SettingListModel settingListModel : device.getList()) {
-                            if (settingListModel.getModel() == BLEUtil.mode_auto_mild ||
-                                    settingListModel.getModel() == BLEUtil.mode_auto_middle ||
-                                    settingListModel.getModel() == BLEUtil.mode_auto_strength) {
+                            if (settingListModel.getModel() == BLEUtil.ble_Mode_Intelligent1 ||
+                                    settingListModel.getModel() == BLEUtil.ble_Mode_Intelligent2 ||
+                                    settingListModel.getModel() == BLEUtil.ble_Mode_Intelligent3) {
                                 hasAuto = true;
                                 break;
                             }
@@ -647,7 +614,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
                         if (!hasAuto) {
                             SettingListModel bsm = new SettingListModel();
                             bsm.setModelName("智能模式");
-                            bsm.setModel(BLEUtil.mode_auto_mild);
+                            bsm.setModel(BLEUtil.ble_Mode_Intelligent1);
                             List<SettingListModel> list = new ArrayList<>();
                             list.add(bsm);
                             list.addAll(device.getList());
@@ -656,18 +623,18 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
                             Log.e("Pan", "添加智能模式=" + new Gson().toJson(device));
                         }
 
-                        if (isAlreadyShort < 0 && (bm.getModel() == BLEUtil.mode_short || bm.getModel() == BLEUtil.mode_short_long)) {
+                        if (isAlreadyShort < 0 && (bm.getModel() == BLEUtil.ble_Mode_Short || bm.getModel() == BLEUtil.ble_Mode_Short_Long)) {
                             SettingListModel bsm = new SettingListModel();
-                            bsm.setModel(BLEUtil.mode_short);
+                            bsm.setModel(BLEUtil.ble_Mode_Short);
                             bsm.setShortTime(bm.getShortTime());
                             bsm.setShortStrength(bm.getShortStrength());
                             bsm.setSelected(true);
                             device.getList().add(bsm);
                             Log.e("Pan", "添加普通模式=" + new Gson().toJson(device));
                         }
-                        if (isAlreadyLong < 0 && (bm.getModel() == BLEUtil.mode_long || bm.getModel() == BLEUtil.mode_short_long)) {
+                        if (isAlreadyLong < 0 && (bm.getModel() == BLEUtil.ble_Mode_Long || bm.getModel() == BLEUtil.ble_Mode_Short_Long)) {
                             SettingListModel bsm = new SettingListModel();
-                            bsm.setModel(BLEUtil.mode_long);
+                            bsm.setModel(BLEUtil.ble_Mode_Long);
                             bsm.setLongTime(bm.getLongTime());
                             bsm.setLongStrength(bm.getLongStrength());
                             bsm.setSelected(true);
@@ -683,8 +650,8 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
                         SpfUtils.saveBluetoothSetList(device.getList(), deviceId);
 
 //                            bluetoothUtil.removeAllOrder();
-                        if (bm.getAutoClean() == BLEUtil.forbidsetpoweronclear) {
-                            BLE_Write(new byte[]{BLEUtil.setpoweronclear});
+                        if (bm.getAutoClean() == BLEUtil.ble_AutoCleanOff) {
+                            BLE_Write(new byte[]{BLEUtil.ble_AutoCleanOn}, BLEUtil.BLE_writeUUid_1);
                         }
 
                         //0 1  2  3  4  5
@@ -697,7 +664,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
                                 sb_cleanValue.setProgress((cleanTime - 6) / 3);
                             } else {
                                 Log.e("Pan", "设置中.....");
-                                BLE_Write(new byte[]{BLEUtil.setcleartime, BLEUtil.OX_ORDER[cleanTime]});
+                                BLE_Write(new byte[]{BLEUtil.ble_SprayQuantity, BLEUtil.OX_ORDER[cleanTime]}, BLEUtil.BLE_writeUUid_2);
                             }
                         } else {
                             cleanTime = bm.getCleanTime();
@@ -705,22 +672,278 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
                             sb_cleanValue.setProgress((cleanTime - 6) / 3);
                         }
 
-//                        handler.sendEmptyMessage(3);
+                        Log.e("Pan", "启动计时刷新");
+                        if (handler.hasMessages(0)) {
+                            handler.removeMessages(0);
+                        }
                         handler.sendEmptyMessageDelayed(0, 1000 * 5);
                     }
 
                     @Override
                     public void onReadFailure(BleException exception) {
-
+                        Log.e("Pan", "刷新蓝牙数据失败，倒计时5秒重新获取");
+                        if (handler.hasMessages(0)) {
+                            handler.removeMessages(0);
+                        }
+                        handler.sendEmptyMessageDelayed(0, 1000 * 5);
                     }
                 }
         );
-//        }
+    }
+
+    private void readStatus() {
+        Log.e("Pan", "读取蓝牙状态");
+        if (isFinishing()) {
+            Log.e("Pan", "Activity以关闭");
+            return;
+        }
+        Log.e("Pan", "开始读取蓝牙");
+        BleManager.getInstance().read(
+                bleDevice,
+                BLEUtil.BLE_serviceUUid,
+                BLEUtil.BLE_character_Read_Number,
+                new BleReadCallback() {
+                    @Override
+                    public void onReadSuccess(byte[] values) {
+                        Log.e("Pan", "蓝牙数据读取成功");
+                        if (isSending) {
+                            Log.e("Pan", "蓝牙正在发送");
+                            return;
+                        }
+                        //0x53+【开机状态】+【剩余电量】+【清洗时长】+【短喷间隔时间】+【短喷喷雾强度】+【开机清洗使能】 +【工作模式】+【长喷间隔时间】+【长喷喷雾强度】。
+                        bm = new BluetoothModel(values);
+                        if (!DevcieVersion.isEmpty()) {
+                            String version1 = DevcieVersion + "-" + bm.getAutoClean() + "-" + bm.getCleanTime();
+                            tv_version.setText(version1);
+                        }
+
+                        if (bm.getLongTime() < 1) {
+                            bm.setLongTime(1);
+                        }
+                        if (bm.getLongTime() > 10) {
+                            bm.setLongTime(10);
+                        }
+                        if (bm.getLongStrength() < 2) {
+                            bm.setLongStrength(2);
+                        }
+                        if (bm.getLongStrength() > 8) {
+                            bm.setLongStrength(8);
+                        }
+                        if (bm.getLongStrength() % 2 != 0) {
+                            bm.setLongStrength(bm.getLongStrength() / 2 * 2);
+                        }
+
+                        ev_electricityQuantity.setCount(bm.getElectricityQuantity() / 10);
+                        tv_power.setText(bm.getElectricityQuantity() + "%");
+                        tv_bootState.setText(bm.getState() == BLEUtil.state_boot ? "关机" : "开机");
+                        sw_bootSwitch.setOnCheckedChangeListener(null);
+                        sw_bootSwitch.setChecked(bm.getState() == BLEUtil.state_boot);
+                        sw_bootSwitch.setOnCheckedChangeListener(checkedListener);
+                        //检查当前蓝牙所开启的模式在设备列表中是否存在
+
+                        int isAlreadyAuto = -1;
+                        int isAlreadyShort = -1;
+                        int isAlreadyLong = -1;
+
+                        if (bm.getModel() == BLEUtil.ble_Mode_Short_Long) {
+                            Log.e("Pan", "长短模式");
+                            for (int i = 0; i < device.getList().size(); i++) {
+                                device.getList().get(i).setSelected(false);
+                                if (device.getList().get(i).getModel() == BLEUtil.ble_Mode_Short &&
+                                        device.getList().get(i).getShortTime() == bm.getShortTime() &&
+                                        device.getList().get(i).getShortStrength() == bm.getShortStrength()
+                                ) {
+                                    isAlreadyShort = i;
+                                }
+                                if (device.getList().get(i).getModel() == BLEUtil.ble_Mode_Long &&
+                                        device.getList().get(i).getLongTime() == bm.getLongTime() &&
+                                        device.getList().get(i).getLongStrength() == bm.getLongStrength()
+                                ) {
+                                    isAlreadyLong = i;
+                                }
+                            }
+                        } else {
+                            Log.e("Pan", "非长短模式");
+                            for (int i = 0; i < device.getList().size(); i++) {
+                                device.getList().get(i).setSelected(false);
+                                if (
+                                        (bm.getModel() == BLEUtil.ble_Mode_Intelligent1 ||
+                                                bm.getModel() == BLEUtil.ble_Mode_Intelligent2 ||
+                                                bm.getModel() == BLEUtil.ble_Mode_Intelligent3
+                                        ) &&
+                                                (device.getList().get(i).getModel() == BLEUtil.ble_Mode_Intelligent1 ||
+                                                        device.getList().get(i).getModel() == BLEUtil.ble_Mode_Intelligent2 ||
+                                                        device.getList().get(i).getModel() == BLEUtil.ble_Mode_Intelligent3
+                                                )
+                                ) {
+                                    device.getList().get(i).setModelName("智能模式");
+                                    device.getList().get(i).setModel(bm.getModel());
+                                    isAlreadyAuto = i;
+                                    continue;
+                                }
+                                if (device.getList().get(i).getModel() == bm.getModel()) {
+                                    if (bm.getModel() == BLEUtil.ble_Mode_Short) {
+                                        //（短）模式
+                                        if (device.getList().get(i).getShortTime() == bm.getShortTime() &&
+                                                device.getList().get(i).getShortStrength() == bm.getShortStrength()) {
+                                            isAlreadyShort = i;
+                                        }
+                                    }
+                                    if (bm.getModel() == BLEUtil.ble_Mode_Long) {
+                                        if (device.getList().get(i).getLongTime() == bm.getLongTime() &&
+                                                device.getList().get(i).getLongStrength() == bm.getLongStrength()) {
+                                            isAlreadyLong = i;
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+
+
+                        Log.e("Pan", "isAlreadyAuto=" + isAlreadyAuto);
+                        Log.e("Pan", "isAlreadyShort=" + isAlreadyShort);
+                        Log.e("Pan", "isAlreadyLong=" + isAlreadyLong);
+                        if (isAlreadyAuto >= 0) {
+                            device.getList().get(isAlreadyAuto).setSelected(true);
+                        }
+                        if (isAlreadyShort >= 0) {
+                            device.getList().get(isAlreadyShort).setSelected(true);
+                        }
+                        if (isAlreadyLong >= 0) {
+                            device.getList().get(isAlreadyLong).setSelected(true);
+                        }
+
+                        boolean hasAuto = false;
+                        for (SettingListModel settingListModel : device.getList()) {
+                            if (settingListModel.getModel() == BLEUtil.ble_Mode_Intelligent1 ||
+                                    settingListModel.getModel() == BLEUtil.ble_Mode_Intelligent2 ||
+                                    settingListModel.getModel() == BLEUtil.ble_Mode_Intelligent3) {
+                                hasAuto = true;
+                                break;
+                            }
+                        }
+                        if (!hasAuto) {
+                            SettingListModel bsm = new SettingListModel();
+                            bsm.setModelName("智能模式");
+                            bsm.setModel(BLEUtil.ble_Mode_Intelligent1);
+                            List<SettingListModel> list = new ArrayList<>();
+                            list.add(bsm);
+                            list.addAll(device.getList());
+                            device.getList().clear();
+                            device.getList().addAll(list);
+                            Log.e("Pan", "添加智能模式=" + new Gson().toJson(device));
+                        }
+
+                        if (isAlreadyShort < 0 && (bm.getModel() == BLEUtil.ble_Mode_Short || bm.getModel() == BLEUtil.ble_Mode_Short_Long)) {
+                            SettingListModel bsm = new SettingListModel();
+                            bsm.setModel(BLEUtil.ble_Mode_Short);
+                            bsm.setShortTime(bm.getShortTime());
+                            bsm.setShortStrength(bm.getShortStrength());
+                            bsm.setSelected(true);
+                            device.getList().add(bsm);
+                            Log.e("Pan", "添加普通模式=" + new Gson().toJson(device));
+                        }
+                        if (isAlreadyLong < 0 && (bm.getModel() == BLEUtil.ble_Mode_Long || bm.getModel() == BLEUtil.ble_Mode_Short_Long)) {
+                            SettingListModel bsm = new SettingListModel();
+                            bsm.setModel(BLEUtil.ble_Mode_Long);
+                            bsm.setLongTime(bm.getLongTime());
+                            bsm.setLongStrength(bm.getLongStrength());
+                            bsm.setSelected(true);
+                            device.getList().add(bsm);
+                            Log.e("Pan", "添加普通模式=" + new Gson().toJson(device));
+                        }
+                        setData();
+
+                        formatData();
+
+                        Log.e("Pan", "device=" + new Gson().toJson(device));
+                        bma.notifyDataSetChanged();
+                        SpfUtils.saveBluetoothSetList(device.getList(), deviceId);
+
+//                            bluetoothUtil.removeAllOrder();
+                        if (bm.getAutoClean() == BLEUtil.ble_AutoCleanOff) {
+                            BLE_Write(new byte[]{BLEUtil.ble_AutoCleanOn}, BLEUtil.BLE_writeUUid_1);
+                        }
+
+                        //0 1  2  3  4  5
+                        //0 20 40 60 80 100
+                        //5 10 15 20 25 30
+                        if (isSetting) {
+                            if (cleanTime == bm.getCleanTime()) {
+                                isSetting = false;
+                                tv_cleanValue.setText("出液量: " + ((cleanTime - 6) / 3 + 2) * 10 + "%");
+                                sb_cleanValue.setProgress((cleanTime - 6) / 3);
+                            } else {
+                                Log.e("Pan", "设置中.....");
+                                BLE_Write(new byte[]{BLEUtil.ble_SprayQuantity, BLEUtil.OX_ORDER[cleanTime]}, BLEUtil.BLE_writeUUid_2);
+                            }
+                        } else {
+                            cleanTime = bm.getCleanTime();
+                            tv_cleanValue.setText("出液量: " + ((cleanTime - 6) / 3 + 2) * 10 + "%");
+                            sb_cleanValue.setProgress((cleanTime - 6) / 3);
+                        }
+//                        Log.e("Pan", "重新倒计时读取蓝牙");
+                        handler.sendEmptyMessageDelayed(0, 1000 * 30);
+                    }
+
+                    @Override
+                    public void onReadFailure(BleException exception) {
+                        Log.e("Pan", "蓝牙读取失败，重新读取");
+                        handler.sendEmptyMessageDelayed(0, 1000 * 30);
+                    }
+                }
+        );
+    }
+
+    private void readVersion() {
+        Log.e("Pan", "读取版本号");
+        if (isFinishing()) {
+            Log.e("Pan", "Activity以关闭");
+            return;
+        }
+        BleManager.getInstance().read(
+                bleDevice,
+                BLEUtil.BLE_serviceUUid,
+                BLEUtil.BLE_character_Read_Version,
+                new BleReadCallback() {
+                    @Override
+                    public void onReadSuccess(byte[] data) {
+                        Log.e("Pan", "读取版本号成功");
+                        DevcieVersion = "版本号:" + getVersion(data);
+                        handler.sendEmptyMessage(22);
+                    }
+
+                    @Override
+                    public void onReadFailure(BleException exception) {
+                        Log.e("Pan", "读取版本号失败，重新读取");
+                        readVersion();
+                    }
+                });
+
+    }
+
+    private String getVersion(byte[] values) {
+        String bt = "";
+        for (byte aByte : values) {
+            bt += aByte & 0xFF;
+        }
+        String bts = "";
+        for (int i = 0; i < bt.length(); i++) {
+            if (i == bt.length() - 1) {
+                bts += bt.charAt(i);
+            } else {
+                bts += bt.charAt(i) + ".";
+            }
+        }
+        Log.e("Pan", "bt=" + bt);
+        Log.e("Pan", "bts=" + bts);
+        return bts;
     }
 
     private void setData() {
         for (SettingListModel slm : device.getList()) {
-            if (slm.getModel() == BLEUtil.mode_long) {
+            if (slm.getModel() == BLEUtil.ble_Mode_Long) {
                 if (slm.getLongTime() < 1) {
                     slm.setLongTime(1);
                 }
@@ -737,7 +960,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
                     slm.setLongStrength(slm.getLongStrength() / 2 * 2);
                 }
             }
-            if (slm.getModel() == BLEUtil.mode_short) {
+            if (slm.getModel() == BLEUtil.ble_Mode_Short) {
                 if (slm.getShortTime() < 5) {
                     slm.setShortTime(5);
                 }
@@ -784,7 +1007,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
             tv_model2.setTextColor(getResources().getColor(R.color.color66));
             tv_model3.setBackgroundResource(R.drawable.dialog_zn_btn_unselect_bg);
             tv_model3.setTextColor(getResources().getColor(R.color.color66));
-            settingModel = BLEUtil.mode_auto_mild;
+            settingModel = BLEUtil.ble_Mode_Intelligent1;
         });
 
         tv_model2.setOnClickListener(view -> {
@@ -794,7 +1017,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
             tv_model2.setTextColor(getResources().getColor(R.color.color_blue));
             tv_model3.setBackgroundResource(R.drawable.dialog_zn_btn_unselect_bg);
             tv_model3.setTextColor(getResources().getColor(R.color.color66));
-            settingModel = BLEUtil.mode_auto_middle;
+            settingModel = BLEUtil.ble_Mode_Intelligent2;
         });
 
         tv_model3.setOnClickListener(view -> {
@@ -804,17 +1027,17 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
             tv_model2.setTextColor(getResources().getColor(R.color.color66));
             tv_model3.setBackgroundResource(R.drawable.dialog_zn_btn_select_bg);
             tv_model3.setTextColor(getResources().getColor(R.color.color_blue));
-            settingModel = BLEUtil.mode_auto_strength;
+            settingModel = BLEUtil.ble_Mode_Intelligent3;
         });
 
         switch (device.getList().get(0).getModel()) {
-            case BLEUtil.mode_auto_mild:
+            case BLEUtil.ble_Mode_Intelligent1:
                 tv_model1.performClick();
                 break;
-            case BLEUtil.mode_auto_middle:
+            case BLEUtil.ble_Mode_Intelligent2:
                 tv_model2.performClick();
                 break;
-            case BLEUtil.mode_auto_strength:
+            case BLEUtil.ble_Mode_Intelligent3:
                 tv_model3.performClick();
                 break;
         }
@@ -826,23 +1049,23 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
             Log.e("Pan", "getModel=" + device.getList().get(0).getModel());
             Log.e("Pan", "bm=" + bm.getModel());
             Log.e("Pan", "isSelected=" + device.getList().get(0).isSelected());
-            switch (settingModel) {
-                case BLEUtil.mode_auto_mild:
-                    if (bm.getModel() != BLEUtil.mode_auto_mild) {
-                        BLE_Write(new byte[]{BLEUtil.mode_auto_mild});
-                    }
-                    break;
-                case BLEUtil.mode_auto_middle:
-                    if (bm.getModel() != BLEUtil.mode_auto_middle) {
-                        BLE_Write(new byte[]{BLEUtil.mode_auto_middle});
-                    }
-                    break;
-                case BLEUtil.mode_auto_strength:
-                    if (bm.getModel() != BLEUtil.mode_auto_strength) {
-                        BLE_Write(new byte[]{BLEUtil.mode_auto_strength});
-                    }
-                    break;
-            }
+//            switch (settingModel) {
+//                case BLEUtil.ble_Mode_Intelligent1:
+//                    if (bm.getModel() != BLEUtil.ble_Mode_Intelligent1) {
+//                        BLE_Write(new byte[]{BLEUtil.ble_Mode_Intelligent1}, BLEUtil.BLE_writeUUid_1);
+//                    }
+//                    break;
+//                case BLEUtil.ble_Mode_Intelligent2:
+//                    if (bm.getModel() != BLEUtil.ble_Mode_Intelligent2) {
+//                        BLE_Write(new byte[]{BLEUtil.ble_Mode_Intelligent2}, BLEUtil.BLE_writeUUid_1);
+//                    }
+//                    break;
+//                case BLEUtil.ble_Mode_Intelligent3:
+//                    if (bm.getModel() != BLEUtil.ble_Mode_Intelligent3) {
+//                        BLE_Write(new byte[]{BLEUtil.ble_Mode_Intelligent3}, BLEUtil.BLE_writeUUid_1);
+//                    }
+//                    break;
+//            }
             device.getList().get(0).setModel(settingModel);
             for (SettingListModel slm : device.getList()) {
                 slm.setSelected(false);
@@ -857,44 +1080,28 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
 
     @Override
     public void onResume() {
-        if (handler.hasMessages(0)) {
-            handler.removeMessages(0);
-        }
-        handler.sendEmptyMessage(0);
-        BleManager.getInstance().read(
-                bleDevice,
-                BLEUtil.BLE_serviceUUid,
-                BLEUtil.BLE_character_Read_Version,
-                new BleReadCallback() {
-                    @Override
-                    public void onReadSuccess(byte[] data) {
-                        Log.e("Pan", "读取版本号");
-                        DevcieVersion = "版本号:" + getVersion(data);
-                        handler.sendEmptyMessage(22);
-                        handler.sendEmptyMessage(0);
-                    }
-
-                    @Override
-                    public void onReadFailure(BleException exception) {
-                        // 读特征值数据失败
-                    }
-                });
-
         Log.e("Pan", "读取状态");
+        readVersion();
+        refresh();
         super.onResume();
     }
 
     @Override
     public void onPause() {
-        handler.removeMessages(0);
+        if (handler.hasMessages(0)) {
+            handler.removeMessages(0);
+        }
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
         //移除30秒读状态的定时器
-        handler.removeMessages(0);
+        if (handler.hasMessages(0)) {
+            handler.removeMessages(0);
+        }
         BleManager.getInstance().disconnect(bleDevice);
+        BleManager.getInstance().destroy();
         super.onDestroy();
     }
 
@@ -947,7 +1154,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
         List<SettingListModel> longList = new ArrayList<>();
 
         for (SettingListModel slm : device.getList()) {
-            if (slm.getModel() == BLEUtil.mode_short) {
+            if (slm.getModel() == BLEUtil.ble_Mode_Short) {
                 boolean has = false;
                 for (SettingListModel slm2 : shortList) {
                     if (slm2.getShortTime() == slm.getShortTime() && slm2.getShortStrength() == slm.getShortStrength()) {
@@ -959,7 +1166,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
                     shortList.add(slm);
                 }
             }
-            if (slm.getModel() == BLEUtil.mode_long) {
+            if (slm.getModel() == BLEUtil.ble_Mode_Long) {
                 boolean has = false;
                 for (SettingListModel slm2 : longList) {
                     if (slm2.getLongTime() == slm.getLongTime() && slm2.getLongStrength() == slm.getLongStrength()) {
@@ -971,9 +1178,9 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
                     longList.add(slm);
                 }
             }
-            if (slm.getModel() == BLEUtil.mode_auto_mild ||
-                    slm.getModel() == BLEUtil.mode_auto_middle ||
-                    slm.getModel() == BLEUtil.mode_auto_strength) {
+            if (slm.getModel() == BLEUtil.ble_Mode_Intelligent1 ||
+                    slm.getModel() == BLEUtil.ble_Mode_Intelligent2 ||
+                    slm.getModel() == BLEUtil.ble_Mode_Intelligent3) {
                 smart = slm;
             }
         }
@@ -1000,13 +1207,58 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
         Log.e("Pan", "smart=" + new Gson().toJson(smart));
     }
 
-    private void BLE_Write(byte[] data) {
-        Log.e("Pan","发送指令："+gson.toJson(data));
+
+    List<byte[]> Orders = new ArrayList<>();
+
+    private void write(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (byte[] order : Orders) {
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    BLE_Write(order, "");
+                }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                readStatus();
+            }
+        }).start();
+
+    }
+
+    private void BLE_Write(byte[] data, String write_id) {
+        Log.e("Pan", "发送指令：" + gson.toJson(data));
+//        if (handler.hasMessages(0)) {
+//            handler.removeMessages(0);
+//        }
+//        isSending = true;
         BleManager.getInstance().write(
                 bleDevice,
                 BLEUtil.BLE_serviceUUid,
-                BLEUtil.BLE_character_write_Number,
+                write_id,
                 data,
-                callback);
+                new BleWriteCallback() {
+                    @Override
+                    public void onWriteSuccess(int current, int total, byte[] justWrite) {
+                        Log.e("Pan", "指令发送成功");
+//                        isSending = false;
+//                        readStatus();
+                    }
+
+                    @Override
+                    public void onWriteFailure(BleException exception) {
+                        Log.e("Pan", "指令发送失败：" + exception);
+//                        isSending = false;
+//                        readStatus();
+                    }
+                });
     }
+
 }

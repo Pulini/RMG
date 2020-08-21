@@ -170,10 +170,11 @@ public class BluetoothMainActivity2 extends BaseActivity {
             @Override
             public void onSendFinish() {
                 isSending = false;
+                Log.e("Pan","读取状态");
                 if (handler.hasMessages(0)) {
                     handler.removeMessages(0);
                 }
-                handler.sendEmptyMessage(0);
+                handler.sendEmptyMessageDelayed(0,1000);
             }
         });
 
@@ -227,7 +228,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
                             break;
                     }
                     if (bluetoothUtil.getOrderFromQuee() != null) {
-                        bluetoothUtil.sendOrder();
+                        bluetoothUtil.sendOrders();
                     }
                     for (SettingListModel slm : device.getList()) {
                         slm.setSelected(false);
@@ -297,7 +298,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
                         ) {
                             bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.mode_auto_mild, 0);
 //                            handler.removeMessages(0);
-                            bluetoothUtil.sendOrder();
+                            bluetoothUtil.sendOrders();
                         }
 
                         Log.e("Pan", "开机");
@@ -386,7 +387,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
 
 //            if (bluetoothUtil.getOrderFromQuee() != null) {
 //                handler.removeMessages(0);
-            bluetoothUtil.sendOrder();
+            bluetoothUtil.sendOrders();
 //            }
             Log.e("Pan", "设置长短喷");
         } else {
@@ -419,7 +420,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
                 );
 //                if (bluetoothUtil.getOrderFromQuee() != null) {
 //                    handler.removeMessages(0);
-                bluetoothUtil.sendOrder();
+                bluetoothUtil.sendOrders();
 //                }
                 Log.e("Pan", "设置短喷");
             }
@@ -452,7 +453,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
                 );
 //                if (bluetoothUtil.getOrderFromQuee() != null) {
 //                    handler.removeMessages(0);
-                bluetoothUtil.sendOrder();
+                bluetoothUtil.sendOrders();
 //                }
                 Log.e("Pan", "设置长喷");
             }
@@ -463,7 +464,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
 //            bluetoothUtil.removeAllOrder();
 //            if (bm.getState() != NewBleBluetoothUtil.state_shutdown) {
 //                bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.shutdown, 0);
-//                bluetoothUtil.sendOrder();
+//                bluetoothUtil.sendOrders();
 //                Log.e("Pan", "关机");
 //            }
 //            if (bluetoothUtil.getOrderFromQuee() != null) {
@@ -587,7 +588,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
             bt_sure.setBackgroundResource(R.drawable.shape_stroke_btn_bg_blue);
             SpfUtils.getSpfUtils(getApplicationContext()).setCleanTime(cleanTime);
             bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, cleanTime);
-            bluetoothUtil.sendOrder();
+            bluetoothUtil.sendOrders();
             bm.setCleanTime(cleanTime);
             ToastUtils.show("设置出液量：" + ((cleanTime - 6) / 3 + 2) * 10 + "%");
             runOnUiThread(() -> {
@@ -607,7 +608,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
 //                if (bluetoothUtil.getOrderFromQuee() != null) {
 //                    handler.removeMessages(0);
 //                }
-                bluetoothUtil.sendOrder();
+                bluetoothUtil.sendOrders();
                 bt_cleanLeft.setBackgroundResource(R.drawable.btn_cleanright);
                 if (handler.hasMessages(1)) {
                     handler.removeMessages(1);
@@ -624,7 +625,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
 //                if (bluetoothUtil.getOrderFromQuee() != null) {
 //                    handler.removeMessages(0);
 //                }
-                bluetoothUtil.sendOrder();
+                bluetoothUtil.sendOrders();
                 bt_cleanRight.setBackgroundResource(R.drawable.btn_cleanright);
                 if (handler.hasMessages(4)) {
                     handler.removeMessages(4);
@@ -664,7 +665,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
 //            SpfUtils.getSpfUtils(this).setCleanTime(clearTime);
 //            bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setpoweronclear, 0);
 //            bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, clearTime);
-//            bluetoothUtil.sendOrder();
+//            bluetoothUtil.sendOrders();
 //            setDialog.dismiss();
 //        });
 //        setDialog.show();
@@ -676,7 +677,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
         bluetoothUtil.addOrderToQuee(b ? NewBleBluetoothUtil.boot : NewBleBluetoothUtil.shutdown, 0);
 //        if (bluetoothUtil.getOrderFromQuee() != null) {
 //            handler.removeMessages(0);
-        bluetoothUtil.sendOrder();
+        bluetoothUtil.sendOrders();
 //        }
     };
 
@@ -687,6 +688,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
             handler.sendEmptyMessageDelayed(0, 1000);
             Log.e("Pan", "正在发送指令");
         } else {
+            Log.e("Pan", "读取蓝牙");
             bluetoothUtil.readStatus(values -> {
                         Log.e("Pan", "接收蓝牙数据");
                         runOnUiThread(() -> {
@@ -846,7 +848,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
 //                            bluetoothUtil.removeAllOrder();
                             if (bm.getAutoClean() == NewBleBluetoothUtil.forbidsetpoweronclear) {
                                 bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setpoweronclear, 0);
-                                bluetoothUtil.sendOrder();
+                                bluetoothUtil.sendOrders();
                             }
 
 //                            Log.e("Pan","getCleanTime="+bm.getCleanTime());
@@ -868,7 +870,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
                                 } else {
                                     Log.e("Pan", "设置中.....");
                                     bluetoothUtil.addOrderToQuee(NewBleBluetoothUtil.setcleartime, cleanTime);
-                                    bluetoothUtil.sendOrder();
+                                    bluetoothUtil.sendOrders();
                                 }
                             } else {
                                 cleanTime = bm.getCleanTime();
@@ -1012,7 +1014,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
 
             if (bluetoothUtil.getOrderFromQuee() != null) {
 //                handler.removeMessages(0);
-                bluetoothUtil.sendOrder();
+                bluetoothUtil.sendOrders();
             }
             device.getList().get(0).setModel(settingModel);
             for (SettingListModel slm : device.getList()) {

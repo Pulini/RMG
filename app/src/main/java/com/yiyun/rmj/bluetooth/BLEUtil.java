@@ -8,32 +8,41 @@ package com.yiyun.rmj.bluetooth;
  * Remark：
  */
 public class BLEUtil {
+    //蓝牙服务号
     public static final String BLE_serviceUUid = "0000fff0-0000-1000-8000-00805f9b34fb"; //蓝牙服务号
-    public static final String BLE_character_Oen_Close_Number = "0000fff1-0000-1000-8000-00805f9b34fb"; //开关量命令特征号
-    public static final String BLE_character_write_Number = "0000fff5-0000-1000-8000-00805f9b34fb"; //写特征号
+
+    //开关指令
+    public static final String BLE_writeUUid_1 = "0000fff1-0000-1000-8000-00805f9b34fb"; //开关量命令特征号
+    public static final byte ble_PowerOff = 0x10; //关机  10进制：16
+    public static final byte ble_PowerON = 0x11; //开机
+    public static final byte ble_CleanLift = 0x21; //清洗左喷头  10进制：33
+    public static final byte ble_CleanRight = 0x20; //清洗右喷头 10进制：32
+    public static final byte ble_AutoCleanOn = 0x31; //设置上电自动清洗  10进制：49
+    public static final byte ble_AutoCleanOff = 0x30; //禁止上电自动清洗 10进制：48
+    public static final byte ble_Mode_Short = 0x40;//短喷  10进制：64
+    public static final byte ble_Mode_Intelligent1 = 0x41;//智能轻度模式  10进制：65
+    public static final byte ble_Mode_Intelligent2 = 0x42;//智能中度模式 10进制：66
+    public static final byte ble_Mode_Intelligent3 = 0x43;//智能强度模式 10进制：67
+    public static final byte ble_Mode_Long = 0x44;//长喷 10进制：68
+    public static final byte ble_Mode_Short_Long = 0x45;//长喷加短喷 10进制：69
+
+    //参数指令
+    public static final String BLE_writeUUid_2 = "0000fff5-0000-1000-8000-00805f9b34fb"; //写特征号
+    public static final byte ble_CleanTime = 0x53;//清洗时长  10进制：83
+    public static final byte ble_ShortTime = 0x54; //设置短喷时间  10进制：84
+    public static final byte ble_LongTime = 0x55; //设置长喷时间  10进制：87
+    public static final byte ble_LongStrength = 0x56; //设置长喷强度  10进制：87
+    public static final byte ble_ShortStrength = 0x57; //设置短喷强度  10进制：87
+    public static final byte ble_SprayQuantity = 0x58; //设置雾化量  10进制：88
+    public static final byte ble_LongOrder = 0x59; //长指令  10进制：89
+
     public static final String BLE_character_Read_Number = "0000fff6-0000-1000-8000-00805f9b34fb"; //读特征号
+
     public static final String BLE_character_Read_Version = "0000fff2-0000-1000-8000-00805f9b34fb"; //读特版本
 
+
+
     public static final byte modeNull = -99; //开机
-    public static final byte boot = 0x11; //开机
-    public static final byte shutdown = 0x10; //关机  10进制：16
-    public static final byte clearleft = 0x21; //清洗左喷头  10进制：33
-    public static final byte clearright = 0x20; //清洗右喷头 10进制：32
-    public static final byte setpoweronclear = 0x31; //设置上电自动清洗  10进制：49
-    public static final byte forbidsetpoweronclear = 0x30; //禁止上电自动清洗 10进制：48
-    public static final byte shortTime = 0x54; //设置短喷时间  10进制：84
-    public static final byte shortStrength = 0x57; //设置短喷强度  10进制：87
-    public static final byte longTime = 0x55; //设置长喷时间  10进制：87
-    public static final byte longStrength = 0x56; //设置长喷强度  10进制：87
-    public static final byte setcleartime = 0x58; //设置清洗时长  10进制：88
-    public static final byte longOrder = 0x59; //设置清洗指令  10进制：89
-    public static final byte readstate = 0x53;//读状态  10进制：83
-    public static final byte mode_short = 0x40;//短喷  10进制：64
-    public static final byte mode_auto_mild = 0x41;//智能轻度模式  10进制：65
-    public static final byte mode_auto_middle = 0x42;//智能中度模式 10进制：66
-    public static final byte mode_auto_strength = 0x43;//智能强度模式 10进制：67
-    public static final byte mode_long = 0x44;//长喷 10进制：68
-    public static final byte mode_short_long = 0x45;//长喷加短喷 10进制：69
     public static final byte state_boot = 0x01; //开机状态
     public static final byte state_shutdown = 0x00; //关机状态
     public static final byte readStatuss = 0x71; //读取状态
@@ -48,4 +57,5 @@ public class BLEUtil {
             0x60, 0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, 0x68, 0x69, (byte) 0x3a, (byte) 0x6b, (byte) 0x6c, (byte) 0x6d, (byte) 0x6e, (byte) 0x6f,
             0x70, 0x71, 0x72, 0x73, 0x74, 0x75, 0x76, 0x77, 0x78, 0x79, (byte) 0x7a, (byte) 0x7b, (byte) 0x7c, (byte) 0x7d, (byte) 0x7e, (byte) 0x7f,
     };
+
 }
