@@ -255,7 +255,8 @@ public class NewBleBluetoothUtil {
         }
     }
 
-    public MyBluetoothGattCallback BluetoothListener=new MyBluetoothGattCallback();
+    public MyBluetoothGattCallback BluetoothListener = new MyBluetoothGattCallback();
+
     /**
      * 连接设备
      *
@@ -362,13 +363,13 @@ public class NewBleBluetoothUtil {
         public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
             super.onCharacteristicRead(gatt, characteristic, status);
             byte[] values = characteristic.getValue();
-            Log.e("Pan","values="+values);
+            Log.e("Pan", "values=" + values);
             removeOrderOnQuee(values[0]);
-            if (characteristic==readVersion) {
+            if (characteristic == readVersion) {
                 readVersionBack.callBack(values);
             }
-            Log.e("Pan","1111111111111");
-            if(characteristic==readCharacter){
+            Log.e("Pan", "1111111111111");
+            if (characteristic == readCharacter) {
                 readInfoCallBack.callBack(values);
             }
             sendOrder();
@@ -390,7 +391,7 @@ public class NewBleBluetoothUtil {
             byte[] values = characteristic.getValue();
             if (status == BluetoothGatt.GATT_SUCCESS) {//写入成功
                 Log.e("Pan", "写入成功" + values[0]);
-                /*removeOrderOnQuee(values[0]);
+                removeOrderOnQuee(values[0]);
                 currentContext.showOrderMessage(values, status);
                 if (orderQuee.size() > 0) {
                     if (listener != null) {
@@ -406,14 +407,15 @@ public class NewBleBluetoothUtil {
                         listener.onSendFinish();
                     }
                 }
-*/
-            } else if (status == BluetoothGatt.GATT_FAILURE) {
-                Log.e("Pan", "写入失败" + values[0]);
-//                sendOrder();
-//                Log.e("onCharacteristicWrite中", "写入失败");
-            } else if (status == BluetoothGatt.GATT_WRITE_NOT_PERMITTED) {
-                Log.e("onCharacteristicWrite中", "没权限");
             }
+
+//            } else if (status == BluetoothGatt.GATT_FAILURE) {
+//                Log.e("Pan", "写入失败" + values[0]);
+////                sendOrder();
+////                Log.e("onCharacteristicWrite中", "写入失败");
+//            } else if (status == BluetoothGatt.GATT_WRITE_NOT_PERMITTED) {
+//                Log.e("onCharacteristicWrite中", "没权限");
+//            }
 
 //            Log.e("bcz", "onCharacteristicWrite----------------begin---------------------");
 //            for (byte value : values) {
@@ -442,7 +444,7 @@ public class NewBleBluetoothUtil {
     }
 
 
-    public void sendOrders() {
+   /* public void sendOrders() {
         new Thread(() -> {
             for (Order order : orderQuee) {
                 send(order);
@@ -529,7 +531,7 @@ public class NewBleBluetoothUtil {
 
         }
     }
-
+*/
     /**
      * 从队列中获取指令进行发送
      */
@@ -539,11 +541,11 @@ public class NewBleBluetoothUtil {
         if (order == null) {
             return;
         }
-            if (listener != null) {
-                orderSum = orderQuee.size();
-                LogUtils.LogE("onStartSend-----------------");
-                listener.onStartSend(orderSum);
-            }
+        if (listener != null) {
+            orderSum = orderQuee.size();
+            LogUtils.LogE("onStartSend-----------------");
+            listener.onStartSend(orderSum);
+        }
         Log.e("bcz", "Order is :" + new Gson().toJson(order.getOrder()));
 
         switch (order.getOrder()) {
@@ -633,21 +635,21 @@ public class NewBleBluetoothUtil {
         }
     }
 
-    public byte getModel(int model){
-        if(model==mode_short){
-            return  mode_short;
-        }else if(model==mode_auto_mild){
-            return  mode_auto_mild;
-        }else if(model==mode_auto_middle){
-            return  mode_auto_middle;
-        }else if(model==mode_auto_strength){
-            return  mode_auto_strength;
-        }else if(model==mode_long){
-            return  mode_long;
-        }else if(model==mode_short_long){
-            return  mode_short_long;
-        }else{
-            return  mode_short;
+    public byte getModel(int model) {
+        if (model == mode_short) {
+            return mode_short;
+        } else if (model == mode_auto_mild) {
+            return mode_auto_mild;
+        } else if (model == mode_auto_middle) {
+            return mode_auto_middle;
+        } else if (model == mode_auto_strength) {
+            return mode_auto_strength;
+        } else if (model == mode_long) {
+            return mode_long;
+        } else if (model == mode_short_long) {
+            return mode_short_long;
+        } else {
+            return mode_short;
         }
     }
 
