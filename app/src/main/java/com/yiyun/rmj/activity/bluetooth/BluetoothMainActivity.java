@@ -606,25 +606,30 @@ public class BluetoothMainActivity extends BaseActivity implements View.OnClickL
         initTitleView();
         bluetoothUtil = NewBleBluetoothUtil.getInstance();
         bluetoothUtil.setBlutToothListener(new NewBleBluetoothUtil.OnBlutToothListener() {
-            @Override
-            public void onStartSend(int Orders) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("Orders", Orders);
-                Message message = new Message();
-                message.what = 11;
-                message.setData(bundle);
-                handler.sendMessage(message);
-            }
+//            @Override
+//            public void onStartSend(int Orders) {
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("Orders", Orders);
+//                Message message = new Message();
+//                message.what = 11;
+//                message.setData(bundle);
+//                handler.sendMessage(message);
+//            }
+//
+//            @Override
+//            public void onSending( int index,  int Orders) {
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("index", index);
+//                bundle.putInt("Orders", Orders);
+//                Message message = new Message();
+//                message.what = 12;
+//                message.setData(bundle);
+//                handler.sendMessage(message);
+//            }
 
             @Override
-            public void onSending( int index,  int Orders) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("index", index);
-                bundle.putInt("Orders", Orders);
-                Message message = new Message();
-                message.what = 12;
-                message.setData(bundle);
-                handler.sendMessage(message);
+            public void onStartSend() {
+
             }
 
             @Override

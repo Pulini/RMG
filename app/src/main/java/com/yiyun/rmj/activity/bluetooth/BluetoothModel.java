@@ -33,6 +33,21 @@ public class BluetoothModel {
             Model = data[7];
             LongTime = data[8];
             LongStrength = data[9];
+            if (LongTime< 1) {
+                LongTime=1;
+            }
+            if (LongTime > 10) {
+                LongTime=10;
+            }
+            if (LongStrength< 2) {
+                LongStrength=2;
+            }
+            if (LongStrength> 8) {
+                LongStrength=8;
+            }
+            if (LongStrength % 2 != 0) {
+                LongStrength=LongStrength / 2 * 2;
+            }
         }catch (Exception e){
             LogUtils.LogE("设备状态数据异常" + data.toString());
         }
@@ -47,6 +62,8 @@ public class BluetoothModel {
         LogUtils.LogE("长喷喷雾强度=" + LongStrength);
 
     }
+
+    public BluetoothModel() { }
 
     public int getState() {
         return State;

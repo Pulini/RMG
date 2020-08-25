@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
@@ -55,6 +56,7 @@ public class NewBleBluetoothUtil {
     public static final byte shutdown = 0x10; //关机  10进制：16
     public static final byte clearleft = 0x21; //清洗左喷头  10进制：33
     public static final byte clearright = 0x20; //清洗右喷头 10进制：32
+    public static final byte cleanLong = 0x22; //清洗右喷头 10进制：34
     public static final byte setpoweronclear = 0x31; //设置上电自动清洗  10进制：49
     public static final byte forbidsetpoweronclear = 0x30; //禁止上电自动清洗 10进制：48
     public static final byte shortTime = 0x54; //设置短喷时间  10进制：84
@@ -83,7 +85,6 @@ public class NewBleBluetoothUtil {
     public BluetoothGattCharacteristic readVersion;
     private IReadInfoListener readInfoCallBack;
     private OnVersionListener readVersionBack;
-    private int orderSum = 0;
 
     public static synchronized NewBleBluetoothUtil getInstance() {
         if (instance == null) {
@@ -97,9 +98,7 @@ public class NewBleBluetoothUtil {
     OnBlutToothListener listener;
 
     public interface OnBlutToothListener {
-        void onStartSend(int Orders);
-
-        void onSending(int index, int Orders);
+        void onStartSend();
 
         void onSendFinish();
     }
@@ -300,6 +299,7 @@ public class NewBleBluetoothUtil {
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             super.onConnectionStateChange(gatt, status, newState);
+            Log.e("Pan", "onConnectionStateChange");
             if (newState == BluetoothProfile.STATE_CONNECTED) {
                 //连接成功
                 currentBlueConnected = true;
@@ -341,7 +341,7 @@ public class NewBleBluetoothUtil {
         @Override
         public void onServicesDiscovered(BluetoothGatt gatt, int status) {
             super.onServicesDiscovered(gatt, status);
-            Log.e("bcz", "onServicesDiscovered");
+            Log.e("Pan", "onServicesDiscovered");
             //连接成功
             List<BluetoothGattService> services = gatt.getServices();
             for (BluetoothGattService service : services) {
@@ -363,12 +363,12 @@ public class NewBleBluetoothUtil {
         public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
             super.onCharacteristicRead(gatt, characteristic, status);
             byte[] values = characteristic.getValue();
-            Log.e("Pan", "values=" + values);
+            Log.e("Pan", "Read=" + new Gson().toJson(values));
             removeOrderOnQuee(values[0]);
             if (characteristic == readVersion) {
                 readVersionBack.callBack(values);
             }
-            Log.e("Pan", "1111111111111");
+
             if (characteristic == readCharacter) {
                 readInfoCallBack.callBack(values);
             }
@@ -378,7 +378,7 @@ public class NewBleBluetoothUtil {
         @Override
         public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
             super.onCharacteristicWrite(gatt, characteristic, status);
-//
+            Log.e("Pan", "onCharacteristicWrite");
 //            if(status == BluetoothGatt.GATT_SUCCESS){
 //                Log.e("Pan","写入成功");
 //            }else if (status == BluetoothGatt.GATT_FAILURE) {
@@ -394,10 +394,6 @@ public class NewBleBluetoothUtil {
                 removeOrderOnQuee(values[0]);
                 currentContext.showOrderMessage(values, status);
                 if (orderQuee.size() > 0) {
-                    if (listener != null) {
-                        LogUtils.LogE("onSending-----------------");
-                        listener.onSending(orderSum - orderQuee.size(), orderSum);
-                    }
                     Log.e("Pan", "发送下一条协议");
                     sendOrder();
                 }
@@ -407,15 +403,12 @@ public class NewBleBluetoothUtil {
                         listener.onSendFinish();
                     }
                 }
+            } else if (status == BluetoothGatt.GATT_FAILURE) {
+                Log.e("Pan", "写入失败" + values[0]);
+                sendOrder();
+            } else if (status == BluetoothGatt.GATT_WRITE_NOT_PERMITTED) {
+                Log.e("Pan", "没权限");
             }
-
-//            } else if (status == BluetoothGatt.GATT_FAILURE) {
-//                Log.e("Pan", "写入失败" + values[0]);
-////                sendOrder();
-////                Log.e("onCharacteristicWrite中", "写入失败");
-//            } else if (status == BluetoothGatt.GATT_WRITE_NOT_PERMITTED) {
-//                Log.e("onCharacteristicWrite中", "没权限");
-//            }
 
 //            Log.e("bcz", "onCharacteristicWrite----------------begin---------------------");
 //            for (byte value : values) {
@@ -434,12 +427,7 @@ public class NewBleBluetoothUtil {
         public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
             super.onCharacteristicChanged(gatt, characteristic);
             byte[] values = characteristic.getValue();
-            Log.e("bcz", "onCharacteristicChanged----------------begin---------------------");
-            for (byte value : values) {
-                Log.e("bcz", "onCharacteristicChanged--===value:" + value);
-            }
-            Log.e("bcz", "onCharacteristicChanged================end======================");
-
+            Log.e("Pan", "onCharacteristicChanged");
         }
     }
 
@@ -532,6 +520,7 @@ public class NewBleBluetoothUtil {
         }
     }
 */
+
     /**
      * 从队列中获取指令进行发送
      */
@@ -542,9 +531,8 @@ public class NewBleBluetoothUtil {
             return;
         }
         if (listener != null) {
-            orderSum = orderQuee.size();
             LogUtils.LogE("onStartSend-----------------");
-            listener.onStartSend(orderSum);
+            listener.onStartSend();
         }
         Log.e("bcz", "Order is :" + new Gson().toJson(order.getOrder()));
 
@@ -556,6 +544,10 @@ public class NewBleBluetoothUtil {
             case clearright:
                 //清洗右喷头
                 sendClearRight();
+                break;
+            case cleanLong:
+                //长喷
+                sendCleanLong();
                 break;
             case setpoweronclear:
                 //设置上电自动清洗
@@ -693,6 +685,8 @@ public class NewBleBluetoothUtil {
      */
     public void readStatus(IReadInfoListener readCallBack) {
         readInfoCallBack = readCallBack;
+//        mBluetoothGatt.setCharacteristicNotification(readCharacter,true);
+        Log.e("Pan", "开始读取");
         mBluetoothGatt.readCharacteristic(readCharacter);
     }
 
@@ -733,6 +727,15 @@ public class NewBleBluetoothUtil {
     public void sendClearRight() {
         byte[] data = new byte[1];
         data[0] = clearright;
+        dataSend(data, opencloseCharacter);
+    }
+
+    /**
+     * 长喷
+     */
+    public void sendCleanLong() {
+        byte[] data = new byte[1];
+        data[0] = cleanLong;
         dataSend(data, opencloseCharacter);
     }
 
@@ -883,6 +886,7 @@ public class NewBleBluetoothUtil {
      */
     private void dataSend(byte[] data, BluetoothGattCharacteristic characteristic) {
         characteristic.setValue(data);
+        characteristic.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE);
         Log.e("bcz", "dataSend----------------start-------------------");
         for (byte dataha : data) {
             Log.e("bcz", "dataSend--data:" + dataha);

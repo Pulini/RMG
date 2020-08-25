@@ -169,6 +169,37 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_sbbh"
         tools:text="版本号:1.0.1.1" />
 
+
+    <LinearLayout
+        android:id="@+id/ll_sending"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+        <ProgressBar
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="5dp"
+            android:indeterminate="true"
+            android:indeterminateBehavior="repeat"
+            android:indeterminateDuration="3000"
+            android:max="100" />
+
+        <TextView
+            android:id="@+id/tv_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发送中..."
+            android:textColor="@color/color66"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
@@ -176,8 +207,8 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_version"
-   >
+
+        app:layout_constraintTop_toBottomOf="@+id/tv_version">
 
 
         <LinearLayout
@@ -241,7 +272,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@drawable/btn_cleanleft"
-        android:text="左清洗"
+        android:text="清洁"
         android:textColor="@color/white"
         android:textSize="@dimen/textsize14"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -254,11 +285,24 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="10dp"
         android:background="@drawable/btn_cleanleft"
-        android:text="右清洗"
+        android:text="长喷"
         android:textColor="@color/white"
         android:textSize="@dimen/textsize14"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <RelativeLayout
+        android:id="@+id/rl_wait"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#11000000"
+        android:visibility="gone"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

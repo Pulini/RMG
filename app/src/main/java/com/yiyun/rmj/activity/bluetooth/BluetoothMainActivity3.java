@@ -2,6 +2,7 @@ package com.yiyun.rmj.activity.bluetooth;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -122,7 +123,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
 
 
     int cleanTime = 5;
-    private BluetoothModel bm;
+    private BluetoothModel bm=new BluetoothModel();
 
 
     @Override
@@ -189,13 +190,13 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
                     device.getList().get(0).setSelected(true);
                     switch (device.getList().get(0).getModel()) {
                         case BLEUtil.ble_Mode_Intelligent1:
-                            BLE_Write(new byte[]{BLEUtil.ble_Mode_Intelligent1}, BLEUtil.BLE_writeUUid_1);
+                            sendOrder(new byte[]{BLEUtil.ble_Mode_Intelligent1}, BLEUtil.BLE_writeUUid_1);
                             break;
                         case BLEUtil.ble_Mode_Intelligent2:
-                            BLE_Write(new byte[]{BLEUtil.ble_Mode_Intelligent2}, BLEUtil.BLE_writeUUid_1);
+                            sendOrder(new byte[]{BLEUtil.ble_Mode_Intelligent2}, BLEUtil.BLE_writeUUid_1);
                             break;
                         case BLEUtil.ble_Mode_Intelligent3:
-                            BLE_Write(new byte[]{BLEUtil.ble_Mode_Intelligent3}, BLEUtil.BLE_writeUUid_1);
+                            sendOrder(new byte[]{BLEUtil.ble_Mode_Intelligent3}, BLEUtil.BLE_writeUUid_1);
                             break;
                     }
                     SpfUtils.saveBluetoothSetList(device.getList(), deviceId);
@@ -258,7 +259,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
                                 bm.getModel() != BLEUtil.ble_Mode_Intelligent2 &&
                                 bm.getModel() != BLEUtil.ble_Mode_Intelligent3
                         ) {
-                            BLE_Write(new byte[]{BLEUtil.ble_Mode_Intelligent1}, BLEUtil.BLE_writeUUid_1);
+                            sendOrder(new byte[]{BLEUtil.ble_Mode_Intelligent1}, BLEUtil.BLE_writeUUid_1);
                         }
                         Log.e("Pan", "开机");
                     }
@@ -308,7 +309,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
         Log.e("Pan", "hasLong=" + hasLong);
         Log.e("Pan", "Model=" + device.getList().get(position).getModel());
         if (hasShort != -1 && hasLong != -1) {
-            BLE_Write(new byte[]{
+            sendOrder(new byte[]{
                     BLEUtil.ble_LongOrder,
                     BLEUtil.OX_ORDER[cleanTime],
                     BLEUtil.OX_ORDER[bm.getAutoClean()],
@@ -321,7 +322,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
             Log.e("Pan", "设置长短喷");
         } else {
             if (hasShort != -1) {
-                BLE_Write(new byte[]{
+                sendOrder(new byte[]{
                         BLEUtil.ble_LongOrder,
                         BLEUtil.OX_ORDER[cleanTime],
                         BLEUtil.OX_ORDER[bm.getAutoClean()],
@@ -334,7 +335,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
                 Log.e("Pan", "设置短喷");
             }
             if (hasLong != -1) {
-                BLE_Write(new byte[]{
+                sendOrder(new byte[]{
                         BLEUtil.ble_LongOrder,
                         BLEUtil.OX_ORDER[cleanTime],
                         BLEUtil.OX_ORDER[bm.getAutoClean()],
@@ -436,7 +437,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
             isSetting = true;
             bt_sure.setBackgroundResource(R.drawable.shape_stroke_btn_bg_blue);
             SpfUtils.getSpfUtils(getApplicationContext()).setCleanTime(cleanTime);
-            BLE_Write(new byte[]{BLEUtil.ble_SprayQuantity, BLEUtil.OX_ORDER[cleanTime]}, BLEUtil.BLE_writeUUid_2);
+            sendOrder(new byte[]{BLEUtil.ble_SprayQuantity, BLEUtil.OX_ORDER[cleanTime]}, BLEUtil.BLE_writeUUid_2);
             bm.setCleanTime(cleanTime);
             ToastUtils.show("设置出液量：" + ((cleanTime - 6) / 3 + 2) * 10 + "%");
             runOnUiThread(() -> {
@@ -451,7 +452,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
         bt_cleanLeft.setOnClickListener(view -> {
             if (!cleanLeft) {
                 cleanLeft = true;
-                BLE_Write(new byte[]{BLEUtil.ble_CleanLift}, BLEUtil.BLE_writeUUid_1);
+                sendOrder(new byte[]{BLEUtil.ble_CleanLift}, BLEUtil.BLE_writeUUid_1);
                 bt_cleanLeft.setBackgroundResource(R.drawable.btn_cleanright);
                 if (handler.hasMessages(1)) {
                     handler.removeMessages(1);
@@ -463,7 +464,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
         bt_cleanRight.setOnClickListener(view -> {
             if (!cleanRight) {
                 cleanRight = true;
-                BLE_Write(new byte[]{BLEUtil.ble_CleanRight}, BLEUtil.BLE_writeUUid_1);
+                sendOrder(new byte[]{BLEUtil.ble_CleanRight}, BLEUtil.BLE_writeUUid_1);
                 bt_cleanRight.setBackgroundResource(R.drawable.btn_cleanright);
                 if (handler.hasMessages(4)) {
                     handler.removeMessages(4);
@@ -477,7 +478,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
 
     private CompoundButton.OnCheckedChangeListener checkedListener = (compoundButton, b) -> {
         tv_bootState.setText(b ? "关机" : "开机");
-        BLE_Write(new byte[]{b ? BLEUtil.ble_PowerON : BLEUtil.ble_PowerOff}, BLEUtil.BLE_writeUUid_1);
+        sendOrder(new byte[]{b ? BLEUtil.ble_PowerON : BLEUtil.ble_PowerOff}, BLEUtil.BLE_writeUUid_1);
     };
 
     private void refresh() {
@@ -651,7 +652,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
 
 //                            bluetoothUtil.removeAllOrder();
                         if (bm.getAutoClean() == BLEUtil.ble_AutoCleanOff) {
-                            BLE_Write(new byte[]{BLEUtil.ble_AutoCleanOn}, BLEUtil.BLE_writeUUid_1);
+                            sendOrder(new byte[]{BLEUtil.ble_AutoCleanOn}, BLEUtil.BLE_writeUUid_1);
                         }
 
                         //0 1  2  3  4  5
@@ -664,7 +665,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
                                 sb_cleanValue.setProgress((cleanTime - 6) / 3);
                             } else {
                                 Log.e("Pan", "设置中.....");
-                                BLE_Write(new byte[]{BLEUtil.ble_SprayQuantity, BLEUtil.OX_ORDER[cleanTime]}, BLEUtil.BLE_writeUUid_2);
+                                sendOrder(new byte[]{BLEUtil.ble_SprayQuantity, BLEUtil.OX_ORDER[cleanTime]}, BLEUtil.BLE_writeUUid_2);
                             }
                         } else {
                             cleanTime = bm.getCleanTime();
@@ -863,7 +864,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
 
 //                            bluetoothUtil.removeAllOrder();
                         if (bm.getAutoClean() == BLEUtil.ble_AutoCleanOff) {
-                            BLE_Write(new byte[]{BLEUtil.ble_AutoCleanOn}, BLEUtil.BLE_writeUUid_1);
+                            sendOrder(new byte[]{BLEUtil.ble_AutoCleanOn}, BLEUtil.BLE_writeUUid_1);
                         }
 
                         //0 1  2  3  4  5
@@ -876,7 +877,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
                                 sb_cleanValue.setProgress((cleanTime - 6) / 3);
                             } else {
                                 Log.e("Pan", "设置中.....");
-                                BLE_Write(new byte[]{BLEUtil.ble_SprayQuantity, BLEUtil.OX_ORDER[cleanTime]}, BLEUtil.BLE_writeUUid_2);
+                                sendOrder(new byte[]{BLEUtil.ble_SprayQuantity, BLEUtil.OX_ORDER[cleanTime]}, BLEUtil.BLE_writeUUid_2);
                             }
                         } else {
                             cleanTime = bm.getCleanTime();
@@ -1052,17 +1053,17 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
 //            switch (settingModel) {
 //                case BLEUtil.ble_Mode_Intelligent1:
 //                    if (bm.getModel() != BLEUtil.ble_Mode_Intelligent1) {
-//                        BLE_Write(new byte[]{BLEUtil.ble_Mode_Intelligent1}, BLEUtil.BLE_writeUUid_1);
+//                        sendOrder(new byte[]{BLEUtil.ble_Mode_Intelligent1}, BLEUtil.BLE_writeUUid_1);
 //                    }
 //                    break;
 //                case BLEUtil.ble_Mode_Intelligent2:
 //                    if (bm.getModel() != BLEUtil.ble_Mode_Intelligent2) {
-//                        BLE_Write(new byte[]{BLEUtil.ble_Mode_Intelligent2}, BLEUtil.BLE_writeUUid_1);
+//                        sendOrder(new byte[]{BLEUtil.ble_Mode_Intelligent2}, BLEUtil.BLE_writeUUid_1);
 //                    }
 //                    break;
 //                case BLEUtil.ble_Mode_Intelligent3:
 //                    if (bm.getModel() != BLEUtil.ble_Mode_Intelligent3) {
-//                        BLE_Write(new byte[]{BLEUtil.ble_Mode_Intelligent3}, BLEUtil.BLE_writeUUid_1);
+//                        sendOrder(new byte[]{BLEUtil.ble_Mode_Intelligent3}, BLEUtil.BLE_writeUUid_1);
 //                    }
 //                    break;
 //            }
@@ -1081,8 +1082,8 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
     @Override
     public void onResume() {
         Log.e("Pan", "读取状态");
-        readVersion();
         refresh();
+        readVersion();
         super.onResume();
     }
 
@@ -1210,7 +1211,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
 
     List<byte[]> Orders = new ArrayList<>();
 
-    private void write(){
+    private void write() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -1220,7 +1221,7 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    BLE_Write(order, "");
+                    sendOrder(order, "");
                 }
                 try {
                     Thread.sleep(1000);
@@ -1233,32 +1234,52 @@ public class BluetoothMainActivity3 extends BaseActivity2 {
 
     }
 
-    private void BLE_Write(byte[] data, String write_id) {
+    private void sendOrder(byte[] data, String write_id) {
         Log.e("Pan", "发送指令：" + gson.toJson(data));
-//        if (handler.hasMessages(0)) {
-//            handler.removeMessages(0);
-//        }
-//        isSending = true;
-        BleManager.getInstance().write(
-                bleDevice,
-                BLEUtil.BLE_serviceUUid,
-                write_id,
-                data,
-                new BleWriteCallback() {
-                    @Override
-                    public void onWriteSuccess(int current, int total, byte[] justWrite) {
-                        Log.e("Pan", "指令发送成功");
-//                        isSending = false;
-//                        readStatus();
-                    }
-
-                    @Override
-                    public void onWriteFailure(BleException exception) {
-                        Log.e("Pan", "指令发送失败：" + exception);
-//                        isSending = false;
-//                        readStatus();
-                    }
-                });
+        new send(data,write_id).start();
     }
+
+     class send extends Thread{
+        byte[] data;
+        String write_id;
+        public send(byte[] data, String write_id) {
+            this.data=data;
+            this.write_id=write_id;
+        }
+
+        @Override
+        public void run() {
+            if(data==null){
+                return;
+            }
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            BleManager.getInstance().write(
+                    bleDevice,
+                    BLEUtil.BLE_serviceUUid,
+                    write_id,
+                    data,
+                    new BleWriteCallback() {
+                        @Override
+                        public void onWriteSuccess(int current, int total, byte[] justWrite) {
+                            Log.e("Pan", "指令发送成功----"+gson.toJson(justWrite));
+                            data=null;
+                        }
+
+                        @Override
+                        public void onWriteFailure(BleException exception) {
+                            Log.e("Pan", "指令发送失败：" + exception);
+                            run();
+                        }
+                    }
+            );
+        }
+
+    }
+
+
 
 }
