@@ -522,7 +522,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
                 if (handler.hasMessages(1)) {
                     handler.removeMessages(1);
                 }
-                handler.sendEmptyMessageDelayed(1, 1000 * 5);
+                handler.sendEmptyMessageDelayed(1, 1000 * bm.getCleanTime()*2+2000);
             }
         });
 
