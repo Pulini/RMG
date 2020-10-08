@@ -412,14 +412,19 @@ public class NewHomeActivity extends BaseActivity {
                             String versionStr = obj.getInfo().getData().getVersion();
                             if (versionStr != null) {
                                 String[] strArr = versionStr.split("\\.");
-                                int versionCode = Integer.parseInt(strArr[strArr.length - 1]);
+                                int newVersionCode = Integer.parseInt(strArr[strArr.length - 1]);
+                                int nowVersionCode = PackageUpdateUtil.getInstance().getVersionCode(context);
+                                Log.e("Pan","newVersionCode="+newVersionCode);
+                                Log.e("Pan","nowVersionCode="+nowVersionCode);
                                 downloadUrl = obj.getInfo().getData().getDownloadLink();
-                                if (PackageUpdateUtil.getInstance().getVersionCode(context) < versionCode) {
+                                if (nowVersionCode < newVersionCode) {
                                     //版本不是最新，需要更新版本
                                     dialog_tv_version.setText("发现新版本(" + versionStr + ")");
                                     dialog_tv_currentversion.setText("当前版本:" + PackageUpdateUtil.getInstance().getVersion(context));
                                     updateDialog.show();
                                 }
+
+
                             }
                         } else {
                         }

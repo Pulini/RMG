@@ -177,6 +177,7 @@
         android:layout_marginEnd="10dp"
         android:gravity="center"
         android:orientation="horizontal"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
@@ -256,15 +257,21 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <com.yanzhenjie.recyclerview.SwipeRecyclerView
-        android:id="@+id/rv_deviceList"
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/srl_deviceList"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="5dp"
         app:layout_constraintBottom_toTopOf="@+id/bt_cleanLeft"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+        app:layout_constraintTop_toBottomOf="@+id/cardView">
+        <com.yanzhenjie.recyclerview.SwipeRecyclerView
+            android:id="@+id/rv_deviceList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
 
     <Button
         android:id="@+id/bt_cleanLeft"
@@ -272,11 +279,24 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@drawable/btn_cleanleft"
-        android:text="清洁"
         android:textColor="@color/white"
         android:textSize="@dimen/textsize14"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@mipmap/icon_bt1"
+        android:gravity="center"
+        android:paddingTop="3dp"
+        android:text="清洁"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/bt_cleanLeft"
+        app:layout_constraintEnd_toEndOf="@+id/bt_cleanLeft"
+        app:layout_constraintStart_toStartOf="@+id/bt_cleanLeft"
+        app:layout_constraintTop_toTopOf="@+id/bt_cleanLeft" />
 
     <Button
         android:id="@+id/bt_cleanRight"
@@ -285,19 +305,30 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="10dp"
         android:background="@drawable/btn_cleanleft"
-        android:text="长喷"
-        android:textColor="@color/white"
-        android:textSize="@dimen/textsize14"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@mipmap/icon_bt2"
+        android:gravity="center"
+        android:paddingTop="3dp"
+        android:text="长喷"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/bt_cleanRight"
+        app:layout_constraintEnd_toEndOf="@+id/bt_cleanRight"
+        app:layout_constraintStart_toStartOf="@+id/bt_cleanRight"
+        app:layout_constraintTop_toTopOf="@+id/bt_cleanRight" />
 
     <RelativeLayout
         android:id="@+id/rl_wait"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#11000000"
-        android:visibility="gone"
         android:elevation="2dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

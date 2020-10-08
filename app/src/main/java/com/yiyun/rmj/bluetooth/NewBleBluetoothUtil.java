@@ -6,13 +6,11 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -98,9 +96,9 @@ public class NewBleBluetoothUtil {
     OnBlutToothListener listener;
 
     public interface OnBlutToothListener {
-        void onStartSend();
+        void onSending(byte order);
 
-        void onSendFinish();
+        void onSendFinish(byte value);
     }
 
     public void setBlutToothListener(OnBlutToothListener listener) {
@@ -400,7 +398,7 @@ public class NewBleBluetoothUtil {
                 if (orderQuee.size() == 0) {
                     if (listener != null) {
                         LogUtils.LogE("onSendFinish-----------------");
-                        listener.onSendFinish();
+                        listener.onSendFinish(values[0]);
                     }
                 }
             } else if (status == BluetoothGatt.GATT_FAILURE) {
@@ -532,7 +530,7 @@ public class NewBleBluetoothUtil {
         }
         if (listener != null) {
             LogUtils.LogE("onStartSend-----------------");
-            listener.onStartSend();
+            listener.onSending(order.getOrder());
         }
         Log.e("bcz", "Order is :" + new Gson().toJson(order.getOrder()));
 

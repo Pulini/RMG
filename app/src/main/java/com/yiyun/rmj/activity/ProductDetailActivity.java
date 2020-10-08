@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.hjq.toast.ToastUtils;
 import com.sackcentury.shinebuttonlib.ShineButton;
 import com.stx.xhb.xbanner.XBanner;
 import com.stx.xhb.xbanner.transformers.Transformer;
@@ -312,13 +313,16 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
 
             case R.id.ll_join_collection:
                 //加入购物车按钮
-
-                BottomDialog.createDialog(ProductDetailActivity.this, BottomDialog.TYPE_ADD_TO_CART,productData, addOrBuyLisenner).show();
+                if(productData!=null){
+                    BottomDialog.createDialog(ProductDetailActivity.this, BottomDialog.TYPE_ADD_TO_CART,productData, addOrBuyLisenner).show();
+                }
                 break;
 
             case R.id.tv_buy_imidiately:
                 //立即购买按钮
-                BottomDialog.createDialog(ProductDetailActivity.this, BottomDialog.TYPE_BUY_NOW, productData, addOrBuyLisenner).show();
+                if(productData!=null){
+                    BottomDialog.createDialog(ProductDetailActivity.this, BottomDialog.TYPE_BUY_NOW, productData, addOrBuyLisenner).show();
+                }
                 break;
             case R.id.tv_share:
                 PermissionUtil.requestStoragePermission(ProductDetailActivity.this,new PermissionUtil.IRequestPermissionCallBack(){

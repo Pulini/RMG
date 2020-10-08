@@ -3,7 +3,6 @@ package com.yiyun.rmj.activity.bluetooth;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
@@ -628,12 +627,12 @@ public class BluetoothMainActivity extends BaseActivity implements View.OnClickL
 //            }
 
             @Override
-            public void onStartSend() {
+            public void onSending(byte order) {
 
             }
 
             @Override
-            public void onSendFinish() {
+            public void onSendFinish(byte value) {
 //                ToastUtils.show("指令发送成功！");
                 handler.sendEmptyMessage(13);
 

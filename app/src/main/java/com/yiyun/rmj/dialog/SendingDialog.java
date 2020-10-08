@@ -50,5 +50,9 @@ public class SendingDialog extends Dialog {
     public void setMessage(String msg) {
         tv_msg.setText(msg);
     }
+    public void Show(String msg){
+        tv_msg.setText(msg);
+        show();
+    }
 
 }

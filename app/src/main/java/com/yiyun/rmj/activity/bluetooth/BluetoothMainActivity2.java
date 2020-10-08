@@ -23,15 +23,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.google.gson.Gson;
 
 import com.hjq.toast.ToastUtils;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.yanzhenjie.recyclerview.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 import com.yiyun.rmj.R;
-import com.yiyun.rmj.activity.CustomServiceActivity;
 import com.yiyun.rmj.base.BaseActivity;
 import com.yiyun.rmj.bean.AddDeviceParm;
 import com.yiyun.rmj.bean.BluetoothBean;
 import com.yiyun.rmj.bluetooth.NewBleBluetoothUtil;
-import com.yiyun.rmj.dialog.CustomerServiceDialog;
 import com.yiyun.rmj.dialog.RoundEditDialog;
 import com.yiyun.rmj.dialog.SendingDialog;
 import com.yiyun.rmj.utils.DESHelper;
@@ -77,6 +78,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
     private TextView tv_cleanValue;
     private SeekBar sb_cleanValue;
     private Button bt_sure;
+    private SmartRefreshLayout srl_deviceList;
     private SwipeRecyclerView rv_deviceList;
     private Button bt_cleanLeft;
     private Button bt_cleanRight;
@@ -94,11 +96,11 @@ public class BluetoothMainActivity2 extends BaseActivity {
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-                case 0:
-                    if (!isFinishing()) {
-                        readStatus();
-                    }
-                    break;
+//                case 0:
+//                    if (!isFinishing()) {
+//                        readStatus();
+//                    }
+//                    break;
                 case 1:
                     cleanLeft = false;
                     bt_cleanLeft.setBackgroundResource(R.drawable.btn_cleanleft);
@@ -125,7 +127,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
     private boolean cleanRight = false;
     private boolean isSending = false;
     private boolean isSetting = false;
-//    private SendingDialog sendingDialog;
+    private SendingDialog sendingDialog;
 
 
     private String getVersion(byte[] values) {
@@ -164,30 +166,37 @@ public class BluetoothMainActivity2 extends BaseActivity {
         sb_cleanValue.setProgress((cleanTime - 6) / 3);
         bt_sure.setBackgroundResource(R.drawable.shape_stroke_btn_bg_blue);
         bluetoothUtil = NewBleBluetoothUtil.getInstance();
+       sendingDialog =new SendingDialog(this);
+
 
         bluetoothUtil.setBlutToothListener(new NewBleBluetoothUtil.OnBlutToothListener() {
             @Override
-            public void onStartSend() {
+            public void onSending(byte order) {
                 isSending = true;
-                runOnUiThread(() -> {
-                    tv_msg.setText("发送指令...");
-                    ll_sending.setVisibility(View.VISIBLE);
-                    rl_wait.setVisibility(View.VISIBLE);
-                });
+                sendingDialog.Show("发送指令...");
+//                runOnUiThread(() -> {
+//                    tv_msg.setText("发送指令...");
+//                    ll_sending.setVisibility(View.VISIBLE);
+//                    rl_wait.setVisibility(View.VISIBLE);
+//                });
+
             }
 
             @Override
-            public void onSendFinish() {
+            public void onSendFinish(byte value) {
                 isSending = false;
-                Log.e("Pan", "读取状态");
-                if (handler.hasMessages(0)) {
-                    handler.removeMessages(0);
-                }
-                runOnUiThread(() -> {
-                    ll_sending.setVisibility(View.GONE);
-                    rl_wait.setVisibility(View.GONE);
-                });
-                handler.sendEmptyMessageDelayed(0, 1000);
+//                Log.e("Pan", "读取状态");
+
+                sendingDialog.dismiss();
+//                readStatus();
+//                if (handler.hasMessages(0)) {
+//                    handler.removeMessages(0);
+//                }
+//                runOnUiThread(() -> {
+//                    ll_sending.setVisibility(View.GONE);
+//                    rl_wait.setVisibility(View.GONE);
+//                });
+//                handler.sendEmptyMessageDelayed(0, 1000);
             }
         });
 
@@ -454,10 +463,15 @@ public class BluetoothMainActivity2 extends BaseActivity {
         sb_cleanValue = findViewById(R.id.sb_cleanValue);
         bt_sure = findViewById(R.id.bt_sure);
 
+        srl_deviceList = findViewById(R.id.srl_deviceList);
         rv_deviceList = findViewById(R.id.rv_deviceList);
         bt_cleanLeft = findViewById(R.id.bt_cleanLeft);
         bt_cleanRight = findViewById(R.id.bt_cleanRight);
-
+        srl_deviceList.setEnableLoadMore(false);
+        srl_deviceList.setOnRefreshListener(refreshLayout -> {
+            refreshLayout.finishRefresh();
+            readStatus();
+        });
 
     }
 
@@ -522,7 +536,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
                 if (handler.hasMessages(1)) {
                     handler.removeMessages(1);
                 }
-                handler.sendEmptyMessageDelayed(1, 1000 * bm.getCleanTime()*2+2000);
+                handler.sendEmptyMessageDelayed(1, 1000 * 5*2);
             }
         });
 
@@ -535,7 +549,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
                 if (handler.hasMessages(4)) {
                     handler.removeMessages(4);
                 }
-                handler.sendEmptyMessageDelayed(4, 1000 * 5);
+                handler.sendEmptyMessageDelayed(4, 1000 * bm.getLongStrength()*2);
             }
         });
 
@@ -550,21 +564,23 @@ public class BluetoothMainActivity2 extends BaseActivity {
     };
 
     private void readStatus() {
-        Log.e("Pan", "开始读取蓝牙");
-        if (isSending) {
-            handler.removeMessages(0);
-            handler.sendEmptyMessageDelayed(0, 1000);
-            Log.e("Pan", "正在发送指令");
-        } else {
+//        Log.e("Pan", "开始读取蓝牙");
+//        if (isSending) {
+//            handler.removeMessages(0);
+//            handler.sendEmptyMessageDelayed(0, 1000);
+//            Log.e("Pan", "正在发送指令");
+//        } else {
             Log.e("Pan", "读取蓝牙");
-            tv_msg.setText("读取状态...");
-            ll_sending.setVisibility(View.VISIBLE);
-            rl_wait.setVisibility(View.VISIBLE);
+//            tv_msg.setText("读取状态...");
+//            ll_sending.setVisibility(View.VISIBLE);
+//            rl_wait.setVisibility(View.VISIBLE);
+            sendingDialog.Show("读取状态...");
             bluetoothUtil.readStatus(values -> {
                         Log.e("Pan", "接收蓝牙数据");
                         runOnUiThread(() -> {
-                            ll_sending.setVisibility(View.GONE);
-                            rl_wait.setVisibility(View.GONE);
+//                            ll_sending.setVisibility(View.GONE);
+//                            rl_wait.setVisibility(View.GONE);
+                            sendingDialog.dismiss();
                             //0x53+【开机状态】+【剩余电量】+【清洗时长】+【短喷间隔时间】+【短喷喷雾强度】+【开机清洗使能】 +【工作模式】+【长喷间隔时间】+【长喷喷雾强度】。
                             bm = new BluetoothModel(values);
                             if (!DevcieVersion.isEmpty()) {
@@ -616,11 +632,11 @@ public class BluetoothMainActivity2 extends BaseActivity {
                                 tv_cleanValue.setText("出液量: " + ((cleanTime - 6) / 3 + 2) * 10 + "%");
                                 sb_cleanValue.setProgress((cleanTime - 6) / 3);
                             }
-                            handler.sendEmptyMessageDelayed(0, 1000 * 10);
+//                            handler.sendEmptyMessageDelayed(0, 1000 * 10);
                         });
                     }
             );
-        }
+//        }
     }
 
     private void setModel() {
@@ -886,25 +902,25 @@ public class BluetoothMainActivity2 extends BaseActivity {
 
     @Override
     public void onResume() {
-        if (handler.hasMessages(0)) {
-            handler.removeMessages(0);
-        }
-        handler.sendEmptyMessage(0);
-
-        Log.e("Pan", "读取状态");
+//        if (handler.hasMessages(0)) {
+//            handler.removeMessages(0);
+//        }
+//        handler.sendEmptyMessage(0);
+        readStatus();
+//        Log.e("Pan", "读取状态");
         super.onResume();
     }
 
     @Override
     public void onPause() {
-        handler.removeMessages(0);
+//        handler.removeMessages(0);
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
         //移除30秒读状态的定时器
-        handler.removeMessages(0);
+//        handler.removeMessages(0);
         bluetoothUtil.disconnectDevice();
         super.onDestroy();
     }
