@@ -173,7 +173,8 @@ public class BluetoothMainActivity2 extends BaseActivity {
             @Override
             public void onSending(byte order) {
                 isSending = true;
-                sendingDialog.Show("发送指令...");
+                runOnUiThread(() -> sendingDialog.Show("发送指令..."));
+
 //                runOnUiThread(() -> {
 //                    tv_msg.setText("发送指令...");
 //                    ll_sending.setVisibility(View.VISIBLE);
@@ -186,8 +187,7 @@ public class BluetoothMainActivity2 extends BaseActivity {
             public void onSendFinish(byte value) {
                 isSending = false;
 //                Log.e("Pan", "读取状态");
-
-                sendingDialog.dismiss();
+                runOnUiThread(() -> sendingDialog.dismiss());
 //                readStatus();
 //                if (handler.hasMessages(0)) {
 //                    handler.removeMessages(0);

@@ -51,7 +51,7 @@ public class SendingDialog extends Dialog {
         tv_msg.setText(msg);
     }
     public void Show(String msg){
-        tv_msg.setText(msg);
+        tv_msg.post(() -> tv_msg.setText(msg));
         show();
     }
 
