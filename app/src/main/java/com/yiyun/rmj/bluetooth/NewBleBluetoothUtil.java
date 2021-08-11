@@ -884,7 +884,7 @@ public class NewBleBluetoothUtil {
      */
     private void dataSend(byte[] data, BluetoothGattCharacteristic characteristic) {
         characteristic.setValue(data);
-        characteristic.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE);
+//        characteristic.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE);
         Log.e("bcz", "dataSend----------------start-------------------");
         for (byte dataha : data) {
             Log.e("bcz", "dataSend--data:" + dataha);

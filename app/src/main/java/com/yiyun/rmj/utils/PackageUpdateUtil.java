@@ -1,5 +1,6 @@
 package com.yiyun.rmj.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -128,7 +129,7 @@ public class PackageUpdateUtil {
             }
         }).start();
     }
-
+/*
     public static boolean install(Context con, String filePath) {
         try {
             if(TextUtils.isEmpty(filePath))
@@ -155,6 +156,34 @@ public class PackageUpdateUtil {
             error.printStackTrace();
 //            Toast.makeText(con, "安装失败，请重新下载", Toast.LENGTH_LONG).show();
             return false;
+        }
+        return true;
+    }
+
+    */
+
+    //安装apk
+    public static boolean install(Context act, String filePath) {
+        if(TextUtils.isEmpty(filePath)) {
+            return false;
+        }
+
+        File file = new File(filePath);
+        if(!file.exists()){
+            return false;
+        }
+        if (Build.VERSION.SDK_INT >= 24) {//判读版本是否在7.0以上
+            Uri apkUri = FileProvider.getUriForFile(act, "com.yiyun.rmj.fileprovider", file);
+            Intent install = new Intent(Intent.ACTION_VIEW);
+            install.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);//添加这一句表示对目标应用临时授权该Uri所代表的文件
+            install.setDataAndType(apkUri, "application/vnd.android.package-archive");
+            act.startActivity(install);
+        } else {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            act.startActivity(intent);
         }
         return true;
     }

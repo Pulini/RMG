@@ -68,7 +68,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
     private List<String> imgesUrl;
     private TextView tv_product_name, tv_product_des, tv_price, tv_freight;
     private ProductDetailBean.Data productData;
-    private TextView tv_sale_num;
+//    private TextView tv_sale_num;
 
     private BottomDialog.CommitLisener addOrBuyLisenner = new BottomDialog.CommitLisener() {
         @Override
@@ -155,7 +155,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
         TextView tv_share = findViewById(R.id.tv_share);
         tv_share.setOnClickListener(this);
 
-        tv_sale_num = findViewById(R.id.tv_sale_num);
+//        tv_sale_num = findViewById(R.id.tv_sale_num);
 
         detailPager = findViewById(R.id.viewpager);
 
@@ -454,7 +454,7 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
         tv_product_des.setText(data.getComposition());
         tv_price.setText(data.getProductPrice() + "");
         tv_freight.setText("运费：￥" + data.getExpressMoney());
-        tv_sale_num.setText( data.getSalesVolume() + "人已付款");
+//        tv_sale_num.setText( data.getSalesVolume() + "人已付款");
 
         ProductDetailFragment productDetailFragment = (ProductDetailFragment)fragments.get(0);
         productDetailFragment.refreshData(data.getGraphic());

@@ -133,15 +133,15 @@
                         android:textColor="@color/color66"
                         />
 
-                    <TextView
-                        android:id="@+id/tv_sale_num"
-                        android:layout_marginLeft="@dimen/marleft_right20"
-                        android:textColor="@color/color66"
-                        android:textSize="@dimen/textsize12"
-                        android:layout_toRightOf="@+id/tv_freight"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
+<!--                    <TextView-->
+<!--                        android:id="@+id/tv_sale_num"-->
+<!--                        android:layout_marginLeft="@dimen/marleft_right20"-->
+<!--                        android:textColor="@color/color66"-->
+<!--                        android:textSize="@dimen/textsize12"-->
+<!--                        android:layout_toRightOf="@+id/tv_freight"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        />-->
 
 
                 </RelativeLayout>

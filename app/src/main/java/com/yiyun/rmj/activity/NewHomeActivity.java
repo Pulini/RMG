@@ -112,6 +112,7 @@ public class NewHomeActivity extends BaseActivity {
                     tv_progress.setText(progress + "%");
                     break;
                 case 2:
+                    updateDialog.findViewById(R.id.tv_sure).setEnabled(true);
                     updateDialog.dismiss();
                     //安装应用
                     PackageUpdateUtil.install(NewHomeActivity.this, downLoadPath + downloadFileName);
@@ -455,6 +456,7 @@ public class NewHomeActivity extends BaseActivity {
         tv_sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                runOnUiThread(() -> updateDialog.findViewById(R.id.tv_sure).setEnabled(false));
                 PermissionUtil.requestStoragePermission(NewHomeActivity.this, new PermissionUtil.IRequestPermissionCallBack() {
                     @Override
                     public void permissionSuccess() {
@@ -469,6 +471,7 @@ public class NewHomeActivity extends BaseActivity {
                                 message.what = 1;
                                 message.setData(bundle);
                                 mhanlder.sendMessage(message);
+
                             }
 
                             @Override
@@ -485,6 +488,7 @@ public class NewHomeActivity extends BaseActivity {
                             public void downloadComplete() {
                                 Message message = new Message();
                                 message.what = 2;
+
                                 mhanlder.sendMessage(message);
                             }
                         });

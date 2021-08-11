@@ -81,7 +81,7 @@ public class BluetoothSelectDeviceActivity extends BaseActivity implements View.
         rv_list.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         //设置侧滑按钮
         rv_list.setSwipeMenuCreator((leftMenu, rightMenu, position) -> {
-            if (0 != position) {
+
                 rightMenu.addMenuItem(
                         new SwipeMenuItem(this)
                                 .setBackgroundColor(Color.parseColor("#BBBBBB"))
@@ -100,7 +100,7 @@ public class BluetoothSelectDeviceActivity extends BaseActivity implements View.
                                 .setWidth(DisplayUtils.dp2px(this, 50))
                                 .setHeight(ViewGroup.LayoutParams.MATCH_PARENT)
                 );
-            }
+
         });
 
         rv_list.setOnItemMenuClickListener((menuBridge, adapterPosition) -> {
