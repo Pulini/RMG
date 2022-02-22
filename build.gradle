@@ -2,10 +2,10 @@
 
 buildscript {
     repositories {
-        jcenter()
+        google()
+        mavenCentral()
         maven { url 'https://dl.bintray.com/umsdk/release' }
         maven { url 'https://maven.google.com' }
-        google() //添加行
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.0.1'
@@ -18,13 +18,13 @@ buildscript {
 
 allprojects {
     repositories {
+        google()
+        mavenCentral()
         maven{url 'http://maven.aliyun.com/nexus/content/groups/public/'}
-        jcenter()
         maven { url 'https://dl.google.com/dl/android/maven2/' }
         maven { url 'https://jitpack.io' }
         maven { url 'https://dl.bintray.com/umsdk/release' }
         maven { url 'https://maven.google.com' }
-        google() //添加行
     }
 }
 
