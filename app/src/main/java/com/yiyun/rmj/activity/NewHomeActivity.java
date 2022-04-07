@@ -247,12 +247,13 @@ public class NewHomeActivity extends BaseActivity {
 
         iv_control.setOnClickListener(v -> {
 //                Ali.LoginIM(getApplicationContext());
-            String token = SpfUtils.getSpfUtils(getApplicationContext()).getToken();
-            if (token.isEmpty()) {
-                startlogin();
-            } else {
-                startActivity(new Intent(context, BluetoothSelectDeviceActivity.class));
-            }
+//            String token = SpfUtils.getSpfUtils(getApplicationContext()).getToken();
+//            if (token.isEmpty()) {
+//                startlogin();
+//            } else {
+//                startActivity(new Intent(context, BluetoothSelectDeviceActivity.class));
+//            }
+            startActivity(new Intent(context, BluetoothSelectDeviceActivity.class));
         });
         tv_person_center.setOnClickListener(v -> startActivity(new Intent(context, PersonCenterActivity.class)));
         tv_custom_service.setOnClickListener(v -> {
@@ -307,7 +308,7 @@ public class NewHomeActivity extends BaseActivity {
 
     public void setTitle() {
         ImageView iv_shopping_cart = findViewById(R.id.iv_shopping_cart);
-        iv_shopping_cart.setVisibility(View.VISIBLE);
+        iv_shopping_cart.setVisibility(View.GONE);
         iv_shopping_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -324,7 +325,7 @@ public class NewHomeActivity extends BaseActivity {
         BaseParm parm = new BaseParm();
         String parmStr = gson.toJson(parm);
         parmDes = DESHelper.encrypt(parmStr);
-        getCommodityList();
+//        getCommodityList();
 
         Log.e("Pan", "isNeedUpdate=" + SpfUtils.getSpfUtils(NewHomeActivity.this).isNeedUpdate());
         //每次打开App的时候检测
@@ -334,7 +335,7 @@ public class NewHomeActivity extends BaseActivity {
             getVersionParm.setDevice("android");
             String getVersionParms = DESHelper.encrypt(gson.toJson(getVersionParm));
             Log.e("Pan", "----------------检查更新------------------");
-            getVersion(getVersionParms);
+//            getVersion(getVersionParms);
         }
     }
 
